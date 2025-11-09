@@ -1,0 +1,5 @@
+@extends('frontend.partials.master')
+@section('title', 'Home')
+@section('content')
+    <h1>Hello, world!</h1>
+@endsection
