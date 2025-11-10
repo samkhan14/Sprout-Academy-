@@ -22,6 +22,14 @@
     letter-spacing: 1px;
 }
 
+.section-heading {
+    padding: 0.625rem 1.5rem;
+}
+
+.section-heading-text {
+    font-size: 0.875rem;
+}
+
 /* Steps container - stack on mobile */
 .steps-container {
     flex-direction: column;
@@ -81,6 +89,10 @@
         font-size: 1.5rem;
     }
 
+    .section-heading-text {
+        font-size: 1rem;
+    }
+
     .section-title {
         font-size: 2rem;
     }
@@ -106,6 +118,14 @@
 
     .green-badge-text {
         font-size: 1.75rem;
+    }
+
+    .section-heading {
+        padding: 0.75rem 2rem;
+    }
+
+    .section-heading-text {
+        font-size: 1.0625rem;
     }
 
     .hero-section {
@@ -175,6 +195,14 @@
     .green-badge-text {
         font-size: 5rem;
         letter-spacing: 2px;
+    }
+
+    .section-heading {
+        padding: 0.79rem 2.7rem;
+    }
+
+    .section-heading-text {
+        font-size: 1.125rem;
     }
 
     .hero-section {
@@ -254,7 +282,7 @@
     }
 
     .hero-title {
-        font-size: 4.5rem;
+        font-size: 5.2rem;
     }
 }
 

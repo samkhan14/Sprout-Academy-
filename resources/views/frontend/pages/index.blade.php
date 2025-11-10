@@ -26,7 +26,12 @@
     <section class="mission-section" aria-labelledby="mission-heading">
         <div class="container">
             <div class="mission-content">
-                <span class="section-label">Our Mission</span>
+                @include('frontend.components.section-heading', [
+                    'text' => 'Our Mission',
+                    'bgColor' => '#6daa44',
+                    'borderColor' => '#6CAA43',
+                    'rotation' => 'right',
+                ])
                 <p class="mission-text">
                     The Sprout Academy develops the whole child by meeting social, emotional, physical, and intellectual
                     needs through learning and growing every day.
