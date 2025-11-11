@@ -43,18 +43,22 @@
     <!-- Three Easy Steps Section -->
     <section class="steps-section section" aria-labelledby="steps-heading">
         <div class="container">
-            <h2 id="steps-heading" class="section-title">THREE EASY STEPS</h2>
+            <div class="text-center">
+                @include('frontend.components.section-heading', [
+                    'text' => 'We Keep It Simple',
+                    'bgColor' => '#6daa44',
+                    'borderColor' => '#6CAA43',
+                    'rotation' => 'left',
+                ])
+            </div>
 
+            <h2 id="steps-heading" class="section-title">THREE EASY STEPS</h2>
             <div class="steps-container">
                 <!-- Step 1 -->
                 <div class="step-item">
                     <div class="step-icon blue" aria-hidden="true">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
-                                fill="currentColor" />
-                        </svg>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon1.png') }}" alt="Choose Location"
+                            loading="lazy">
                     </div>
                     <h3 class="step-title">CHOOSE LOCATION</h3>
                     <p class="step-description">Start by choosing a location.</p>
@@ -63,12 +67,8 @@
                 <!-- Step 2 -->
                 <div class="step-item">
                     <div class="step-icon orange" aria-hidden="true">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 4C16.55 4 17 4.45 17 5V6H19C20.1 6 21 6.9 21 8V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V8C3 6.9 3.9 6 5 6H7V5C7 4.45 7.45 4 8 4C8.55 4 9 4.45 9 5V6H15V5C15 4.45 15.45 4 16 4ZM5 10V19H19V10H5ZM12 13C13.66 13 15 14.34 15 16C15 17.66 13.66 19 12 19C10.34 19 9 17.66 9 16C9 14.34 10.34 13 12 13Z"
-                                fill="currentColor" />
-                        </svg>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon2.png') }}" alt="Schedule a Tour"
+                            loading="lazy">
                     </div>
                     <h3 class="step-title">SCHEDULE A TOUR</h3>
                     <p class="step-description">Schedule a tour and experience.</p>
@@ -77,12 +77,8 @@
                 <!-- Step 3 -->
                 <div class="step-item">
                     <div class="step-icon green" aria-hidden="true">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z"
-                                fill="currentColor" />
-                        </svg>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon3.png') }}" alt="Relax"
+                            loading="lazy">
                     </div>
                     <h3 class="step-title">RELAX</h3>
                     <p class="step-description">Know your child is in good hands.</p>
@@ -91,7 +87,7 @@
 
             <div class="steps-cta">
                 <p class="steps-cta-text">So, what are you waiting for?</p>
-                <a href="#tour" class="btn btn-secondary btn-lg">Schedule a Tour</a>
+                <a href="#tour" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
             </div>
         </div>
     </section>
@@ -99,9 +95,17 @@
     <!-- Accreditation Section -->
     <section class="accreditation-section" aria-labelledby="accreditation-heading">
         <div class="container">
+            <div class="text-center">
+                @include('frontend.components.section-heading', [
+                    'text' => "We're one of the best",
+                    'bgColor' => '#0A2239',
+                    'borderColor' => '#0A2239',
+                    'rotation' => 'right',
+                ])
+            </div>
             <h2 id="accreditation-heading" class="accreditation-title section-title">ACCREDITED, AWARDED, & LICENSED</h2>
 
-            <div class="accreditation-grid">
+            <div class="accreditation-slider">
                 <div class="accreditation-card">
                     <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
                         loading="lazy">
@@ -122,83 +126,155 @@
                     <img src="{{ asset('frontend/assets/home_page_images/certif5.png') }}"
                         alt="Early Learning Coalition of Pinellas County" loading="lazy">
                 </div>
+                <!-- Duplicate items for seamless loop -->
+                <div class="accreditation-card">
+                    <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
+                        loading="lazy">
+                </div>
+                <div class="accreditation-card">
+                    <img src="{{ asset('frontend/assets/home_page_images/certif2.png') }}"
+                        alt="Florida Health Certification" loading="lazy">
+                </div>
+                <div class="accreditation-card">
+                    <img src="{{ asset('frontend/assets/home_page_images/certif3.png') }}" alt="APPLE Accreditation"
+                        loading="lazy">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Parents Love Us / Testimonials Section -->
-    <section class="testimonials-section section" aria-labelledby="testimonials-heading">
+    <!-- Why Parents Love Us Section -->
+    <section class="why-parents-section section" aria-labelledby="why-parents-heading">
         <div class="container">
-            <div class="testimonial-header">
-                <h2 id="testimonials-heading" class="section-title">WANT TO SEE WHY PARENTS LOVE US?</h2>
+            <!-- Title Below Video -->
+            <div class="text-center mt-5 mb-5">
+                <h2 id="why-parents-heading" class="section-title">WANT TO SEE WHY PARENTS LOVE US?</h2>
+            </div>
+            <!-- Video Showcase at Top -->
+            <div class="main-video-wrapper">
+                <div class="video-showcase-main">
+                    <video id="main-video" class="main-video-player"
+                        poster="{{ asset('frontend/assets/home_page_images/singlevideo.png') }}" controls playsinline>
+                        <source src="{{ asset('frontend/assets/videos/main-video.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('frontend/assets/videos/main-video.webm') }}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="video-play-btn-main" id="play-video-btn"
+                        aria-label="Play video about our learning approach">
+                        <span class="visually-hidden">Play video</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="row mb-5">
+
+            <!-- Why Choose Us Content -->
+            <div class="row align-items-center mb-5">
                 <div class="col-lg-5 mb-4 mb-lg-0">
-                    <span class="section-label">Why The Sprout Academy?</span>
-                    <h3 class="display-6 fw-bold mb-3">YOUR CHILD WON'T COME HOME A MESS</h3>
-                    <p class="lead">
-                        We believe in hands-on learning that engages children's curiosity while maintaining a clean,
-                        organized environment. Our innovative approach ensures your child explores, learns, and grows
-                        without the mess.
-                    </p>
+                    <span class="section-label">Why the sprout academy?</span>
+                    <h3 class="why-choose-title">YOUR CHILD WON'T COME HOME A MESS</h3>
+                    <a href="#tour" class="btn btn-foundation btn-lg mt-3">Enroll Now</a>
                 </div>
                 <div class="col-lg-7">
-                    <div class="video-showcase">
-                        <img src="{{ asset('frontend/assets/home_page_images/singlevideo.png') }}"
-                            alt="Children engaged in sensory learning activities" loading="lazy">
-                        <button class="video-play-btn" aria-label="Play video about our learning approach">
-                            <span class="visually-hidden">Play video</span>
-                        </button>
-                    </div>
+                    <p class="why-choose-text-right mb-3">
+                        Finding quality childcare that balances education, safety, and fun can be challenging for parents.
+                        Many facilities promise engaging activities but often send children home covered in mess, which can
+                        be stressful for busy families.
+                    </p>
+                    <p class="why-choose-text-right">
+                        At The Sprout Academy, we've solved this problem. Our innovative approach provides hands-on learning
+                        experiences that engage children's natural curiosity while maintaining a clean, organized
+                        environment.
+                        We guarantee your child will explore, learn, and grow—without coming home a mess.
+                    </p>
                 </div>
             </div>
 
-            <!-- Image Carousel -->
-            <div class="testimonial-carousel mb-5" role="region" aria-label="Photo gallery">
-                <img src="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}"
-                    alt="Child enjoying sensory play activities" loading="lazy">
-                <img src="{{ asset('frontend/assets/home_page_images/vdo-img2.png') }}"
-                    alt="Happy child at learning table" loading="lazy">
-                <img src="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}"
-                    alt="Child building with colorful blocks" loading="lazy">
-            </div>
+        </div>
 
+        <!-- Full Width Marquee Video Gallery -->
+        <div class="marquee-gallery-wrapper">
+            <div class="marquee-gallery-slider">
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}"
+                        alt="Child enjoying classroom activities" loading="lazy">
+                </div>
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img2.png') }}"
+                        alt="Happy child at learning table" loading="lazy">
+                </div>
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}"
+                        alt="Child building with colorful blocks" loading="lazy">
+                </div>
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img2.png') }}" alt="Happy child learning"
+                        loading="lazy">
+                </div>
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}" alt="Child in classroom"
+                        loading="lazy">
+                </div>
+                <div class="marquee-slide">
+                    <img src="{{ asset('frontend/assets/home_page_images/vdo-img2.png') }}" alt="Happy child at table"
+                        loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section section" aria-labelledby="testimonials-heading">
+        <div class="container">
             <!-- Testimonial Cards -->
             <div class="testimonial-cards">
                 <div class="testimonial-card">
-                    <div class="testimonial-quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-quote-circle">
+                        <span class="testimonial-quote-icon">"</span>
+                    </div>
+                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
                     <p class="testimonial-text">
-                        "The Sprout Academy has been a blessing for our family. The teachers are caring and professional,
-                        and our daughter loves going every day!"
+                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
+                        Kindergarten but he will never forget his time at Sprout!"
                     </p>
-                    <p class="testimonial-author">SARAH M.</p>
-                    <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                        ★★★★★
+                    <div class="testimonial-footer">
+                        <p class="testimonial-author">- THERESA C</p>
+                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                            ★★★★★
+                        </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-quote-circle">
+                        <span class="testimonial-quote-icon">"</span>
+                    </div>
+                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
                     <p class="testimonial-text">
-                        "We couldn't be happier with the education and care our son receives. The curriculum is engaging and
-                        age-appropriate."
+                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
+                        Kindergarten but he will never forget his time at Sprout!"
                     </p>
-                    <p class="testimonial-author">MICHAEL T.</p>
-                    <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                        ★★★★★
+                    <div class="testimonial-footer">
+                        <p class="testimonial-author">- THERESA C</p>
+                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                            ★★★★★
+                        </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-quote-icon" aria-hidden="true">"</div>
+                    <div class="testimonial-quote-circle">
+                        <span class="testimonial-quote-icon">"</span>
+                    </div>
+                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
                     <p class="testimonial-text">
-                        "The facilities are clean, safe, and welcoming. We feel confident knowing our children are in such
-                        good hands every day."
+                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
+                        Kindergarten but he will never forget his time at Sprout!"
                     </p>
-                    <p class="testimonial-author">JENNIFER L.</p>
-                    <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                        ★★★★★
+                    <div class="testimonial-footer">
+                        <p class="testimonial-author">- THERESA C</p>
+                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                            ★★★★★
+                        </div>
                     </div>
                 </div>
             </div>
@@ -206,31 +282,36 @@
     </section>
 
     <!-- From Our Founders Section -->
-    <section class="founders-section section" aria-labelledby="founders-heading">
-        <div class="container">
-            <div class="founders-container">
-                <div class="founders-image">
-                    <img src="{{ asset('frontend/assets/home_page_images/founder-img.png') }}"
-                        alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy">
-                </div>
-                <div class="founders-content">
-                    <span class="section-label">About</span>
+    <section class="founders-section" aria-labelledby="founders-heading">
+        <div class="founders-grid-wrapper">
+            <!-- Left Column - Image -->
+            <div class="founders-image-column">
+                <img src="{{ asset('frontend/assets/home_page_images/founder-img.png') }}"
+                    alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy" class="founders-image">
+            </div>
+
+            <!-- Right Column - Content -->
+            <div class="founders-content-column">
+                <div class="founders-content-inner">
+                    <div class="founders-label-wrapper">
+                        <span class="founders-label">A Word</span>
+                    </div>
                     <h2 id="founders-heading" class="founders-title">From Our Founders</h2>
                     <p class="founders-text">
-                        We started The Sprout Academy with a simple mission: to provide a nurturing environment where every
-                        child can grow, learn, and thrive. Our commitment to excellence in early childhood education drives
-                        everything we do, from our carefully designed curriculum to our passionate team of educators.
-                    </p>
-                    <p class="founders-text">
-                        Every day, we're honored to be part of your child's journey and to watch them blossom into
-                        confident, curious learners.
+                        All three of our children attend or have attended The Sprout Academy and grew up around our staff.
+                        We are extremely passionate about what we do and creating a wonderful, safe, learning atmosphere for
+                        children in our community.
                     </p>
                     <p class="founders-signature">- Justin & Rachel</p>
-                    <svg class="founders-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                            fill="currentColor" />
-                    </svg>
+                    <div class="founders-icon-wrapper">
+                        <svg class="founders-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Sprout icon -->
+                            <ellipse cx="50" cy="85" rx="20" ry="8" fill="#8B6F47" />
+                            <rect x="48" y="50" width="4" height="35" fill="#6daa44" />
+                            <path d="M 50 50 Q 40 40, 35 30 Q 32 20, 38 15 Q 42 18, 45 25 Q 48 35, 50 50" fill="#6daa44" />
+                            <path d="M 50 50 Q 60 40, 65 30 Q 68 20, 62 15 Q 58 18, 55 25 Q 52 35, 50 50" fill="#6daa44" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
@@ -241,7 +322,7 @@
         <div class="container">
             <div class="locations-header">
                 <h2 id="locations-heading" class="section-title">SPOTS ARE LIMITED!</h2>
-                <p class="locations-subtitle">Schedule a tour to enroll today.</p>
+                <p class="locations-subtitle">Enroll Today & Secure Your Child's Spot</p>
             </div>
 
             <div class="locations-grid">
@@ -249,23 +330,20 @@
                 <div class="location-card">
                     <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
                         alt="The Sprout Academy Seminole location exterior" class="location-image" loading="lazy">
-                    <div class="location-info">
-                        <h3 class="location-name">Seminole</h3>
-                        <a href="{{ route('frontend.locations') }}#seminole" class="btn btn-primary location-btn">View
-                            Details</a>
+                    <div class="location-label">
+                        <span class="location-name">Seminole</span>
                     </div>
                 </div>
 
-                <!-- St. Pete (Featured) -->
+                <!-- St. Pete (Featured with Orange Overlay) -->
                 <div class="location-card featured">
                     <img src="{{ asset('frontend/assets/home_page_images/sch-img-2.png') }}"
                         alt="The Sprout Academy St. Pete location exterior" class="location-image" loading="lazy">
-                    <div class="location-info">
-                        <h3 class="location-name">ST. PETE</h3>
-                        <p class="location-address">1970 54th Ave. N, St. Petersburg, FL 33714</p>
-                        <a href="{{ route('frontend.locations') }}#st-pete" class="btn btn-secondary location-btn">Tour
-                            This
-                            Center</a>
+                    <div class="location-overlay">
+                        <h3 class="location-name-overlay">ST. PETE</h3>
+                        <p class="location-address-overlay">1970 54th Ave. N, St. Petersburg, FL 33714</p>
+                        <a href="{{ route('frontend.locations') }}#st-pete"
+                            class="btn btn-secondary location-btn-overlay">Schedule a Tour</a>
                     </div>
                 </div>
 
@@ -273,11 +351,8 @@
                 <div class="location-card">
                     <img src="{{ asset('frontend/assets/home_page_images/sch-img-3.png') }}"
                         alt="The Sprout Academy Pinellas Park location exterior" class="location-image" loading="lazy">
-                    <div class="location-info">
-                        <h3 class="location-name">Pinellas Park</h3>
-                        <a href="{{ route('frontend.locations') }}#pinellas-park"
-                            class="btn btn-primary location-btn">View
-                            Details</a>
+                    <div class="location-label">
+                        <span class="location-name">Pinellas Park</span>
                     </div>
                 </div>
 
@@ -285,10 +360,8 @@
                 <div class="location-card">
                     <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
                         alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
-                    <div class="location-info">
-                        <h3 class="location-name">Montessori</h3>
-                        <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-primary location-btn">View
-                            Details</a>
+                    <div class="location-label">
+                        <span class="location-name">Montessori</span>
                     </div>
                 </div>
 
@@ -296,10 +369,8 @@
                 <div class="location-card">
                     <img src="{{ asset('frontend/assets/home_page_images/sch-img-5.png') }}"
                         alt="The Sprout Academy Largo location exterior" class="location-image" loading="lazy">
-                    <div class="location-info">
-                        <h3 class="location-name">Largo</h3>
-                        <a href="{{ route('frontend.locations') }}#largo" class="btn btn-primary location-btn">View
-                            Details</a>
+                    <div class="location-label">
+                        <span class="location-name">Largo</span>
                     </div>
                 </div>
             </div>
@@ -307,3 +378,126 @@
     </section>
 
 @endsection
+
+@push('scripts')
+    <script>
+        // Initialize Accreditation Slider
+        if (typeof jQuery !== 'undefined' && typeof jQuery.fn.slick !== 'undefined') {
+            $(document).ready(function() {
+                console.log('Initializing Accreditation Slider');
+
+                if ($('.accreditation-slider').length > 0) {
+                    $('.accreditation-slider').slick({
+                        infinite: true,
+                        slidesToShow: 5,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        arrows: true,
+                        dots: true,
+                        centerMode: false,
+                        variableWidth: false,
+                        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+                        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+                        responsive: [{
+                                breakpoint: 1024,
+                                settings: {
+                                    slidesToShow: 3,
+                                    slidesToScroll: 1
+                                }
+                            },
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    slidesToShow: 2,
+                                    slidesToScroll: 1
+                                }
+                            },
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1
+                                }
+                            }
+                        ]
+                    });
+                    console.log('Accreditation Slider Initialized Successfully');
+                } else {
+                    console.error('Accreditation slider element not found');
+                }
+
+                // Video Play Button Functionality
+                const playBtn = document.getElementById('play-video-btn');
+                const video = document.getElementById('main-video');
+                const videoContainer = document.querySelector('.video-showcase-main');
+
+                if (playBtn && video) {
+                    // Play button click
+                    playBtn.addEventListener('click', function() {
+                        video.play();
+                        videoContainer.classList.add('playing');
+                        video.setAttribute('controls', 'controls');
+                    });
+
+                    // When video ends, show play button again
+                    video.addEventListener('ended', function() {
+                        videoContainer.classList.remove('playing');
+                        video.removeAttribute('controls');
+                    });
+
+                    // If user pauses the video
+                    video.addEventListener('pause', function() {
+                        if (!video.ended) {
+                            // Keep controls visible even when paused
+                            videoContainer.classList.add('playing');
+                        }
+                    });
+
+                    // When video starts playing
+                    video.addEventListener('play', function() {
+                        videoContainer.classList.add('playing');
+                    });
+                }
+
+                // Initialize Marquee Video Gallery - Continuous Slow Scroll
+                if ($('.marquee-gallery-slider').length > 0) {
+                    $('.marquee-gallery-slider').slick({
+                        infinite: true,
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 0, // Continuous movement without pause
+                        speed: 5000, // 5 seconds for smooth slow transition
+                        cssEase: 'linear', // Linear for constant speed
+                        arrows: false,
+                        dots: false,
+                        pauseOnHover: false, // Don't pause on hover for continuous effect
+                        draggable: true,
+                        swipe: true,
+                        responsive: [{
+                                breakpoint: 1200,
+                                settings: {
+                                    slidesToShow: 2,
+                                    slidesToScroll: 1,
+                                    speed: 5000
+                                }
+                            },
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1,
+                                    speed: 4000
+                                }
+                            }
+                        ]
+                    });
+                    console.log('Marquee Video Gallery - Continuous Scroll Initialized');
+                }
+            });
+        } else {
+            console.error('jQuery or Slick not loaded');
+        }
+    </script>
+@endpush
