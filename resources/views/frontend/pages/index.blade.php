@@ -170,7 +170,13 @@
             <!-- Why Choose Us Content -->
             <div class="row align-items-center mb-5">
                 <div class="col-lg-5 mb-4 mb-lg-0">
-                    <span class="section-label">Why the sprout academy?</span>
+                    {{-- <span class="section-label">Why the sprout academy?</span> --}}
+                    @include('frontend.components.section-heading', [
+                        'text' => 'Why the sprout academy?',
+                        'bgColor' => '#6daa44',
+                        'borderColor' => '#6CAA43',
+                        'rotation' => 'left',
+                    ])
                     <h3 class="why-choose-title">YOUR CHILD WON'T COME HOME A MESS</h3>
                     <a href="#tour" class="btn btn-foundation btn-lg mt-3">Enroll Now</a>
                 </div>
@@ -217,6 +223,42 @@
                 <div class="marquee-slide">
                     <img src="{{ asset('frontend/assets/home_page_images/vdo-img2.png') }}" alt="Happy child at table"
                         loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- From Our Founders Section -->
+    <section class="founders-section" aria-labelledby="founders-heading">
+        <div class="founders-grid-wrapper">
+            <!-- Left Column - Image -->
+            <div class="founders-image-column">
+                <img src="{{ asset('frontend/assets/home_page_images/founder-img.png') }}"
+                    alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy" class="founders-image">
+            </div>
+
+            <!-- Right Column - Content -->
+            <div class="founders-content-column">
+                <div class="founders-content-inner">
+                    <div class="mt-5">
+                        @include('frontend.components.section-heading', [
+                            'text' => 'A Word',
+                            'bgColor' => '#6daa44',
+                            'borderColor' => '#6CAA43',
+                            'rotation' => 'left',
+                        ])
+                    </div>
+                    <h2 id="founders-heading" class="founders-title">From Our Founders</h2>
+                    <p class="founders-text">
+                        "All three of our children attend or have attended The Sprout Academy and grew up around our staff.
+                        We are extremely passionate about what we do and creating a wonderful, safe, learning atmosphere for
+                        children in our community. "
+                    </p>
+                    <p class="founders-signature">- Justin & Rachel</p>
+                    <div class="founders-icon-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/tree-layer.png') }}"
+                            alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy" class="founders-icon">
+                    </div>
                 </div>
             </div>
         </div>
@@ -275,42 +317,6 @@
                         <div class="testimonial-rating" aria-label="5 out of 5 stars">
                             ★★★★★
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- From Our Founders Section -->
-    <section class="founders-section" aria-labelledby="founders-heading">
-        <div class="founders-grid-wrapper">
-            <!-- Left Column - Image -->
-            <div class="founders-image-column">
-                <img src="{{ asset('frontend/assets/home_page_images/founder-img.png') }}"
-                    alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy" class="founders-image">
-            </div>
-
-            <!-- Right Column - Content -->
-            <div class="founders-content-column">
-                <div class="founders-content-inner">
-                    <div class="founders-label-wrapper">
-                        <span class="founders-label">A Word</span>
-                    </div>
-                    <h2 id="founders-heading" class="founders-title">From Our Founders</h2>
-                    <p class="founders-text">
-                        All three of our children attend or have attended The Sprout Academy and grew up around our staff.
-                        We are extremely passionate about what we do and creating a wonderful, safe, learning atmosphere for
-                        children in our community.
-                    </p>
-                    <p class="founders-signature">- Justin & Rachel</p>
-                    <div class="founders-icon-wrapper">
-                        <svg class="founders-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Sprout icon -->
-                            <ellipse cx="50" cy="85" rx="20" ry="8" fill="#8B6F47" />
-                            <rect x="48" y="50" width="4" height="35" fill="#6daa44" />
-                            <path d="M 50 50 Q 40 40, 35 30 Q 32 20, 38 15 Q 42 18, 45 25 Q 48 35, 50 50" fill="#6daa44" />
-                            <path d="M 50 50 Q 60 40, 65 30 Q 68 20, 62 15 Q 58 18, 55 25 Q 52 35, 50 50" fill="#6daa44" />
-                        </svg>
                     </div>
                 </div>
             </div>
