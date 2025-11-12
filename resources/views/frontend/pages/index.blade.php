@@ -519,7 +519,7 @@
                         centerMode: true,
                         centerPadding: '0px',
                         variableWidth: false,
-                        autoplay: false,
+                        autoplay: true,
                         autoplaySpeed: 3000,
                         speed: 600,
                         arrows: false,

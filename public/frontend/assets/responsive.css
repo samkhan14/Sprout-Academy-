@@ -143,7 +143,7 @@
 
     /* Section titles */
     .section-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
 
     /* Accreditation */
@@ -198,7 +198,7 @@
     }
 
     .section-heading {
-        padding: 0.79rem 2.7rem;
+        padding: 0.79rem 2rem;
     }
 
     .section-heading-text {
@@ -216,7 +216,7 @@
 
     /* Section padding - full on desktop */
     .section {
-        padding: var(--space-3xl) 0;
+        padding: var(--space-2xl) 0;
     }
 
     /* Navbar */

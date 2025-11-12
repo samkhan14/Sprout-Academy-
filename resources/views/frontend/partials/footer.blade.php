@@ -1,6 +1,14 @@
 <!-- Newsletter Section -->
 <section class="footer-newsletter">
     <div class="container">
+        <div class="text-center">
+            @include('frontend.components.section-heading', [
+                'text' => 'Join Our Newsletter',
+                'bgColor' => '#6daa44',
+                'borderColor' => '#6CAA43',
+                'rotation' => 'right',
+            ])
+        </div>
         <h2 class="newsletter-title">Stay Connected to The Sprout Academy!</h2>
         <form class="newsletter-form needs-validation" novalidate>
             <input type="text" class="newsletter-input" name="name" placeholder="Your Name" required
