@@ -30,4 +30,9 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.sproutvine');
     }
+
+    public function VirtualTour()
+    {
+        return view('frontend.pages.virtual_tour');
+    }
 }

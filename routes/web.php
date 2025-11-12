@@ -9,4 +9,5 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/programs-and-curriculum', 'programsAndCurriculum')->name('programsAndCurriculum');
     Route::get('/locations', 'Locations')->name('locations');
     Route::get('/Sproutvine', 'Sproutvine')->name('sproutvine');
+    Route::get('virtual-tour', 'VirtualTour')->name('virtualTour');
 });

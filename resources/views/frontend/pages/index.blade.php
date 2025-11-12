@@ -265,63 +265,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section section" aria-labelledby="testimonials-heading">
-        <div class="container">
-            <!-- Testimonial Cards -->
-            <div class="testimonial-cards">
-                <div class="testimonial-card">
-                    <div class="testimonial-quote-circle">
-                        <span class="testimonial-quote-icon">"</span>
-                    </div>
-                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
-                    <p class="testimonial-text">
-                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
-                        Kindergarten but he will never forget his time at Sprout!"
-                    </p>
-                    <div class="testimonial-footer">
-                        <p class="testimonial-author">- THERESA C</p>
-                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                            ★★★★★
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-quote-circle">
-                        <span class="testimonial-quote-icon">"</span>
-                    </div>
-                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
-                    <p class="testimonial-text">
-                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
-                        Kindergarten but he will never forget his time at Sprout!"
-                    </p>
-                    <div class="testimonial-footer">
-                        <p class="testimonial-author">- THERESA C</p>
-                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                            ★★★★★
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-quote-circle">
-                        <span class="testimonial-quote-icon">"</span>
-                    </div>
-                    <h3 class="testimonial-headline">I DRIVE A HALF HOUR OUT OF MY WAY</h3>
-                    <p class="testimonial-text">
-                        "The Sprout Academy is the best. My son still talks about his time there. He just graduated
-                        Kindergarten but he will never forget his time at Sprout!"
-                    </p>
-                    <div class="testimonial-footer">
-                        <p class="testimonial-author">- THERESA C</p>
-                        <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                            ★★★★★
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    @include('frontend.components.testimonials-slider')
 
     <!-- Spots Are Limited / Locations Section -->
     <section class="locations-section section" aria-labelledby="locations-heading">
@@ -334,51 +278,115 @@
             <div class="locations-grid">
                 <!-- Seminole -->
                 <div class="location-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
-                        alt="The Sprout Academy Seminole location exterior" class="location-image" loading="lazy">
-                    <div class="location-label">
-                        <span class="location-name">Seminole</span>
+                    <div class="location-image-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
+                            alt="The Sprout Academy Seminole location exterior" class="location-image" loading="lazy">
                     </div>
-                </div>
-
-                <!-- St. Pete (Featured with Orange Overlay) -->
-                <div class="location-card featured">
-                    <img src="{{ asset('frontend/assets/home_page_images/sch-img-2.png') }}"
-                        alt="The Sprout Academy St. Pete location exterior" class="location-image" loading="lazy">
+                    <div class="location-bar">
+                        <span class="location-name">SEMINOLE</span>
+                        <button class="location-toggle" aria-label="Toggle location details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
                     <div class="location-overlay">
-                        <h3 class="location-name-overlay">ST. PETE</h3>
-                        <p class="location-address-overlay">1970 54th Ave. N, St. Petersburg, FL 33714</p>
-                        <a href="{{ route('frontend.locations') }}#st-pete"
-                            class="btn btn-secondary location-btn-overlay">Schedule a Tour</a>
+                        <div class="location-overlay-content">
+                            <h3 class="location-overlay-title">SEMINOLE</h3>
+                            <p class="location-overlay-address">9259 Park Blvd Seminole, FL 33777</p>
+                            <a href="{{ route('frontend.locations') }}#seminole" class="btn btn-secondary">Schedule a
+                                Tour</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Pinellas Park -->
                 <div class="location-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/sch-img-3.png') }}"
-                        alt="The Sprout Academy Pinellas Park location exterior" class="location-image" loading="lazy">
-                    <div class="location-label">
-                        <span class="location-name">Pinellas Park</span>
+                    <div class="location-image-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-3.png') }}"
+                            alt="The Sprout Academy Pinellas Park location exterior" class="location-image"
+                            loading="lazy">
+                    </div>
+                    <div class="location-bar">
+                        <span class="location-name">PINELLAS PARK</span>
+                        <button class="location-toggle" aria-label="Toggle location details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="location-overlay">
+                        <div class="location-overlay-content">
+                            <h3 class="location-overlay-title">PINELLAS PARK</h3>
+                            <p class="location-overlay-address">Pinellas Park Location</p>
+                            <a href="{{ route('frontend.locations') }}#pinellas-park" class="btn btn-secondary">Schedule
+                                a Tour</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Montessori -->
                 <div class="location-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
-                        alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
-                    <div class="location-label">
-                        <span class="location-name">Montessori</span>
+                    <div class="location-image-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
+                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
+                    </div>
+                    <div class="location-bar">
+                        <span class="location-name">MONTESSORI</span>
+                        <button class="location-toggle" aria-label="Toggle location details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="location-overlay">
+                        <div class="location-overlay-content">
+                            <h3 class="location-overlay-title">MONTESSORI</h3>
+                            <p class="location-overlay-address">Montessori Location</p>
+                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                                Tour</a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Largo -->
+                <!-- Montessori -->
                 <div class="location-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/sch-img-5.png') }}"
-                        alt="The Sprout Academy Largo location exterior" class="location-image" loading="lazy">
-                    <div class="location-label">
-                        <span class="location-name">Largo</span>
+                    <div class="location-image-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
+                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
+                    </div>
+                    <div class="location-bar">
+                        <span class="location-name">MONTESSORI</span>
+                        <button class="location-toggle" aria-label="Toggle location details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="location-overlay">
+                        <div class="location-overlay-content">
+                            <h3 class="location-overlay-title">MONTESSORI</h3>
+                            <p class="location-overlay-address">Montessori Location</p>
+                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                                Tour</a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Montessori -->
+                <div class="location-card">
+                    <div class="location-image-wrapper">
+                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
+                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
+                    </div>
+                    <div class="location-bar">
+                        <span class="location-name">MONTESSORI</span>
+                        <button class="location-toggle" aria-label="Toggle location details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="location-overlay">
+                        <div class="location-overlay-content">
+                            <h3 class="location-overlay-title">MONTESSORI</h3>
+                            <p class="location-overlay-address">Montessori Location</p>
+                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                                Tour</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -500,6 +508,42 @@
                         ]
                     });
                     console.log('Marquee Video Gallery - Continuous Scroll Initialized');
+                }
+
+                // Initialize Testimonial Slider (3 items, center active)
+                if ($('.testimonial-slider').length > 0) {
+                    $('.testimonial-slider').slick({
+                        infinite: true,
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        centerMode: true,
+                        centerPadding: '0px',
+                        variableWidth: false,
+                        autoplay: false,
+                        autoplaySpeed: 3000,
+                        speed: 600,
+                        arrows: false,
+                        dots: false,
+                        pauseOnHover: false,
+                        responsive: [{
+                                breakpoint: 1024,
+                                settings: {
+                                    slidesToShow: 3,
+                                    centerMode: true,
+                                    centerPadding: '0px'
+                                }
+                            },
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    slidesToShow: 1,
+                                    centerMode: true,
+                                    centerPadding: '40px'
+                                }
+                            }
+                        ]
+                    });
+                    console.log('Testimonial Slider Initialized');
                 }
             });
         } else {
