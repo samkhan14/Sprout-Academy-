@@ -7,25 +7,6 @@
     "use strict";
 
     // ========================================
-    // Top Bar Close Functionality
-    // ========================================
-    const topBar = document.querySelector(".top-bar");
-    const topBarClose = document.querySelector(".top-bar-close");
-
-    if (topBarClose && topBar) {
-        topBarClose.addEventListener("click", function () {
-            topBar.style.display = "none";
-            // Store in session storage so it stays closed
-            sessionStorage.setItem("topBarClosed", "true");
-        });
-
-        // Check if top bar was previously closed
-        if (sessionStorage.getItem("topBarClosed") === "true") {
-            topBar.style.display = "none";
-        }
-    }
-
-    // ========================================
     // Mobile Menu Accessibility Enhancement
     // ========================================
     const navbarToggler = document.querySelector(".navbar-toggler");
@@ -264,14 +245,62 @@
     });
 
     // ========================================
-    // Console Welcome Message
+    // Directors Tab Functionality
     // ========================================
-    console.log(
-        "%c🌱 Welcome to The Sprout Academy! 🌱",
-        "color: #4CAF50; font-size: 20px; font-weight: bold;"
-    );
-    console.log(
-        "%cDeveloped with care for children's education",
-        "color: #FF6B35; font-size: 14px;"
-    );
+    const directorTabs = document.querySelectorAll(".director-tab");
+    const directorCards = document.querySelectorAll(".director-card");
+
+    if (directorTabs.length > 0 && directorCards.length > 0) {
+        directorTabs.forEach((tab) => {
+            tab.addEventListener("click", function () {
+                const location = this.getAttribute("data-location");
+
+                // Remove active class from all tabs
+                directorTabs.forEach((t) => t.classList.remove("active"));
+
+                // Add active class to clicked tab
+                this.classList.add("active");
+
+                // Hide all director cards
+                directorCards.forEach((card) => {
+                    card.classList.remove("active");
+                });
+
+                // Show the selected director card
+                const targetCard = document.getElementById(location);
+                if (targetCard) {
+                    setTimeout(() => {
+                        targetCard.classList.add("active");
+                    }, 50);
+                }
+            });
+        });
+    }
+
+    // ========================================
+    // Video Play Button Handler (Main Video)
+    // ========================================
+    const mainVideoPlayBtn = document.querySelector(".video-play-btn-main");
+    const mainVideoPlayer = document.querySelector(".main-video-player");
+
+    if (mainVideoPlayBtn && mainVideoPlayer) {
+        mainVideoPlayBtn.addEventListener("click", function () {
+            mainVideoPlayer.play();
+            this.style.display = "none";
+        });
+
+        // Show play button when video is paused
+        mainVideoPlayer.addEventListener("pause", function () {
+            if (mainVideoPlayBtn) {
+                mainVideoPlayBtn.style.display = "flex";
+            }
+        });
+
+        // Hide play button when video is playing
+        mainVideoPlayer.addEventListener("play", function () {
+            if (mainVideoPlayBtn) {
+                mainVideoPlayBtn.style.display = "none";
+            }
+        });
+    }
 })();

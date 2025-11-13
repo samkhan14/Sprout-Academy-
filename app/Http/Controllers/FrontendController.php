@@ -60,4 +60,9 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.meet_the_owner');
     }
+
+    public function DownloadForms()
+    {
+        return view('frontend.pages.download_forms');
+    }
 }

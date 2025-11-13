@@ -58,6 +58,9 @@
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheOwner') ? 'active' : '' }}"
                                     href="{{ route('frontend.meetTheOwner') }}"
                                     @if (request()->routeIs('frontend.meetTheOwner')) aria-current="page" @endif>Meet the Owner</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
+                                    href="{{ route('frontend.downloadForms') }}"
+                                    @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li>
                         </ul>
                     </li>
 

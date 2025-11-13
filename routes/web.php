@@ -11,7 +11,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/tuition-costs', 'TuitionCosts')->name('tuitionCosts');
     Route::get('/meet-the-team', 'MeetTheTeam')->name('meetTheTeam');
     Route::get('/meet-the-owner', 'MeetTheOwner')->name('meetTheOwner');
-
+    Route::get('/download-forms', 'DownloadForms')->name('downloadForms');
 
 
     Route::get('/for-parents', 'Parents')->name('parents');
