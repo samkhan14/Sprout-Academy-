@@ -45,4 +45,19 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.we_care_for_your_child');
     }
+
+    public function TuitionCosts()
+    {
+        return view('frontend.pages.tution_costs');
+    }
+
+    public function MeetTheTeam()
+    {
+        return view('frontend.pages.team');
+    }
+
+    public function MeetTheOwner()
+    {
+        return view('frontend.pages.meet_the_owner');
+    }
 }

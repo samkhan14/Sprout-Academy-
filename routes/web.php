@@ -8,9 +8,14 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/virtual-tour', 'VirtualTour')->name('virtualTour');
     Route::get('/the-sprout-academy-difference', 'TheSproutAcademyDifference')->name('theSproutAcademyDifference');
     Route::get('/we-care-for-your-child', 'WeCareForYourChild')->name('weCareForYourChild');
+    Route::get('/tuition-costs', 'TuitionCosts')->name('tuitionCosts');
+    Route::get('/meet-the-team', 'MeetTheTeam')->name('meetTheTeam');
+    Route::get('/meet-the-owner', 'MeetTheOwner')->name('meetTheOwner');
+
+
+
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/programs-and-curriculum', 'programsAndCurriculum')->name('programsAndCurriculum');
     Route::get('/locations', 'Locations')->name('locations');
-    Route::get('/Sproutvine', 'Sproutvine')->name('sproutvine');
-
+    Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
 });

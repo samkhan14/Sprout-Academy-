@@ -27,7 +27,9 @@
             @endif
 
             <h1 class="inner-header-title">{{ $title ?? 'VIRTUAL TOURS' }}</h1>
-
+            @if (isset($text) && $text)
+                <p class="inner-header-text">{{ $text ?? 'Explore Our Academy' }}</p>
+            @endif
             @if (isset($showButton) && $showButton)
                 <a href="{{ $buttonLink ?? '#' }}" class="btn btn-foundation btn-lg inner-header-btn">
                     {{ $buttonText ?? 'Explore Our Academy' }}

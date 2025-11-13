@@ -49,6 +49,15 @@
                                     href="{{ route('frontend.weCareForYourChild') }}"
                                     @if (request()->routeIs('frontend.weCareForYourChild')) aria-current="page" @endif>We Care for Your
                                     Child</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.tuitionCosts') ? 'active' : '' }}"
+                                    href="{{ route('frontend.tuitionCosts') }}"
+                                    @if (request()->routeIs('frontend.tuitionCosts')) aria-current="page" @endif>Tuition Costs</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheTeam') ? 'active' : '' }}"
+                                    href="{{ route('frontend.meetTheTeam') }}"
+                                    @if (request()->routeIs('frontend.meetTheTeam')) aria-current="page" @endif>Meet the Team</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheOwner') ? 'active' : '' }}"
+                                    href="{{ route('frontend.meetTheOwner') }}"
+                                    @if (request()->routeIs('frontend.meetTheOwner')) aria-current="page" @endif>Meet the Owner</a></li>
                         </ul>
                     </li>
 

@@ -502,7 +502,11 @@ img {
     position: relative;
     z-index: 2;
     text-align: left;
-    max-width: 700px;
+    max-width: 820px;
+}
+.inner-header-text {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .inner-header-title {
@@ -2504,6 +2508,797 @@ form.newsletter-form button {
 }
 
 /* ========================================
+   Info Cards Section (3 Column with Icon Blobs)
+   ======================================== */
+
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.info-card {
+    text-align: left;
+    padding: var(--space-lg);
+}
+
+/* Icon Wrapper with Blob Background */
+.info-icon-wrapper {
+    position: relative;
+    width: 140px;
+    height: 130px;
+    margin-bottom: var(--space-lg);
+}
+
+.info-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Card Typography */
+.info-card-title {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+}
+
+.info-card-text {
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4a4a4a;
+    margin-bottom: 0;
+}
+
+.info-read-more {
+    color: var(--color-primary-orange);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: var(--transition-base);
+    display: inline-block;
+    margin-top: var(--space-xs);
+}
+
+.info-read-more:hover {
+    color: #d88903;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .info-cards-grid {
+        gap: var(--space-xl);
+    }
+
+    .info-card {
+        padding: var(--space-md);
+    }
+
+    .info-icon-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .info-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .info-card-title {
+        font-size: 1.125rem;
+    }
+
+    .info-card-text {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .info-cards-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .info-card {
+        text-align: center;
+        padding: var(--space-xl);
+    }
+
+    .info-icon-wrapper {
+        margin: 0 auto var(--space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .info-cards-section {
+        padding: var(--space-2xl) 0;
+    }
+
+    .info-icon-wrapper {
+        width: 90px;
+        height: 90px;
+    }
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .info-card-title {
+        font-size: 1rem;
+    }
+
+    .info-card-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* ========================================
+   Accordion Section Component (Two Column FAQ/Q&A)
+   ======================================== */
+
+.accordion-section {
+    padding: var(--space-3xl) 0 0;
+}
+
+/* Header with Icons */
+.accordion-header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-3xl);
+}
+
+.accordion-icon-left,
+.accordion-icon-right {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.accordion-section-title {
+    font-family: var(--font-primary);
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    margin: 0;
+}
+
+/* Two Column Grid */
+.accordion-two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.accordion-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* Accordion Item */
+.accordion-item {
+    background: #ffffff;
+    overflow: hidden;
+    transition: var(--transition-base);
+    border-left: 6px solid #daedfa;
+    border-top-left-radius: 15px !important;
+    border-bottom-left-radius: 15px;
+}
+
+/* Accordion Button/Header */
+.accordion-button {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #0000001c;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-align: left;
+    position: relative;
+    border-radius: 10px;
+}
+
+.accordion-button:hover {
+    background: #dcdcdc1a;
+}
+
+.accordion-button.active {
+    background: transparent;
+}
+
+/* Question Mark Icon */
+.accordion-question-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: transparent;
+    color: var(--color-primary-orange);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-primary);
+    font-size: 1.125rem;
+    font-weight: 700;
+    border: 1px solid var(--color-primary-orange);
+}
+
+/* Title Text */
+.accordion-title-text {
+    flex: 1;
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Toggle Icon (+/-) */
+.accordion-toggle-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: var(--transition-base);
+    border: 1px solid #0000000f;
+}
+
+.accordion-toggle-icon i {
+    position: absolute;
+    font-size: 0.875rem;
+    color: var(--color-dark-blue);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.accordion-toggle-icon .fa-plus {
+    opacity: 1;
+}
+
+.accordion-toggle-icon .fa-minus {
+    opacity: 0;
+}
+
+/* When accordion is active (expanded) */
+.accordion-button.active .accordion-toggle-icon .fa-plus {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.accordion-button.active .accordion-toggle-icon .fa-minus {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Bootstrap's collapsed state */
+.accordion-button.collapsed .accordion-toggle-icon .fa-plus {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.accordion-button.collapsed .accordion-toggle-icon .fa-minus {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+/* When not collapsed (Bootstrap default) */
+.accordion-button:not(.collapsed) .accordion-toggle-icon .fa-plus {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.accordion-button:not(.collapsed) .accordion-toggle-icon .fa-minus {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Accordion Body/Content */
+.accordion-collapse {
+    transition: height 0.35s ease;
+}
+
+.accordion-body {
+    background: var(--color-white);
+    padding: var(--space-lg) var(--space-xl);
+}
+
+.accordion-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.accordion-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #333;
+}
+
+.accordion-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.accordion-list li:last-child {
+    margin-bottom: 0;
+}
+
+.accordion-item:last-of-type {
+    border-bottom-left-radius: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .accordion-section-title {
+        font-size: 2.25rem;
+    }
+
+    .accordion-icon-left,
+    .accordion-icon-right {
+        width: 45px;
+        height: 45px;
+    }
+
+    .accordion-title-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .accordion-two-column {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .accordion-section-title {
+        font-size: 2rem;
+    }
+
+    .accordion-header-wrapper {
+        gap: var(--space-md);
+        margin-bottom: var(--space-2xl);
+    }
+}
+
+@media (max-width: 768px) {
+    .accordion-section {
+        padding: var(--space-2xl) 0;
+    }
+
+    .accordion-section-title {
+        font-size: 1.5rem;
+    }
+
+    .accordion-icon-left,
+    .accordion-icon-right {
+        width: 35px;
+        height: 35px;
+    }
+
+    .accordion-button {
+        padding: var(--space-sm) var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    .accordion-question-icon {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 1rem;
+    }
+
+    .accordion-title-text {
+        font-size: 0.9rem;
+    }
+
+    .accordion-toggle-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+
+    .accordion-body {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .accordion-list li {
+        font-size: 0.9rem;
+        padding-left: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .accordion-header-wrapper {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .accordion-section-title {
+        font-size: 1.25rem;
+    }
+
+    .accordion-icon-left,
+    .accordion-icon-right {
+        width: 30px;
+        height: 30px;
+    }
+
+    .accordion-button {
+        padding: var(--space-sm);
+    }
+
+    .accordion-title-text {
+        font-size: 0.85rem;
+    }
+
+    .accordion-body {
+        padding: var(--space-md);
+    }
+
+    .accordion-list li {
+        font-size: 0.85rem;
+    }
+}
+
+/* ========================================
+   Sprout Academy Cares Section (Two Column with Framed Image)
+   ======================================== */
+
+.sprout-cares-section {
+    padding: var(--space-3xl) 0;
+    background: #f5f5f5;
+}
+
+.sprout-cares-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Left Column - Content */
+.sprout-cares-content {
+    padding-right: var(--space-xl);
+}
+
+.sprout-cares-icon-top {
+    margin-bottom: var(--space-sm);
+}
+
+.sprout-cares-icon-top img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.sprout-cares-title {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sprout-cares-description {
+    font-family: var(--font-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #4a4a4a;
+    margin-bottom: var(--space-md);
+}
+
+.sprout-cares-faq {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sprout-cares-faq li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #4a4a4a;
+}
+
+.sprout-cares-faq li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-dark);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Right Column - Framed Image */
+.sprout-cares-image-wrapper {
+    position: relative;
+    padding-left: var(--space-xl);
+}
+
+.sprout-cares-image-frame {
+    position: relative;
+    border: 1px solid var(--color-primary-orange);
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.sprout-cares-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .sprout-cares-title {
+        font-size: 2.25rem;
+    }
+
+    .sprout-cares-description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .sprout-cares-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+
+    .sprout-cares-content {
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .sprout-cares-icon-top {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sprout-cares-faq {
+        text-align: left;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .sprout-cares-image-wrapper {
+        padding-left: 0;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .sprout-cares-section {
+        padding: var(--space-2xl) 0;
+    }
+
+    .sprout-cares-title {
+        font-size: 1.75rem;
+        margin-bottom: var(--space-lg);
+    }
+
+    .sprout-cares-description {
+        font-size: 0.95rem;
+        margin-bottom: var(--space-lg);
+    }
+
+    .sprout-cares-faq li {
+        font-size: 0.95rem;
+        margin-bottom: var(--space-sm);
+    }
+
+    .sprout-cares-image-frame {
+        border-width: 6px;
+        border-radius: 15px;
+    }
+
+    .sprout-cares-star-accent {
+        width: 50px;
+        height: 50px;
+        top: -15px;
+        right: -15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sprout-cares-icon-top img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .sprout-cares-title {
+        font-size: 1.5rem;
+    }
+
+    .sprout-cares-description {
+        font-size: 0.9rem;
+    }
+
+    .sprout-cares-faq li {
+        font-size: 0.9rem;
+    }
+
+    .sprout-cares-image-frame {
+        border-width: 5px;
+    }
+
+    .sprout-cares-star-accent {
+        width: 40px;
+        height: 40px;
+        top: -12px;
+        right: -12px;
+    }
+}
+
+/* ========================================
+   Info Overlay Section (Image Background with Content Box)
+   ======================================== */
+
+.info-overlay-section {
+    position: relative;
+    min-height: 1080px;
+    display: flex;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
+.info-overlay-content {
+    width: 100%;
+    background: #fff;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: var(--space-2xl) var(--space-2xl);
+    position: relative;
+    z-index: 2;
+}
+
+.info-overlay-title {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
+
+.info-overlay-text {
+    font-family: var(--font-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: var(--space-md);
+}
+
+.info-overlay-text:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .info-overlay-section {
+        min-height: 900px;
+    }
+
+    .info-overlay-title {
+        font-size: 2.25rem;
+    }
+
+    .info-overlay-content {
+        padding: var(--space-2xl) var(--space-xl);
+    }
+}
+
+@media (max-width: 992px) {
+    .info-overlay-section {
+        min-height: 800px;
+    }
+
+    .info-overlay-title {
+        font-size: 2rem;
+    }
+
+    .info-overlay-text {
+        font-size: 1rem;
+    }
+
+    .info-overlay-content {
+        padding: var(--space-xl) var(--space-lg);
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-overlay-section {
+        min-height: 700px;
+    }
+
+    .info-overlay-title {
+        font-size: 1.75rem;
+        margin-bottom: var(--space-lg);
+    }
+
+    .info-overlay-text {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--space-md);
+    }
+
+    .info-overlay-content {
+        padding: var(--space-lg) var(--space-md);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-overlay-section {
+        min-height: 600px;
+    }
+
+    .info-overlay-title {
+        font-size: 1.5rem;
+    }
+
+    .info-overlay-text {
+        font-size: 0.9rem;
+    }
+
+    .info-overlay-content {
+        padding: var(--space-md) 1rem;
+    }
+}
+
+/* ========================================
    THE SPROUT ACADEMY DIFFERENCE PAGE
    ======================================== */
 
@@ -2518,7 +3313,7 @@ form.newsletter-form button {
     align-items: center;
     justify-content: center;
     min-height: 400px;
-    border-radius: 60px;
+    border-radius: 90px;
 }
 
 .footer-cta-overlay {
@@ -2816,6 +3611,15 @@ form.newsletter-form button {
     font-weight: 600;
     margin: 0;
     font-family: var(--font-primary);
+}
+
+.section-heading-wrapper.we_care_page {
+    align-items: baseline;
+    gap: 14px;
+}
+
+.section-heading-wrapper.we_care_page h2.section-title {
+    width: 68%;
 }
 
 /* Responsive Design - Tablets */
