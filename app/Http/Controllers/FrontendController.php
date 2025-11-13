@@ -35,4 +35,14 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.virtual_tour');
     }
+
+    public function TheSproutAcademyDifference()
+    {
+        return view('frontend.pages.sprout_academy_difference');
+    }
+
+    public function WeCareForYourChild()
+    {
+        return view('frontend.pages.we_care_for_your_child');
+    }
 }

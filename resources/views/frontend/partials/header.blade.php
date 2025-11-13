@@ -36,11 +36,19 @@
                             For Parents
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="parentsDropdown">
-                            <li><a class="dropdown-item" href="{{ route('frontend.parents') }}">Parent Resources</a>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.virtualTour') ? 'active' : '' }}"
+                                    href="{{ route('frontend.virtualTour') }}"
+                                    @if (request()->routeIs('frontend.virtualTour')) aria-current="page" @endif>Virtual
+                                    Tour</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Parent Portal</a></li>
-                            <li><a class="dropdown-item" href="#">Parent Testimonials</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.theSproutAcademyDifference') ? 'active' : '' }}"
+                                    href="{{ route('frontend.theSproutAcademyDifference') }}"
+                                    @if (request()->routeIs('frontend.theSproutAcademyDifference')) aria-current="page" @endif>The Sprout Academy
+                                    Difference</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.weCareForYourChild') ? 'active' : '' }}"
+                                    href="{{ route('frontend.weCareForYourChild') }}"
+                                    @if (request()->routeIs('frontend.weCareForYourChild')) aria-current="page" @endif>We Care for Your
+                                    Child</a></li>
                         </ul>
                     </li>
 

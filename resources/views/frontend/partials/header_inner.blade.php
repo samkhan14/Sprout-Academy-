@@ -21,8 +21,8 @@
                 @include('frontend.components.section-heading', [
                     'text' => $subtitle,
                     'bgColor' => '#ed9b04',
-                    'borderColor' => '#ed9b04',
-                    'rotation' => 'left',
+                    'borderColor' => '#fff',
+                    'rotation' => 'right',
                 ])
             @endif
 

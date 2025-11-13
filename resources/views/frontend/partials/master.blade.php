@@ -37,7 +37,12 @@
     @stack('styles')
 </head>
 
-<body>
+@php
+    $currentRoute = Route::currentRouteName();
+    $pageSlug = $currentRoute ? str_replace(['frontend.', '.'], ['', '-'], $currentRoute) : 'default';
+@endphp
+
+<body class="page-{{ $pageSlug }}">
     <div class="d-flex flex-column min-vh-100">
         @include('frontend.partials.header')
 
