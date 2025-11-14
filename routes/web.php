@@ -12,10 +12,10 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/meet-the-team', 'MeetTheTeam')->name('meetTheTeam');
     Route::get('/meet-the-owner', 'MeetTheOwner')->name('meetTheOwner');
     Route::get('/download-forms', 'DownloadForms')->name('downloadForms');
+    Route::get('/locations', 'Locations')->name('locations');
 
 
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/programs-and-curriculum', 'programsAndCurriculum')->name('programsAndCurriculum');
-    Route::get('/locations', 'Locations')->name('locations');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
 });

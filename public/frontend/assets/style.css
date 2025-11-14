@@ -4793,3 +4793,77 @@ form.newsletter-form button {
         font-size: 0.8125rem;
     }
 }
+
+/* ============================================
+   LOCATIONS PAGE - Unique Styles for 5:7 Ratio
+   ============================================ */
+
+/* Override grid ratio for locations page only - 5:7 (info:map) */
+.locations-page .vt-location-block {
+    grid-template-columns: 5fr 7fr;
+}
+
+/* When viewer comes first (left side), swap to 7:5 */
+.locations-page .vt-location-block .vt-location-viewer:first-child {
+    order: -1;
+}
+
+.locations-page .vt-location-block:has(.vt-location-viewer:first-child) {
+    grid-template-columns: 7fr 5fr;
+}
+
+/* Adjust padding for info when it's on the right */
+.locations-page
+    .vt-location-block:has(.vt-location-viewer:first-child)
+    .vt-location-info {
+    padding-right: 0;
+    padding-left: var(--space-xl);
+}
+
+/* Ensure iframe fills the container */
+.locations-page .vt-viewer-container {
+    height: 650px;
+    position: relative;
+}
+
+.location-map-iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Responsive adjustments for locations page */
+@media (max-width: 1200px) {
+    .locations-page .vt-viewer-container {
+        height: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .locations-page .vt-location-block {
+        grid-template-columns: 1fr !important;
+    }
+
+    .locations-page
+        .vt-location-block:has(.vt-location-viewer:first-child)
+        .vt-location-info {
+        padding-left: 0;
+    }
+
+    .locations-page .vt-viewer-container {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .locations-page .vt-viewer-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .locations-page .vt-viewer-container {
+        height: 250px;
+    }
+}
