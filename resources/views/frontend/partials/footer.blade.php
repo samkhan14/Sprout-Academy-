@@ -40,7 +40,7 @@
             <div class="footer-col">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="{{ route('frontend.programsAndCurriculum') }}">Programs</a></li>
+                    <li><a href="{{ route('frontend.ourPrograms') }}">Programs</a></li>
                     <li><a href="#enroll">Enroll Now</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
                     {{-- <li><a href="{{ route('frontend.contact') }}">Contact Us</a></li> --}}

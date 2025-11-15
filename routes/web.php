@@ -13,9 +13,15 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/meet-the-owner', 'MeetTheOwner')->name('meetTheOwner');
     Route::get('/download-forms', 'DownloadForms')->name('downloadForms');
     Route::get('/locations', 'Locations')->name('locations');
+    Route::get('/location/seminole', 'LocationSeminole')->name('locationSeminole');
+    Route::get('/location/clearwater', 'LocationClearwater')->name('locationClearwater');
+    Route::get('/location/st-petersburg', 'LocationStPetersburg')->name('locationStPetersburg');
+    Route::get('/location/pinellas-park', 'LocationPinellasPark')->name('locationPinellasPark');
+    Route::get('/location/montessori', 'LocationMontessori')->name('locationMontessori');
+    Route::get('/location/largo', 'LocationLargo')->name('locationLargo');
 
 
     Route::get('/for-parents', 'Parents')->name('parents');
-    Route::get('/programs-and-curriculum', 'programsAndCurriculum')->name('programsAndCurriculum');
+    Route::get('/our-programs', 'OurPrograms')->name('ourPrograms');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
 });

@@ -286,6 +286,10 @@
     if (mainVideoPlayBtn && mainVideoPlayer) {
         mainVideoPlayBtn.addEventListener("click", function () {
             mainVideoPlayer.play();
+            const showcase = this.closest(".video-showcase-main");
+            if (showcase) {
+                showcase.classList.add("playing");
+            }
             this.style.display = "none";
         });
 
@@ -294,6 +298,10 @@
             if (mainVideoPlayBtn) {
                 mainVideoPlayBtn.style.display = "flex";
             }
+            const showcase = mainVideoPlayBtn.closest(".video-showcase-main");
+            if (showcase) {
+                showcase.classList.remove("playing");
+            }
         });
 
         // Hide play button when video is playing
@@ -301,6 +309,233 @@
             if (mainVideoPlayBtn) {
                 mainVideoPlayBtn.style.display = "none";
             }
+            const showcase = mainVideoPlayBtn?.closest(".video-showcase-main");
+            if (showcase) {
+                showcase.classList.add("playing");
+            }
         });
     }
+
+    // ========================================
+    // Curriculum Video Play Button Handler
+    // ========================================
+    const curriculumVideoPlayBtn = document.getElementById(
+        "play-curriculum-video-btn"
+    );
+    const curriculumVideoPlayer = document.querySelector(
+        ".curriculum-video-player"
+    );
+
+    if (curriculumVideoPlayBtn && curriculumVideoPlayer) {
+        curriculumVideoPlayBtn.addEventListener("click", function () {
+            curriculumVideoPlayer.play();
+            const showcase = this.closest(".curriculum-video-showcase");
+            if (showcase) {
+                showcase.classList.add("playing");
+            }
+            this.style.display = "none";
+        });
+
+        // Show play button when video is paused
+        curriculumVideoPlayer.addEventListener("pause", function () {
+            if (curriculumVideoPlayBtn) {
+                curriculumVideoPlayBtn.style.display = "flex";
+            }
+            const showcase = curriculumVideoPlayBtn?.closest(
+                ".curriculum-video-showcase"
+            );
+            if (showcase) {
+                showcase.classList.remove("playing");
+            }
+        });
+
+        // Hide play button when video is playing
+        curriculumVideoPlayer.addEventListener("play", function () {
+            if (curriculumVideoPlayBtn) {
+                curriculumVideoPlayBtn.style.display = "none";
+            }
+            const showcase = curriculumVideoPlayBtn?.closest(
+                ".curriculum-video-showcase"
+            );
+            if (showcase) {
+                showcase.classList.add("playing");
+            }
+        });
+    }
+
+    // ========================================
+    // Masonry Gallery Lightbox
+    // ========================================
+    function initMasonryGallery() {
+        const gallerySections = document.querySelectorAll(
+            ".masonry-gallery-section"
+        );
+
+        gallerySections.forEach((section) => {
+            const galleryId = section.id;
+            const lightbox = document.getElementById(`lightbox-${galleryId}`);
+            const galleryItems = section.querySelectorAll(
+                ".masonry-gallery-item"
+            );
+            const lightboxImage = lightbox?.querySelector(
+                ".masonry-lightbox-image"
+            );
+            const lightboxCaption = lightbox?.querySelector(
+                ".masonry-lightbox-caption"
+            );
+            const closeBtn = lightbox?.querySelector(".masonry-lightbox-close");
+            const prevBtn = lightbox?.querySelector(".masonry-lightbox-prev");
+            const nextBtn = lightbox?.querySelector(".masonry-lightbox-next");
+            const backdrop = lightbox?.querySelector(
+                ".masonry-lightbox-backdrop"
+            );
+
+            if (!lightbox || !lightboxImage) return;
+
+            let currentIndex = 0;
+            const images = Array.from(galleryItems).map((item) => {
+                const img = item.querySelector(".masonry-gallery-image");
+                return {
+                    src: img.getAttribute("data-lightbox-src") || img.src,
+                    alt: img.alt,
+                };
+            });
+
+            // Open lightbox
+            function openLightbox(index) {
+                currentIndex = index;
+                updateLightboxImage();
+                lightbox.classList.add("active");
+                document.body.style.overflow = "hidden"; // Prevent body scroll
+            }
+
+            // Close lightbox
+            function closeLightbox() {
+                lightbox.classList.remove("active");
+                document.body.style.overflow = ""; // Restore body scroll
+            }
+
+            // Update lightbox image
+            function updateLightboxImage() {
+                if (images[currentIndex]) {
+                    lightboxImage.src = images[currentIndex].src;
+                    lightboxImage.alt = images[currentIndex].alt;
+                    if (lightboxCaption) {
+                        lightboxCaption.textContent = images[currentIndex].alt;
+                    }
+                }
+
+                // Update button states
+                if (prevBtn) {
+                    prevBtn.style.display =
+                        currentIndex === 0 ? "none" : "flex";
+                }
+                if (nextBtn) {
+                    nextBtn.style.display =
+                        currentIndex === images.length - 1 ? "none" : "flex";
+                }
+            }
+
+            // Navigate to previous image
+            function showPrevious() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateLightboxImage();
+                }
+            }
+
+            // Navigate to next image
+            function showNext() {
+                if (currentIndex < images.length - 1) {
+                    currentIndex++;
+                    updateLightboxImage();
+                }
+            }
+
+            // Event listeners for gallery items
+            galleryItems.forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    openLightbox(index);
+                });
+
+                // Keyboard accessibility
+                item.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        openLightbox(index);
+                    }
+                });
+            });
+
+            // Close button
+            if (closeBtn) {
+                closeBtn.addEventListener("click", closeLightbox);
+            }
+
+            // Backdrop click to close
+            if (backdrop) {
+                backdrop.addEventListener("click", closeLightbox);
+            }
+
+            // Previous button
+            if (prevBtn) {
+                prevBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    showPrevious();
+                });
+            }
+
+            // Next button
+            if (nextBtn) {
+                nextBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    showNext();
+                });
+            }
+
+            // Keyboard navigation
+            document.addEventListener("keydown", function (e) {
+                if (!lightbox.classList.contains("active")) return;
+
+                switch (e.key) {
+                    case "Escape":
+                        closeLightbox();
+                        break;
+                    case "ArrowLeft":
+                        showPrevious();
+                        break;
+                    case "ArrowRight":
+                        showNext();
+                        break;
+                }
+            });
+
+            // Prevent lightbox content clicks from closing
+            const lightboxContainer = lightbox.querySelector(
+                ".masonry-lightbox-container"
+            );
+            if (lightboxContainer) {
+                lightboxContainer.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                });
+            }
+        });
+    }
+
+    // Initialize masonry gallery on DOM ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initMasonryGallery);
+    } else {
+        initMasonryGallery();
+    }
+
+    // Re-initialize if new galleries are added dynamically
+    const masonryObserver = new MutationObserver(() => {
+        initMasonryGallery();
+    });
+
+    masonryObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+    });
 })();

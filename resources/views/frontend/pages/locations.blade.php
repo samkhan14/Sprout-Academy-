@@ -55,29 +55,18 @@
                     </div>
                     <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
-                        <a href="{{ route('frontend.locations') }}#seminole" class="btn btn-foundation">More Information</a>
+                        <a href="{{ route('frontend.locationSeminole') }}" class="btn btn-foundation">More Information</a>
                     </div>
                 </div>
-                <div class="vt-location-viewer">
-                    <div class="vt-viewer-container">
-                        <iframe src="https://www.google.com/maps?q=7985+113th+St+N,+Seminole,+FL+33772&output=embed&z=15"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" class="location-map-iframe">
-                        </iframe>
-                    </div>
-                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '7985 113th St N, Seminole, FL 33772',
+                ])
             </div>
             <!-- Clearwater Location -->
             <div class="vt-location-block" id="clearwater">
-                <div class="vt-location-viewer">
-                    <div class="vt-viewer-container">
-                        <iframe
-                            src="https://www.google.com/maps?q=2750+State+Road+580,+Clearwater,+FL+33761&output=embed&z=15"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" class="location-map-iframe">
-                        </iframe>
-                    </div>
-                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '2750 State Road 580, Clearwater, FL 33761',
+                ])
                 <div class="vt-location-info">
                     <h2 class="vt-location-title">CLEARWATER</h2>
                     <div class="vt-contact-list">
@@ -119,11 +108,65 @@
                     </div>
                     <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
-                        <a href="{{ route('frontend.locations') }}#clearwater" class="btn btn-foundation">More
+                        <a href="{{ route('frontend.locationClearwater') }}" class="btn btn-foundation">More
                             Information</a>
                     </div>
                 </div>
             </div>
+
+            <!-- St. Petersburg Location -->
+            <!-- Seminole Location -->
+            <div class="vt-location-block" id="st-petersburg">
+                <div class="vt-location-info">
+                    <h2 class="vt-location-title">ST. PETERSBURG</h2>
+                    <div class="vt-contact-list">
+                        <div class="vt-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="vt-contact-details">
+                                <span class="vt-contact-label">LOCATION ADDRESS</span>
+                                <span class="vt-contact-value">1100 1st Ave N, St. Petersburg, FL 33701</span>
+                            </div>
+                        </div>
+                        <div class="vt-contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="vt-contact-details">
+                                <span class="vt-contact-label">PHONE</span>
+                                <span class="vt-contact-value">727-541-6260</span>
+                            </div>
+                        </div>
+                        <div class="vt-contact-item">
+                            <i class="fas fa-fax"></i>
+                            <div class="vt-contact-details">
+                                <span class="vt-contact-label">FAX</span>
+                                <span class="vt-contact-value">727-851-9975</span>
+                            </div>
+                        </div>
+                        <div class="vt-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="vt-contact-details">
+                                <span class="vt-contact-label">EMAIL</span>
+                                <span class="vt-contact-value">Sheena@the-sprout-academy.com
+                            </div>
+                        </div>
+                        <div class="vt-contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="vt-contact-details">
+                                <span class="vt-contact-label">HOURS OF OPERATION</span>
+                                <span class="vt-contact-value">Monday-Friday – 6:30 a.m. to 6:00 p.m</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vt-action-buttons">
+                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('frontend.locationStPetersburg') }}" class="btn btn-foundation">More
+                            Information</a>
+                    </div>
+                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '1100 1st Ave N, St. Petersburg, FL 33701',
+                ])
+            </div>
+
             <!-- Pinellas Park Location -->
             <div class="vt-location-block" id="pinellas-park">
                 <div class="vt-location-info">
@@ -167,31 +210,19 @@
                     </div>
                     <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
-                        <a href="{{ route('frontend.locations') }}#pinellas-park" class="btn btn-foundation">More
+                        <a href="{{ route('frontend.locationPinellasPark') }}" class="btn btn-foundation">More
                             Information</a>
                     </div>
                 </div>
-                <div class="vt-location-viewer">
-                    <div class="vt-viewer-container">
-                        <iframe
-                            src="https://www.google.com/maps?q=5995+Park+Blvd,+Pinellas+Park,+FL+33781&output=embed&z=15"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" class="location-map-iframe">
-                        </iframe>
-                    </div>
-                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '5995 Park Blvd, Pinellas Park, FL 33781',
+                ])
             </div>
             <!-- Montessori Location -->
             <div class="vt-location-block" id="montessori">
-                <div class="vt-location-viewer">
-                    <div class="vt-viewer-container">
-                        <iframe
-                            src="https://www.google.com/maps?q=2255+Countryside+Blvd,+Clearwater,+FL+33763&output=embed&z=15"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" class="location-map-iframe">
-                        </iframe>
-                    </div>
-                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '2255 Countryside Blvd, Clearwater, FL 33763',
+                ])
                 <div class="vt-location-info">
                     <h2 class="vt-location-title">MONTESSORI</h2>
                     <div class="vt-contact-list">
@@ -233,7 +264,7 @@
                     </div>
                     <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
-                        <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-foundation">More
+                        <a href="{{ route('frontend.locationMontessori') }}" class="btn btn-foundation">More
                             Information</a>
                     </div>
                 </div>
@@ -281,18 +312,12 @@
                     </div>
                     <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
-                        <a href="{{ route('frontend.locations') }}#largo" class="btn btn-foundation">More Information</a>
+                        <a href="{{ route('frontend.locationLargo') }}" class="btn btn-foundation">More Information</a>
                     </div>
                 </div>
-                <div class="vt-location-viewer">
-                    <div class="vt-viewer-container">
-                        <iframe
-                            src="https://www.google.com/maps?q=1807+Clearwater+Largo+Rd,+Largo,+FL+33770&output=embed&z=15"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade" class="location-map-iframe">
-                        </iframe>
-                    </div>
-                </div>
+                @include('frontend.components.google-map', [
+                    'address' => '1807 Clearwater Largo Rd, Largo, FL 33770',
+                ])
             </div>
         </div>
     </section>

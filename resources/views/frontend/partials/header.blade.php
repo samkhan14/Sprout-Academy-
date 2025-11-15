@@ -66,9 +66,9 @@
 
                     <!-- Programs & Curriculum -->
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.programsAndCurriculum') ? 'active' : '' }}"
-                            href="{{ route('frontend.programsAndCurriculum') }}"
-                            @if (request()->routeIs('frontend.programsAndCurriculum')) aria-current="page" @endif>
+                        <a class="nav-link {{ request()->routeIs('frontend.ourPrograms') ? 'active' : '' }}"
+                            href="{{ route('frontend.ourPrograms') }}"
+                            @if (request()->routeIs('frontend.ourPrograms')) aria-current="page" @endif>
                             Programs & Curriculum
                         </a>
                     </li>

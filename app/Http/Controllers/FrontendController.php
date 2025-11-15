@@ -16,7 +16,7 @@ class FrontendController extends Controller
         return view('frontend.pages.parents');
     }
 
-    public function programsAndCurriculum()
+    public function OurPrograms()
     {
         return view('frontend.pages.programs');
     }
@@ -64,5 +64,35 @@ class FrontendController extends Controller
     public function DownloadForms()
     {
         return view('frontend.pages.download_forms');
+    }
+
+    public function LocationSeminole()
+    {
+        return view('frontend.pages.location_seminole');
+    }
+
+    public function LocationClearwater()
+    {
+        return view('frontend.pages.location_clearwater');
+    }
+
+    public function LocationPinellasPark()
+    {
+        return view('frontend.pages.location_pinellessPark');
+    }
+
+    public function LocationMontessori()
+    {
+        return view('frontend.pages.location_montesorri');
+    }
+
+    public function LocationLargo()
+    {
+        return view('frontend.pages.location_largo');
+    }
+
+    public function LocationStPetersburg()
+    {
+        return view('frontend.pages.location_stPetersburg');
     }
 }

@@ -73,6 +73,9 @@
     <!-- Slick Slider JS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
+    <!-- SimpleMasonry Web Component -->
+    <script src="{{ asset('frontend/assets/js/simple-masonry.js') }}"></script>
+
     <!-- Custom JS -->
     <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 
