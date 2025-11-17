@@ -226,20 +226,30 @@
     accordionButtons.forEach((button) => {
         const targetId = button.getAttribute("data-bs-target");
         const targetElement = document.querySelector(targetId);
+        const accordionItem = button.closest(".accordion-item");
 
         if (targetElement) {
             // Update icon on collapse show/hide events
             targetElement.addEventListener("show.bs.collapse", function () {
                 button.classList.add("active");
+                if (accordionItem) {
+                    accordionItem.classList.add("active-item");
+                }
             });
 
             targetElement.addEventListener("hide.bs.collapse", function () {
                 button.classList.remove("active");
+                if (accordionItem) {
+                    accordionItem.classList.remove("active-item");
+                }
             });
 
             // Set initial state based on whether collapse is shown
             if (targetElement.classList.contains("show")) {
                 button.classList.add("active");
+                if (accordionItem) {
+                    accordionItem.classList.add("active-item");
+                }
             }
         }
     });

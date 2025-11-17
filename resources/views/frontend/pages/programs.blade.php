@@ -34,7 +34,7 @@
         'text' =>
             'Infants and toddlers need a safe, nurturing environment to begin exploring the world around them. The Sprout Academy provide all the support and early education that young children need to learn, grow, and form solid educational foundations.',
         'buttonText' => 'Learn More',
-        'buttonLink' => '#',
+        'buttonLink' => route('frontend.infantToddlerEducation'),
         'buttonClass' => 'btn btn-foundation',
     ])
 
@@ -45,7 +45,7 @@
         'text' =>
             'Preschool-age children are gaining independence and developing rapidly. Our preschool early education programs provide a balance between nurturing and exploration of the world around them. We carefully guide children toward the more structured classroom experiences ahead.',
         'buttonText' => 'Learn More',
-        'buttonLink' => '#',
+        'buttonLink' => route('frontend.preschoolEarlyEducation'),
         'buttonClass' => 'btn btn-program-preschool',
     ])
 

@@ -95,4 +95,19 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.location_stPetersburg');
     }
+
+    public function InfantToddlerEducation()
+    {
+        return view('frontend.pages.infant_toddler_education');
+    }
+
+    public function PreschoolEarlyEducation()
+    {
+        return view('frontend.pages.preschool_early_education');
+    }
+
+    public function EducationFor512YearOld()
+    {
+        return view('frontend.pages.education_for_5_12_year_old');
+    }
 }

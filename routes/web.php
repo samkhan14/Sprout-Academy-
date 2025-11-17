@@ -19,9 +19,10 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/location/pinellas-park', 'LocationPinellasPark')->name('locationPinellasPark');
     Route::get('/location/montessori', 'LocationMontessori')->name('locationMontessori');
     Route::get('/location/largo', 'LocationLargo')->name('locationLargo');
-
-
-    Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/our-programs', 'OurPrograms')->name('ourPrograms');
+    Route::get('our-programs/infant-toddler-education', 'InfantToddlerEducation')->name('infantToddlerEducation');
+    Route::get('our-programs/preschool-early-education', 'PreschoolEarlyEducation')->name('preschoolEarlyEducation');
+    Route::get('our-programs/education-for-5-12-year-old', 'EducationFor512YearOld')->name('educationFor512YearOld');
+    Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
 });
