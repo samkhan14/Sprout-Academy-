@@ -85,8 +85,7 @@
                     <!-- Sproutvine with Icon -->
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link {{ request()->routeIs('frontend.sproutvine') ? 'active' : '' }}"
-                            href="{{ route('frontend.sproutvine') }}"
-                            @if (request()->routeIs('frontend.sproutvine')) aria-current="page" @endif>
+                            href="#" @if (request()->routeIs('frontend.sproutvine')) aria-current="page" @endif>
                             <i class="fas fa-newspaper me-1"></i>
                             Sproutvine
                         </a>
