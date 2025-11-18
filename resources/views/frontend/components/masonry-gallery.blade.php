@@ -17,16 +17,37 @@
     ];
 
     $folderName = $locationFolderMap[$locationFolder] ?? $locationFolder;
-    $imagesPath = public_path("frontend/assets/home_page_images/locations/{$folderName}");
+
+    // For subdirectory deployment: frontend folder is at root level (not in public/)
+    // Try base_path first (for subdirectory), then public_path (for local)
+    $imagesPath = base_path("frontend/assets/home_page_images/locations/{$folderName}");
+
+    // Fallback to public_path if base_path doesn't exist (local development)
+    if (!is_dir($imagesPath)) {
+        $imagesPath = public_path("frontend/assets/home_page_images/locations/{$folderName}");
+    }
 
     // Get all images from the location folder
     $images = [];
     if (is_dir($imagesPath)) {
         $files = glob($imagesPath . '/*.{png,jpg,jpeg,gif,webp}', GLOB_BRACE);
+
+        // If glob with brace doesn't work, try individual extensions
+        if (empty($files)) {
+            $files = array_merge(
+                glob($imagesPath . '/*.png'),
+                glob($imagesPath . '/*.jpg'),
+                glob($imagesPath . '/*.jpeg'),
+                glob($imagesPath . '/*.gif'),
+                glob($imagesPath . '/*.webp')
+            );
+        }
+
         sort($files); // Sort alphabetically
 
         foreach ($files as $file) {
             $filename = basename($file);
+            // Use asset() helper which handles subdirectory automatically
             $images[] = [
                 'src' => asset("frontend/assets/home_page_images/locations/{$folderName}/{$filename}"),
                 'alt' => ucfirst($locationName) . ' Location - ' . pathinfo($filename, PATHINFO_FILENAME),
