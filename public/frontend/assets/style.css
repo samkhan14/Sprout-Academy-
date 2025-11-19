@@ -6442,14 +6442,6 @@ select.form-control {
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    /* Uncomment when dark mode is implemented */
-    /* body {
-    background: #0f172a;
-    color: #f8f9fa;
-  } */
-}
-
 @media (prefers-contrast: high) {
     :focus-visible {
         outline-width: 4px;

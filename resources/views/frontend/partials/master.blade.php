@@ -30,9 +30,10 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/assets/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/forms-style.css') }}">
 
     @stack('styles')
 </head>
@@ -78,6 +79,100 @@
 
     <!-- Custom JS -->
     <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Set today's date
+        const today = new Date();
+        const todayFormatted = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+        document.getElementById('today').value = todayFormatted;
+
+        // Initialize main calendar
+        const calendarInstance = flatpickr('#calendar', {
+            inline: true,
+            defaultDate: '2024-02-02',
+            dateFormat: 'm/d/Y',
+            onChange: function(selectedDates, dateStr) {
+                if (selectedDates.length > 0) {
+                    const date = selectedDates[0];
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const year = date.getFullYear();
+
+                    // Update displays
+                    const shortDate = month + '/' + day;
+                    const fullDate = month + '/' + day + '/' + year;
+                    const time = document.getElementById('timeDisplay').value;
+
+                    document.getElementById('dateDisplay').value = fullDate;
+                    document.getElementById('dateTimeDisplay').value = shortDate + ' ' + time;
+                    document.getElementById('startDate').value = fullDate;
+                    document.getElementById('endDate').value = fullDate;
+                }
+            }
+        });
+
+        // Time picker for time display field
+        const timePickerInstance = flatpickr('#timeDisplay', {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: 'h:i K',
+            defaultDate: '10:39 PM',
+            onChange: function(selectedDates, timeStr) {
+                const dateVal = document.getElementById('dateDisplay').value;
+                const shortDate = dateVal.substring(0, 5); // Get MM/DD part
+                document.getElementById('dateTimeDisplay').value = shortDate + ' ' + timeStr;
+            }
+        });
+
+        // Start date picker
+        const startDatePicker = flatpickr('#startDate', {
+            dateFormat: 'm/d/Y',
+            defaultDate: '2024-02-02',
+            onChange: function(selectedDates, dateStr) {
+                // Optionally sync with main calendar
+            }
+        });
+
+        // End date picker
+        const endDatePicker = flatpickr('#endDate', {
+            dateFormat: 'm/d/Y',
+            defaultDate: '2024-02-02',
+            onChange: function(selectedDates, dateStr) {
+                // Optionally sync with main calendar
+            }
+        });
+
+        // Submit button handler
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const startDate = document.getElementById('startDate').value.trim();
+            const endDate = document.getElementById('endDate').value.trim();
+
+            if (!name || !email) {
+                alert('Please fill in Name and Email fields');
+                return;
+            }
+
+            if (!location) {
+                alert('Please select a Location');
+                return;
+            }
+
+            if (!startDate || !endDate) {
+                alert('Please select Start and End dates');
+                return;
+            }
+
+            // Simulate director signature after submission
+            document.getElementById('directorSignature').value = 'Director Approved - ' + new Date()
+                .toLocaleDateString();
+            alert('Form submitted successfully!');
+        });
+    </script>
 
     @stack('scripts')
 </body>
