@@ -80,6 +80,7 @@
     <!-- Custom JS -->
     <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ asset('frontend/assets/js/form-fields.js') }}"></script>
     <script>
         // Set today's date
         const today = new Date();

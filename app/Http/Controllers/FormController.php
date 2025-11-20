@@ -15,4 +15,14 @@ class FormController extends Controller
     {
         return view('frontend.pages.forms.maintenance_work_order_form');
     }
+
+    public function SuggestionForm()
+    {
+        return view('frontend.pages.forms.suggestion_form');
+    }
+
+    public function TimeClockChangeRequestForm()
+    {
+        return view('frontend.pages.forms.time_clock_change_request_form');
+    }
 }

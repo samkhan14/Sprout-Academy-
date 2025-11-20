@@ -58,11 +58,11 @@
 
 .site_form {
     width: 100%;
-    max-width: 1200px;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    background: transparent;
+    padding: 40px 0;
+    border-radius: 0;
+    box-shadow: none;
     margin: 0 auto;
 }
 
@@ -89,10 +89,10 @@
 /* Global Label Styles */
 .site_form label {
     display: block;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
-    color: var(--label-color);
-    margin-bottom: 8px;
+    color: #000;
+    margin-bottom: 3px;
 }
 
 /* Global Input Styles */
@@ -126,10 +126,30 @@
 
 /* Textarea Specific */
 .site_form .form-textarea {
-    min-height: 120px;
-    resize: vertical;
+    min-height: 170px;
     border-radius: 20px;
-    padding: 16px 20px;
+    padding: 16px 20px 16px 50px;
+    position: relative;
+    resize: none;
+}
+
+/* Textarea Wrapper with Pencil Icon */
+.site_form .textarea-wrapper {
+    position: relative;
+}
+
+.site_form .textarea-wrapper::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'%3E%3C/path%3E%3Cpath d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* Select Dropdown with Arrow Icon */
@@ -179,7 +199,7 @@
 .site_form .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 30px;
     margin-bottom: 20px;
 }
 
@@ -193,54 +213,65 @@
 
 .site_form .date-split-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     position: relative;
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: 25px;
-    padding: 0 50px 0 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
     min-height: 52px;
 }
 
 .site_form .date-split-input {
     flex: 1;
     text-align: center;
-    max-width: 70px;
-    padding: 14px 8px;
-    border: none;
-    background: transparent;
-    border-radius: 0;
+    padding: 14px 12px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    border-radius: 25px;
+    font-size: 15px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
 }
 
 .site_form .date-split-input:focus {
     outline: none;
-    box-shadow: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .date-split-input::placeholder {
+    color: var(--placeholder-color);
+    font-size: 14px;
 }
 
 .site_form .date-split-icon {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: relative;
     pointer-events: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .site_form .date-split-icon:hover {
-    opacity: 0.7;
-    transform: translateY(-50%) scale(1.1);
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
 }
 
 .site_form .date-split-icon svg {
-    width: 100%;
-    height: 100%;
+    width: 18px;
+    height: 18px;
+    stroke: #666;
 }
 
 .site_form .date-picker-hidden {
@@ -251,10 +282,432 @@
     pointer-events: none;
 }
 
+/* ========================================
+   TIME SPLIT FIELDS (HH, MM, AM/PM)
+   ======================================== */
+
+.site_form .time-split-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    min-height: 52px;
+}
+
+.site_form .time-split-input {
+    flex: 1;
+    text-align: center;
+    padding: 14px 12px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    border-radius: 25px;
+    font-size: 15px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.site_form .time-split-input:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .time-split-input[readonly] {
+    cursor: pointer;
+    background: var(--input-bg);
+}
+
+.site_form .time-split-input::placeholder {
+    color: var(--placeholder-color);
+    font-size: 14px;
+}
+
+.site_form .time-split-select {
+    flex: 1;
+    text-align: center;
+    padding: 14px 12px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    border-radius: 25px;
+    font-size: 15px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    appearance: none;
+    cursor: pointer;
+}
+
+.site_form .time-split-select:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .time-split-icon {
+    position: relative;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.site_form .time-split-icon:hover {
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
+}
+
+.site_form .time-split-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: #666;
+}
+
+/* Time Picker Wrapper Positioning */
+.site_form .time-split-wrapper {
+    position: relative;
+}
+
+/* Custom Time Picker Dropdown */
+.site_form .custom-time-picker {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1px solid var(--input-border);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    min-width: 280px;
+}
+
+.site_form .time-picker-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.site_form .time-picker-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.site_form .time-picker-select {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 25px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+    padding-right: 40px;
+    transition: all 0.3s ease;
+}
+
+.site_form .time-picker-select:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .time-picker-select:hover {
+    border-color: var(--input-focus);
+}
+
+.site_form .time-separator {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 0 5px;
+}
+
+/* Flatpickr Calendar Positioning */
+.site_form .date-split-wrapper {
+    position: relative;
+}
+
+.site_form .flatpickr-calendar {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    margin-top: 8px !important;
+    z-index: 9999 !important;
+    background: #ffffff !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    width: auto !important;
+    min-width: 280px !important;
+    max-width: 320px !important;
+}
+
+/* Time Picker Specific Styles */
+.site_form .flatpickr-calendar.hasTime {
+    min-width: 220px !important;
+    max-width: 260px !important;
+    padding: 15px !important;
+}
+
+.site_form .flatpickr-calendar.hasTime.noCalendar {
+    padding: 15px !important;
+}
+
+.site_form .flatpickr-time {
+    background: #ffffff;
+    border: none;
+    padding: 10px 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 20px;
+}
+
+.site_form .flatpickr-time .flatpickr-time-wrapper {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.site_form .flatpickr-time .numInputWrapper {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+}
+
+.site_form .flatpickr-time .numInputWrapper .numInput {
+    border: 1px solid var(--input-border);
+    border-radius: 25px;
+    padding: 12px 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    background: var(--input-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+.site_form
+    .flatpickr-time
+    .numInputWrapper
+    .numInput::-webkit-outer-spin-button,
+.site_form
+    .flatpickr-time
+    .numInputWrapper
+    .numInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.site_form .flatpickr-time .numInputWrapper .numInput:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .flatpickr-time .flatpickr-time-separator {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 0 8px;
+    line-height: 1;
+}
+
+.site_form .flatpickr-time .flatpickr-am-pm {
+    border: 1px solid var(--input-border);
+    border-radius: 25px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--input-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 55px;
+    text-align: center;
+    display: inline-block;
+}
+
+.site_form .flatpickr-time .flatpickr-am-pm:hover {
+    border-color: var(--input-focus);
+    background: var(--input-focus);
+    color: #ffffff;
+}
+
+.site_form .flatpickr-time .flatpickr-am-pm.flatpickr-am-pm-selected {
+    background: var(--button-bg);
+    color: #ffffff;
+    border-color: var(--button-bg);
+}
+
+.site_form .flatpickr-time .arrowUp,
+.site_form .flatpickr-time .arrowDown {
+    position: absolute;
+    right: 8px;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+.site_form .flatpickr-time .arrowUp {
+    top: 4px;
+    border-bottom: 6px solid var(--text-color);
+}
+
+.site_form .flatpickr-time .arrowDown {
+    bottom: 4px;
+    border-top: 6px solid var(--text-color);
+}
+
+.site_form .flatpickr-time .arrowUp:hover,
+.site_form .flatpickr-time .arrowDown:hover {
+    opacity: 1;
+}
+
+.site_form .flatpickr-time .numInputWrapper:hover .arrowUp,
+.site_form .flatpickr-time .numInputWrapper:hover .arrowDown {
+    opacity: 0.8;
+}
+
+/* Ensure time picker displays all components */
+.site_form .flatpickr-calendar.hasTime.noCalendar .flatpickr-time {
+    border-top: none;
+    padding: 10px 0;
+}
+
+/* Make sure hour, minute, and AM/PM are all visible */
+.site_form .flatpickr-time .numInputWrapper {
+    flex: 0 0 auto;
+}
+
+.site_form .flatpickr-time .flatpickr-time-separator {
+    flex: 0 0 auto;
+}
+
+.site_form .flatpickr-time .flatpickr-am-pm {
+    flex: 0 0 auto;
+}
+
+/* Highlight active input in time picker */
+.site_form .flatpickr-time .numInputWrapper .numInput:focus {
+    background: #f0f0f0;
+    border-color: var(--input-focus);
+}
+
+.site_form .flatpickr-calendar.arrowTop::before {
+    border-bottom-color: #fff;
+}
+
+.site_form .flatpickr-calendar.arrowTop::after {
+    border-bottom-color: #fff;
+}
+
+/* ========================================
+   FILE UPLOAD FIELD STYLES
+   ======================================== */
+
+.site_form .file-upload-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.site_form .form-file-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.site_form .form-file-label {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 15px;
+    color: var(--text-color);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+}
+
+.site_form .form-file-label:hover {
+    border-color: var(--input-focus);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.site_form .file-upload-text {
+    color: var(--placeholder-color);
+    font-size: 14px;
+}
+
+.site_form .file-upload-icon {
+    width: 40px;
+    height: 40px;
+    background: #ed9b04;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 10px;
+}
+
+.site_form .file-upload-icon:hover {
+    background: #d6890a;
+    transform: scale(1.05);
+}
+
+.site_form .file-upload-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #ffffff;
+}
+
 /* Submit Button */
 .site_form .submit-btn {
     width: 100%;
-    max-width: 600px;
+    max-width: 100%;
     padding: 16px 32px;
     font-size: 16px;
     font-weight: 600;
@@ -264,7 +717,7 @@
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .site_form .submit-btn:hover {
@@ -342,15 +795,20 @@
 
 /* Flatpickr Calendar Customization */
 .site_form .flatpickr-calendar {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    width: 100% !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 20px !important;
+    width: auto !important;
+    min-width: 280px !important;
+    max-width: 320px !important;
+    padding: 15px !important;
 }
 
 .site_form .flatpickr-months {
-    background: transparent;
+    background: #ffffff;
     margin-bottom: 15px;
+    padding: 10px 0;
 }
 
 .site_form .flatpickr-month {
@@ -376,8 +834,9 @@
 }
 
 .site_form .flatpickr-weekdays {
-    background: transparent;
+    background: #ffffff;
     margin-bottom: 5px;
+    padding: 5px 0;
 }
 
 .site_form .flatpickr-weekday {
@@ -388,12 +847,14 @@
 
 .site_form .flatpickr-days {
     width: 100% !important;
+    background: #ffffff;
 }
 
 .site_form .dayContainer {
     width: 100% !important;
     min-width: 100% !important;
     max-width: 100% !important;
+    background: #ffffff;
 }
 
 .site_form .flatpickr-day {
@@ -402,8 +863,9 @@
     font-weight: 500;
     border: 2px solid transparent;
     max-width: none;
-    height: 40px;
-    line-height: 36px;
+    height: 36px;
+    line-height: 32px;
+    background: #ffffff;
 }
 
 .site_form .flatpickr-day.prevMonthDay,
@@ -463,6 +925,10 @@
          ======================================== */
 
 @media (max-width: 1024px) {
+    .site_form {
+        max-width: 90%;
+    }
+
     .site_form .form-wrapper {
         flex-direction: column;
     }
@@ -474,13 +940,14 @@
     .form-section-gradient {
         padding: 40px 0;
     }
-
-    .site_form {
-        padding: 30px;
-    }
 }
 
 @media (max-width: 768px) {
+    .site_form {
+        max-width: 95%;
+        padding: 20px 0;
+    }
+
     .site_form .form-grid {
         grid-template-columns: 1fr;
     }
@@ -488,11 +955,6 @@
     .form-section-gradient {
         padding: 30px 0;
         min-height: auto;
-    }
-
-    .site_form {
-        padding: 25px 20px;
-        border-radius: 15px;
     }
 
     body {
@@ -504,26 +966,47 @@
     }
 
     .site_form .date-split-wrapper {
-        gap: 8px;
-        padding-right: 45px;
+        gap: 6px;
     }
 
     .site_form .date-split-input {
-        max-width: 65px;
-        padding: 12px 6px;
+        max-width: 70px;
+        padding: 12px 8px;
         font-size: 14px;
     }
 
     .site_form .date-split-icon {
-        right: 12px;
-        width: 18px;
-        height: 18px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .site_form .date-split-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .site_form .time-split-input,
+    .site_form .time-split-select {
+        max-width: 70px;
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+
+    .site_form .time-split-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .site_form .time-split-icon svg {
+        width: 16px;
+        height: 16px;
     }
 }
 
 @media (max-width: 480px) {
     .site_form {
-        padding: 20px 15px;
+        max-width: 100%;
+        padding: 15px 0;
     }
 
     .site_form .form-input,
@@ -538,19 +1021,40 @@
     }
 
     .site_form .date-split-wrapper {
-        gap: 6px;
-        padding-right: 40px;
+        gap: 4px;
+        flex-wrap: wrap;
     }
 
     .site_form .date-split-input {
-        max-width: 55px;
-        padding: 10px 4px;
+        max-width: 60px;
+        padding: 10px 6px;
         font-size: 13px;
     }
 
     .site_form .date-split-icon {
-        right: 10px;
-        width: 16px;
-        height: 16px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .site_form .date-split-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .site_form .time-split-input,
+    .site_form .time-split-select {
+        max-width: 60px;
+        padding: 10px 6px;
+        font-size: 13px;
+    }
+
+    .site_form .time-split-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .site_form .time-split-icon svg {
+        width: 14px;
+        height: 14px;
     }
 }

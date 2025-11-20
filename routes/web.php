@@ -33,4 +33,6 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 Route::controller(FormController::class)->name('form.')->group(function () {
     Route::get('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
     Route::get('/maintenance-work-order-form', 'MaintenanceWorkOrderForm')->name('maintenanceWorkOrderForm');
+    Route::get('/suggestion-form', 'SuggestionForm')->name('suggestionForm');
+    Route::get('/time-clock-change-request-form', 'TimeClockChangeRequestForm')->name('timeClockChangeRequestForm');
 });

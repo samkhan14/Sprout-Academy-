@@ -3,6 +3,11 @@
 @section('title', 'Maintenance Work Order Form')
 
 @section('content')
+
+    @include('frontend.components.form_header', [
+        'title' => 'Maintenance Work Order Form',
+        'text' => 'Fill out form for a repair work order.',
+    ])
     {{-- Form Section --}}
     <section class="form-section form-section-gradient">
         <div class="container">
@@ -101,13 +106,27 @@
                                 {{-- Description Of Work Needed --}}
                                 <div class="form-field form-field-full">
                                     <label for="description">Description Of Work Needed:</label>
-                                    <textarea id="description" class="form-textarea" placeholder="Type here"></textarea>
+                                    <div class="textarea-wrapper">
+                                        <textarea id="description" class="form-textarea" placeholder="Type here"></textarea>
+                                    </div>
                                 </div>
 
                                 {{-- Attach A File / Area Repair Needed --}}
                                 <div class="form-field">
                                     <label for="attachFile">Attach A File*</label>
-                                    <input type="file" id="attachFile" class="form-input" />
+                                    <div class="file-upload-wrapper">
+                                        <input type="file" id="attachFile" class="form-file-input" />
+                                        <label for="attachFile" class="form-file-label">
+                                            <span class="file-upload-text" id="fileUploadText">Choose a File to
+                                                Upload</span>
+                                        </label>
+                                        <div class="file-upload-icon" id="fileUploadIcon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 19V5M5 12l7-7 7 7" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-field">
@@ -164,10 +183,49 @@
                 document.getElementById('todayDay').value = day;
                 document.getElementById('todayYear').value = year;
 
+                // Get date wrapper elements for positioning
+                const todayDateWrapper = document.querySelector('#todayMonth').closest('.date-split-wrapper');
+                const completionDateWrapper = document.querySelector('#completionMonth').closest('.date-split-wrapper');
+                const todayCalendarIcon = document.getElementById('todayCalendarIcon');
+                const completionCalendarIcon = document.getElementById('completionCalendarIcon');
+
+                // Function to position calendar relative to wrapper
+                function positionCalendar(picker, iconElement) {
+                    if (picker.calendarContainer && iconElement) {
+                        const wrapper = iconElement.closest('.date-split-wrapper');
+                        if (!wrapper) return;
+
+                        const calendar = picker.calendarContainer;
+                        calendar.style.position = 'absolute';
+                        calendar.style.top = 'calc(100% + 8px)';
+                        calendar.style.left = '0';
+                        calendar.style.right = 'auto';
+                        calendar.style.marginTop = '0';
+                        calendar.style.marginLeft = '0';
+                        calendar.style.zIndex = '9999';
+
+                        // Check if calendar goes off-screen and adjust
+                        setTimeout(() => {
+                            const rect = calendar.getBoundingClientRect();
+                            const viewportWidth = window.innerWidth;
+
+                            if (rect.right > viewportWidth) {
+                                calendar.style.left = 'auto';
+                                calendar.style.right = '0';
+                            }
+                        }, 10);
+                    }
+                }
+
                 // Initialize Flatpickr for Today's Date
                 const todayDatePicker = flatpickr("#todayDatePicker", {
                     dateFormat: "Y-m-d",
                     defaultDate: "today",
+                    appendTo: todayDateWrapper,
+                    static: false,
+                    onReady: function(selectedDates, dateStr, instance) {
+                        positionCalendar(instance, todayCalendarIcon);
+                    },
                     onChange: function(selectedDates) {
                         updateSplitDateFields(selectedDates, 'todayMonth', 'todayDay', 'todayYear');
                     }
@@ -177,6 +235,11 @@
                 const completionDatePicker = flatpickr("#completionDatePicker", {
                     dateFormat: "Y-m-d",
                     minDate: "today",
+                    appendTo: completionDateWrapper,
+                    static: false,
+                    onReady: function(selectedDates, dateStr, instance) {
+                        positionCalendar(instance, completionCalendarIcon);
+                    },
                     onChange: function(selectedDates) {
                         updateSplitDateFields(selectedDates, 'completionMonth', 'completionDay',
                             'completionYear');
@@ -184,13 +247,25 @@
                 });
 
                 // Open calendar on icon click for Today's Date
-                document.getElementById('todayCalendarIcon').addEventListener('click', function() {
+                todayCalendarIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     todayDatePicker.open();
+                    // Reposition after opening
+                    setTimeout(() => {
+                        positionCalendar(todayDatePicker, todayCalendarIcon);
+                    }, 10);
                 });
 
                 // Open calendar on icon click for Completion Date
-                document.getElementById('completionCalendarIcon').addEventListener('click', function() {
+                completionCalendarIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     completionDatePicker.open();
+                    // Reposition after opening
+                    setTimeout(() => {
+                        positionCalendar(completionDatePicker, completionCalendarIcon);
+                    }, 10);
                 });
 
                 // Auto-advance to next field on input
@@ -263,6 +338,37 @@
                 // Setup date inputs
                 setupDateInputs('todayMonth', 'todayDay', 'todayYear');
                 setupDateInputs('completionMonth', 'completionDay', 'completionYear');
+
+                // File upload handler
+                const attachFileInput = document.getElementById('attachFile');
+                const fileUploadText = document.getElementById('fileUploadText');
+                const fileUploadIcon = document.getElementById('fileUploadIcon');
+
+                if (attachFileInput && fileUploadText && fileUploadIcon) {
+                    // Click on icon opens file picker
+                    fileUploadIcon.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        attachFileInput.click();
+                    });
+
+                    // Click on label also opens file picker
+                    const fileLabel = document.querySelector('.form-file-label');
+                    if (fileLabel) {
+                        fileLabel.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            attachFileInput.click();
+                        });
+                    }
+
+                    attachFileInput.addEventListener('change', function(e) {
+                        if (e.target.files && e.target.files.length > 0) {
+                            fileUploadText.textContent = e.target.files[0].name;
+                        } else {
+                            fileUploadText.textContent = 'Choose a File to Upload';
+                        }
+                    });
+                }
 
                 // Form validation
                 const form = document.getElementById('maintenanceWorkOrderForm');
