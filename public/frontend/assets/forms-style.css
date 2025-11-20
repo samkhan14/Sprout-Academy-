@@ -82,6 +82,24 @@
     flex-shrink: 0;
 }
 
+/* Supply Order Form - Two Equal Columns */
+.site_form .form-wrapper-supply-order {
+    align-items: stretch;
+}
+
+.site_form .form-left-supply-order,
+.site_form .form-right-supply-order {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.site_form .form-left-supply-order .form-field,
+.site_form .form-right-supply-order .form-field {
+    margin-bottom: 21px;
+}
+
 /* ========================================
          FORM FIELD STYLES
          ======================================== */
@@ -205,6 +223,18 @@
 
 .site_form .form-field-full {
     grid-column: 1 / -1;
+}
+
+/* Full Width Form Field */
+.site_form .form-field-full-width {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Full Width Submit Button */
+.site_form .submit-btn-full-width {
+    width: 100%;
+    max-width: 100%;
 }
 
 /* ========================================
@@ -943,6 +973,15 @@
 }
 
 @media (max-width: 768px) {
+    /* Supply Order Form - Stack Columns on Mobile */
+    .site_form .form-wrapper-supply-order {
+        flex-direction: column;
+    }
+
+    .site_form .form-left-supply-order,
+    .site_form .form-right-supply-order {
+        width: 100%;
+    }
     .site_form {
         max-width: 95%;
         padding: 20px 0;

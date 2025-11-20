@@ -110,4 +110,9 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.education_for_5_12_year_old');
     }
+
+    public function EmployeeForms()
+    {
+        return view('frontend.pages.employee_forms');
+    }
 }

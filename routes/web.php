@@ -26,6 +26,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('our-programs/education-for-5-12-year-old', 'EducationFor512YearOld')->name('educationFor512YearOld');
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
+    Route::get('/employee-forms', 'EmployeeForms')->name('employeeForms');
 
 });
 
@@ -33,6 +34,10 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 Route::controller(FormController::class)->name('form.')->group(function () {
     Route::get('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
     Route::get('/maintenance-work-order-form', 'MaintenanceWorkOrderForm')->name('maintenanceWorkOrderForm');
+    Route::get('/supply-order-form', 'SupplyOrderForm')->name('supplyOrderForm');
+    Route::get('/snack-order-form', 'SnackOrderForm')->name('snackOrderForm');
     Route::get('/suggestion-form', 'SuggestionForm')->name('suggestionForm');
     Route::get('/time-clock-change-request-form', 'TimeClockChangeRequestForm')->name('timeClockChangeRequestForm');
+    Route::get('/standard-t-shirt-order-form', 'StandardTShirtOrderForm')->name('standardTShirtOrderForm');
+    Route::get('/specialty-t-shirt-order-form', 'SpecialtyTShirtOrderForm')->name('specialtyTShirtOrderForm');
 });

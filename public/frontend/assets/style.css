@@ -2023,6 +2023,118 @@ img {
 /* Responsive Design */
 
 /* ========================================
+   EMPLOYEE FORMS SECTION
+   ======================================== */
+
+.employee-forms-section {
+    padding: var(--space-3xl) 0;
+}
+
+.employee-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl) var(--space-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Employee Form Card */
+.employee-form-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: var(--space-sm) var(--space-md);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    min-height: 180px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Employee Form Icon */
+.employee-form-icon {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.employee-form-icon img {
+    max-width: 80%;
+    max-height: 80%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+/* Employee Form Label */
+.employee-form-label {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    font-family: "Rubik", sans-serif;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 18px;
+    padding: 7px;
+    margin-top: -10%;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+    .employee-forms-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+    }
+
+    .employee-form-card {
+        min-height: 300px;
+        padding: var(--space-xl) var(--space-lg);
+    }
+
+    .employee-form-icon {
+        min-height: 180px;
+    }
+
+    .employee-form-label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .employee-forms-section {
+        padding: var(--space-2xl) 0;
+    }
+
+    .employee-forms-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        max-width: 100%;
+    }
+
+    .employee-form-card {
+        min-height: 280px;
+        padding: var(--space-xl) var(--space-lg);
+    }
+
+    .employee-form-icon {
+        min-height: 160px;
+    }
+
+    .employee-form-label {
+        font-size: 0.95rem;
+    }
+}
+
+/* ========================================
    Locations Section
    ======================================== */
 
@@ -4654,8 +4766,13 @@ h2.mission-title {
         font-size: 2rem;
     }
 
-    .time-off-form {
+    .time-off-form,
+    .supply-order-form {
         padding: var(--space-xl);
+    }
+
+    .form-wrapper-two-column {
+        gap: var(--space-xl);
     }
     .marquee-slide {
         width: 350px;
@@ -5541,8 +5658,14 @@ h2.mission-title {
         line-height: 1.6;
     }
 
-    .time-off-form {
+    .time-off-form,
+    .supply-order-form {
         padding: var(--space-lg);
+    }
+
+    .form-wrapper-two-column {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
     }
 
     .form-group {
@@ -5937,7 +6060,6 @@ h2.mission-title {
 .form-header-content {
     position: relative;
     z-index: 2;
-    max-width: 900px;
 }
 
 .form-header-title {
@@ -6022,7 +6144,8 @@ h2.mission-title {
     z-index: 2;
 }
 
-.time-off-form {
+.time-off-form,
+.supply-order-form {
     background: var(--color-white);
     padding: var(--space-2xl);
     border-radius: 12px;
@@ -6030,6 +6153,25 @@ h2.mission-title {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+}
+
+/* Two Column Form Wrapper */
+.form-wrapper-two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+}
+
+.form-column-left,
+.form-column-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-full-width {
+    grid-column: 1 / -1;
+    width: 100%;
 }
 
 .form-group {
