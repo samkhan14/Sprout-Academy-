@@ -119,24 +119,102 @@
     // ========================================
     // Newsletter Form Handler
     // ========================================
-    const newsletterForm = document.querySelector(".newsletter-form");
+    const newsletterForm = document.getElementById("newsletterForm");
     if (newsletterForm) {
+        const submitBtn = newsletterForm.querySelector("#newsletterSubmitBtn");
+        const btnText = submitBtn ? submitBtn.querySelector(".btn-text") : null;
+        const btnSpinner = submitBtn
+            ? submitBtn.querySelector(".btn-spinner")
+            : null;
+        const formMessage = document.getElementById("newsletterMessage");
+
         newsletterForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const nameInput = this.querySelector('input[name="name"]');
-            const emailInput = this.querySelector('input[name="email"]');
-
-            if (
-                nameInput &&
-                emailInput &&
-                emailInput.value &&
-                nameInput.value
-            ) {
-                // Add your newsletter subscription logic here
-                alert("Thank you for subscribing! (This is a demo)");
-                this.reset();
+            // Hide previous messages
+            if (formMessage) {
+                formMessage.style.display = "none";
+                formMessage.className = "newsletter-message";
             }
+
+            // Show spinner and disable button
+            if (btnText && btnSpinner && submitBtn) {
+                btnText.style.display = "none";
+                btnSpinner.style.display = "inline-block";
+                submitBtn.disabled = true;
+            }
+
+            // Create FormData
+            const formData = new FormData(newsletterForm);
+
+            // AJAX submission
+            fetch(newsletterForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    Accept: "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Hide spinner and enable button
+                    if (btnText && btnSpinner && submitBtn) {
+                        btnText.style.display = "inline-block";
+                        btnSpinner.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+
+                    if (data.success) {
+                        // Show success message
+                        if (formMessage) {
+                            formMessage.textContent = data.message;
+                            formMessage.className =
+                                "newsletter-message success";
+                            formMessage.style.display = "block";
+                        }
+
+                        // Reset form
+                        newsletterForm.reset();
+                    } else {
+                        // Show error message
+                        let errorMessage =
+                            data.message ||
+                            "An error occurred. Please try again.";
+
+                        // Add validation errors if present
+                        if (data.errors) {
+                            const errorList = Object.values(data.errors)
+                                .flat()
+                                .join("<br>");
+                            errorMessage += "<br>" + errorList;
+                        }
+
+                        if (formMessage) {
+                            formMessage.innerHTML = errorMessage;
+                            formMessage.className = "newsletter-message error";
+                            formMessage.style.display = "block";
+                        }
+                    }
+                })
+                .catch((error) => {
+                    // Hide spinner and enable button
+                    if (btnText && btnSpinner && submitBtn) {
+                        btnText.style.display = "inline-block";
+                        btnSpinner.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+
+                    // Show error message
+                    if (formMessage) {
+                        formMessage.textContent =
+                            "An error occurred while subscribing. Please try again later.";
+                        formMessage.className = "newsletter-message error";
+                        formMessage.style.display = "block";
+                    }
+
+                    console.error("Error:", error);
+                });
         });
     }
 

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MaintenanceWorkOrder;
+use App\Models\Suggestion;
+use App\Models\TimeClockChangeRequest;
+use App\Models\StandardTShirtOrder;
+use App\Models\SpecialtyTShirtOrder;
+use App\Models\NewsletterSubscription;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -263,6 +268,338 @@ class FormController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Submit Suggestion Form
+     */
+    public function submitSuggestion(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'subject' => 'required|string|max:255',
+                'description' => 'nullable|string|max:5000',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'subject.required' => 'Subject is required.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Create suggestion
+            $suggestion = Suggestion::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'subject' => $request->subject,
+                'description' => $request->description,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your suggestion has been submitted successfully!',
+                'data' => [
+                    'id' => $suggestion->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Suggestion submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Submit Time Clock Change Request Form
+     */
+    public function submitTimeClockChangeRequest(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'location' => 'required|string|in:seminole,orlando,tampa',
+                'date_to_be_changed' => 'required|date',
+                'clock_in_time' => 'required|date_format:H:i',
+                'clock_out_for_lunch' => 'nullable|date_format:H:i',
+                'clock_in_from_lunch' => 'nullable|date_format:H:i',
+                'clock_out_time' => 'nullable|date_format:H:i',
+                'reason_for_change' => 'required|string|max:255',
+                'supervisor_first_name' => 'nullable|string|max:255',
+                'supervisor_last_name' => 'nullable|string|max:255',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'location.required' => 'Center location is required.',
+                'location.in' => 'Please select a valid center location.',
+                'date_to_be_changed.required' => 'Date to be changed is required.',
+                'date_to_be_changed.date' => 'Date to be changed must be a valid date.',
+                'clock_in_time.required' => 'Clock in time is required.',
+                'clock_in_time.date_format' => 'Clock in time must be in valid time format.',
+                'clock_out_for_lunch.date_format' => 'Clock out for lunch must be in valid time format.',
+                'clock_in_from_lunch.date_format' => 'Clock in from lunch must be in valid time format.',
+                'clock_out_time.date_format' => 'Clock out time must be in valid time format.',
+                'reason_for_change.required' => 'Reason for change is required.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Create time clock change request
+            $timeClockChangeRequest = TimeClockChangeRequest::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'location' => $request->location,
+                'date_to_be_changed' => $request->date_to_be_changed,
+                'clock_in_time' => $request->clock_in_time,
+                'clock_out_for_lunch' => $request->clock_out_for_lunch,
+                'clock_in_from_lunch' => $request->clock_in_from_lunch,
+                'clock_out_time' => $request->clock_out_time,
+                'reason_for_change' => $request->reason_for_change,
+                'supervisor_first_name' => $request->supervisor_first_name,
+                'supervisor_last_name' => $request->supervisor_last_name,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your time clock change request has been submitted successfully!',
+                'data' => [
+                    'id' => $timeClockChangeRequest->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Time clock change request submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Submit Standard T-Shirt Order Form
+     */
+    public function submitStandardTShirtOrder(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'location' => 'required|string|in:seminole,orlando,tampa',
+                'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
+                'colors' => 'required|array|min:1',
+                'colors.*' => 'string',
+                'special_instructions' => 'nullable|string|max:5000',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'location.required' => 'Location is required.',
+                'location.in' => 'Please select a valid location.',
+                'size.required' => 'Size is required.',
+                'size.in' => 'Please select a valid size.',
+                'colors.required' => 'Please select at least one color.',
+                'colors.array' => 'Colors must be an array.',
+                'colors.min' => 'Please select at least one color.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Create standard t-shirt order
+            $order = StandardTShirtOrder::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'location' => $request->location,
+                'size' => $request->size,
+                'colors' => $request->colors,
+                'special_instructions' => $request->special_instructions,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your standard t-shirt order has been submitted successfully!',
+                'data' => [
+                    'id' => $order->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Standard t-shirt order submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Submit Specialty T-Shirt Order Form
+     */
+    public function submitSpecialtyTShirtOrder(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'location' => 'required|string|in:seminole,orlando,tampa',
+                'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
+                'themes' => 'required|array|min:1',
+                'themes.*' => 'string',
+                'special_instructions' => 'nullable|string|max:5000',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'location.required' => 'Location is required.',
+                'location.in' => 'Please select a valid location.',
+                'size.required' => 'Size is required.',
+                'size.in' => 'Please select a valid size.',
+                'themes.required' => 'Please select at least one theme/holiday.',
+                'themes.array' => 'Themes must be an array.',
+                'themes.min' => 'Please select at least one theme/holiday.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Create specialty t-shirt order
+            $order = SpecialtyTShirtOrder::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'location' => $request->location,
+                'size' => $request->size,
+                'themes' => $request->themes,
+                'special_instructions' => $request->special_instructions,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your specialty t-shirt order has been submitted successfully!',
+                'data' => [
+                    'id' => $order->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Specialty t-shirt order submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Subscribe to Newsletter
+     */
+    public function subscribeNewsletter(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:newsletter_subscriptions,email',
+            ], [
+                'name.required' => 'Name is required.',
+                'email.required' => 'Email is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'email.unique' => 'This email is already subscribed to our newsletter.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Create newsletter subscription
+            $subscription = NewsletterSubscription::create([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you for subscribing to our newsletter!',
+                'data' => [
+                    'id' => $subscription->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Newsletter subscription failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while subscribing. Please try again later.',
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }

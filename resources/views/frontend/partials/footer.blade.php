@@ -10,12 +10,23 @@
             ])
         </div>
         <h2 class="newsletter-title">Stay Connected to The Sprout Academy!</h2>
-        <form class="newsletter-form needs-validation" novalidate>
-            <input type="text" class="newsletter-input" name="name" placeholder="Your Name" required
-                aria-label="Your name">
-            <input type="email" class="newsletter-input" name="email" placeholder="Your Email" required
-                aria-label="Your email address">
-            <button type="submit" class="btn btn-secondary">Subscribe Now!</button>
+        <form id="newsletterForm" class="newsletter-form needs-validation" method="POST"
+            action="{{ route('form.subscribeNewsletter') }}" novalidate>
+            @csrf
+            <div id="newsletterMessage" class="newsletter-message" style="display: none;"></div>
+            <input type="text" class="newsletter-input" name="name" id="newsletterName" placeholder="Your Name"
+                required aria-label="Your name">
+            <input type="email" class="newsletter-input" name="email" id="newsletterEmail" placeholder="Your Email"
+                required aria-label="Your email address">
+            <button type="submit" class="btn btn-secondary" id="newsletterSubmitBtn">
+                <span class="btn-text">Subscribe Now!</span>
+                <span class="btn-spinner" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 12a9 9 0 11-6.219-8.56" />
+                    </svg>
+                </span>
+            </button>
         </form>
     </div>
 </section>
@@ -43,8 +54,7 @@
                     <li><a href="{{ route('frontend.ourPrograms') }}">Programs</a></li>
                     <li><a href="#enroll">Enroll Now</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
-                    {{-- <li><a href="{{ route('frontend.contact') }}">Contact Us</a></li> --}}
-                    {{-- <li><a href="#careers">Careers</a></li> --}}
+                    <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
                 </ul>
             </div>
 
@@ -52,11 +62,11 @@
             <div class="footer-col">
                 <h3 class="footer-title">Our Locations</h3>
                 <ul class="footer-links">
-                    <li><a href="{{ route('frontend.locations') }}#seminole">Seminole</a></li>
-                    <li><a href="{{ route('frontend.locations') }}#st-pete">St. Pete</a></li>
-                    <li><a href="{{ route('frontend.locations') }}#pinellas-park">Pinellas Park</a></li>
-                    <li><a href="{{ route('frontend.locations') }}#largo">Largo</a></li>
-                    <li><a href="{{ route('frontend.locations') }}#montessori">Montessori</a></li>
+                    <li><a href="{{ route('frontend.locationSeminole') }}">Seminole</a></li>
+                    <li><a href="{{ route('frontend.locationClearwater') }}">St. Pete</a></li>
+                    <li><a href="{{ route('frontend.locationPinellasPark') }}">Pinellas Park</a></li>
+                    <li><a href="{{ route('frontend.locationLargo') }}">Largo</a></li>
+                    <li><a href="{{ route('frontend.locationMontessori') }}">Montessori</a></li>
                 </ul>
             </div>
         </div>

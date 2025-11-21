@@ -39,7 +39,12 @@ Route::controller(FormController::class)->name('form.')->group(function () {
     Route::get('/supply-order-form', 'SupplyOrderForm')->name('supplyOrderForm');
     Route::get('/snack-order-form', 'SnackOrderForm')->name('snackOrderForm');
     Route::get('/suggestion-form', 'SuggestionForm')->name('suggestionForm');
+    Route::post('/suggestion-form', 'submitSuggestion')->name('submitSuggestion');
     Route::get('/time-clock-change-request-form', 'TimeClockChangeRequestForm')->name('timeClockChangeRequestForm');
+    Route::post('/time-clock-change-request-form', 'submitTimeClockChangeRequest')->name('submitTimeClockChangeRequest');
     Route::get('/standard-t-shirt-order-form', 'StandardTShirtOrderForm')->name('standardTShirtOrderForm');
+    Route::post('/standard-t-shirt-order-form', 'submitStandardTShirtOrder')->name('submitStandardTShirtOrder');
     Route::get('/specialty-t-shirt-order-form', 'SpecialtyTShirtOrderForm')->name('specialtyTShirtOrderForm');
+    Route::post('/specialty-t-shirt-order-form', 'submitSpecialtyTShirtOrder')->name('submitSpecialtyTShirtOrder');
+    Route::post('/newsletter-subscribe', 'subscribeNewsletter')->name('subscribeNewsletter');
 });

@@ -12,38 +12,50 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_suggestion">
-                <form id="suggestionForm">
+                <form id="suggestionForm" method="POST" action="{{ route('form.submitSuggestion') }}" novalidate>
+                    @csrf
                     <div class="form-wrapper">
                         <!-- Left Form Section -->
                         <div class="form-left">
+                            {{-- Success/Error Messages --}}
+                            <div id="formMessage" class="form-message" style="display: none;"></div>
+
                             <div class="form-grid">
 
                                 {{-- First Name / Last Name --}}
                                 <div class="form-field">
                                     <label for="firstName">First Name*</label>
-                                    <input type="text" id="firstName" class="form-input" />
+                                    <input type="text" id="firstName" name="first_name" class="form-input" required />
                                 </div>
 
                                 <div class="form-field">
                                     <label for="lastName">Last Name*</label>
-                                    <input type="text" id="lastName" class="form-input" />
+                                    <input type="text" id="lastName" name="last_name" class="form-input" required />
                                 </div>
 
                                 <div class="form-field form-field-full">
-                                    <label for="email">Subject*</label>
-                                    <input type="text" id="subject" class="form-input" />
+                                    <label for="subject">Subject*</label>
+                                    <input type="text" id="subject" name="subject" class="form-input" required />
                                 </div>
 
-                                {{-- Description Of Work Needed --}}
+                                {{-- Description --}}
                                 <div class="form-field form-field-full">
-                                    <label for="description">Description Of Work Needed:</label>
+                                    <label for="description">Description:</label>
                                     <div class="textarea-wrapper">
-                                        <textarea id="description" class="form-textarea" placeholder="Type here"></textarea>
+                                        <textarea id="description" name="description" class="form-textarea" placeholder="Type here"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="submit" class="submit-btn" id="submitBtn">Submit Now</button>
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span class="btn-text">Submit Now</span>
+                                <span class="btn-spinner" style="display: none;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2">
+                                        <path d="M21 12a9 9 0 11-6.219-8.56" />
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -56,44 +68,94 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-
-                input.addEventListener('keydown', function(e) {
-                    // Allow: backspace, delete, tab, escape, enter
-                    if ([8, 9, 27, 13, 46].indexOf(e.keyCode) !== -1 ||
-                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                        (e.keyCode === 65 && e.ctrlKey === true) ||
-                        (e.keyCode === 67 && e.ctrlKey === true) ||
-                        (e.keyCode === 86 && e.ctrlKey === true) ||
-                        (e.keyCode === 88 && e.ctrlKey === true) ||
-                        // Allow: home, end, left, right
-                        (e.keyCode >= 35 && e.keyCode <= 39)) {
-                        return;
-                    }
-                    // Ensure that it is a number and stop the keypress
-                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 ||
-                            e.keyCode > 105)) {
-                        e.preventDefault();
-                    }
-                });
-
-
-                // Form validation
+                // Form submission with AJAX
                 const form = document.getElementById('suggestionForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnSpinner = submitBtn.querySelector('.btn-spinner');
+                const formMessage = document.getElementById('formMessage');
+
                 if (form) {
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
 
-                        // Basic validation
-                        const firstName = document.getElementById('firstName').value.trim();
-                        const lastName = document.getElementById('lastName').value.trim();
-                        const description = document.getElementById('description').value.trim();
+                        // Hide previous messages
+                        formMessage.style.display = 'none';
+                        formMessage.className = 'form-message';
 
-                        if (!firstName || !lastName || !description) {
-                            alert('Please fill in all required fields');
-                            return;
-                        }
+                        // Show spinner and disable button
+                        btnText.style.display = 'none';
+                        btnSpinner.style.display = 'inline-block';
+                        submitBtn.disabled = true;
 
-                        alert('Form submitted successfully!');
+                        // Create FormData
+                        const formData = new FormData(form);
+
+                        // AJAX submission
+                        fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Hide spinner and enable button
+                                btnText.style.display = 'inline-block';
+                                btnSpinner.style.display = 'none';
+                                submitBtn.disabled = false;
+
+                                if (data.success) {
+                                    // Show success message
+                                    formMessage.textContent = data.message;
+                                    formMessage.className = 'form-message success';
+                                    formMessage.style.display = 'block';
+
+                                    // Reset form
+                                    form.reset();
+
+                                    // Redirect to thank you page after 2 seconds
+                                    setTimeout(() => {
+                                        window.location.href = '{{ route('frontend.thankYou') }}';
+                                    }, 2000);
+                                } else {
+                                    // Show error message
+                                    let errorMessage = data.message ||
+                                        'An error occurred. Please try again.';
+
+                                    // Add validation errors if present
+                                    if (data.errors) {
+                                        const errorList = Object.values(data.errors).flat().join('<br>');
+                                        errorMessage += '<br>' + errorList;
+                                    }
+
+                                    formMessage.innerHTML = errorMessage;
+                                    formMessage.className = 'form-message error';
+                                    formMessage.style.display = 'block';
+
+                                    // Scroll to message
+                                    formMessage.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'nearest'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                // Hide spinner and enable button
+                                btnText.style.display = 'inline-block';
+                                btnSpinner.style.display = 'none';
+                                submitBtn.disabled = false;
+
+                                // Show error message
+                                formMessage.textContent =
+                                    'An error occurred while submitting the form. Please try again later.';
+                                formMessage.className = 'form-message error';
+                                formMessage.style.display = 'block';
+
+                                console.error('Error:', error);
+                            });
                     });
                 }
             });
