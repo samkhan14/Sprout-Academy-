@@ -55,7 +55,7 @@
         'text' =>
             'As children get older and more independent, they need new challenges. That\'s why we offer enrichment programs before and after school, as well as Summer Camps that address the changing and varied needs of growing school-age children.',
         'buttonText' => 'Learn More',
-        'buttonLink' => '#',
+        'buttonLink' => route('frontend.educationFor512YearOld'),
         'buttonClass' => 'btn btn-secondary',
     ])
 

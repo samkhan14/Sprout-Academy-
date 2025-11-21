@@ -11,7 +11,7 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_time_clock_change_request">
-                <form id="timeClockChangeRequestForm" method="POST" action="{{ route('form.submitTimeClockChangeRequest') }}"
+                <form id="timeClockChangeRequestForm" method="POST" action="{{ route('form.timeClockChangeRequest') }}"
                     novalidate>
                     @csrf
                     <div class="form-wrapper">

@@ -23,7 +23,7 @@
                 </a>
 
                 {{-- Form Card 2: Maintenance Work Order Form --}}
-                <a href="{{ route('form.maintenanceWorkOrderForm') }}" class="employee-form-card">
+                <a href="{{ route('form.maintenanceWorkOrder') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-7.png') }}"
                             alt="Maintenance Work Order Form">
@@ -32,7 +32,7 @@
                 </a>
 
                 {{-- Form Card 3: Supply Order Form --}}
-                <a href="{{ route('form.supplyOrderForm') }}" class="employee-form-card">
+                <a href="{{ route('form.supplyOrder') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-6.png') }}" alt="Supply Order Form">
                     </div>
@@ -40,7 +40,7 @@
                 </a>
 
                 {{-- Form Card 4: Snack Order Form --}}
-                <a href="{{ route('form.snackOrderForm') }}" class="employee-form-card">
+                <a href="{{ route('form.snackOrder') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-5.png') }}" alt="Snack Order Form">
                     </div>
@@ -48,7 +48,7 @@
                 </a>
 
                 {{-- Form Card 5: Suggestion Form --}}
-                <a href="{{ route('form.suggestionForm') }}" class="employee-form-card">
+                <a href="{{ route('form.suggestion') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-4.png') }}" alt="Suggestion Form">
                     </div>
@@ -56,7 +56,7 @@
                 </a>
 
                 {{-- Form Card 6: Time Clock Change Request --}}
-                <a href="{{ route('form.timeClockChangeRequestForm') }}" class="employee-form-card">
+                <a href="{{ route('form.timeClockChangeRequest') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-3.png') }}"
                             alt="Time Clock Change Request">
@@ -65,7 +65,7 @@
                 </a>
 
                 {{-- Form Card 7: Standard Sprout T-Shirt Order --}}
-                <a href="{{ route('form.standardTShirtOrderForm') }}" class="employee-form-card">
+                <a href="{{ route('form.standardTShirtOrder') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-2.png') }}"
                             alt="Standard Sprout T-Shirt Order">
@@ -74,7 +74,7 @@
                 </a>
 
                 {{-- Form Card 8: Specialty Sprout T-Shirt Order --}}
-                <a href="{{ route('form.specialtyTShirtOrderForm') }}" class="employee-form-card">
+                <a href="{{ route('form.specialtyTShirtOrder') }}" class="employee-form-card">
                     <div class="employee-form-icon">
                         <img src="{{ asset('frontend/assets/home_page_images/emp-frm-1.png') }}"
                             alt="Specialty Sprout T-Shirt Order">

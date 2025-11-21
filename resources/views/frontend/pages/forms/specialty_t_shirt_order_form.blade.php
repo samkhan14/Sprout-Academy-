@@ -15,8 +15,8 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_standardSproutTShirtOrder">
-                <form id="specialtySproutTShirtOrderForm" method="POST"
-                    action="{{ route('form.submitSpecialtyTShirtOrder') }}" novalidate>
+                <form id="specialtySproutTShirtOrderForm" method="POST" action="{{ route('form.specialtyTShirtOrder') }}"
+                    novalidate>
                     @csrf
                     <div class="form-wrapper">
                         <!-- Left Form Section -->

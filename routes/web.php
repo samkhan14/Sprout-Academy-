@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\ProfileController;
+
+
 
 Route::controller(FrontendController::class)->name('frontend.')->group(function () {
     Route::get('/', 'index')->name('home');
@@ -32,19 +35,33 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 });
 
 
+// Form Routes (Public)
 Route::controller(FormController::class)->name('form.')->group(function () {
-    Route::get('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
-    Route::get('/maintenance-work-order-form', 'MaintenanceWorkOrderForm')->name('maintenanceWorkOrderForm');
-    Route::post('/maintenance-work-order-form', 'submitMaintenanceWorkOrder')->name('submitMaintenanceWorkOrder');
-    Route::get('/supply-order-form', 'SupplyOrderForm')->name('supplyOrderForm');
-    Route::get('/snack-order-form', 'SnackOrderForm')->name('snackOrderForm');
-    Route::get('/suggestion-form', 'SuggestionForm')->name('suggestionForm');
-    Route::post('/suggestion-form', 'submitSuggestion')->name('submitSuggestion');
-    Route::get('/time-clock-change-request-form', 'TimeClockChangeRequestForm')->name('timeClockChangeRequestForm');
-    Route::post('/time-clock-change-request-form', 'submitTimeClockChangeRequest')->name('submitTimeClockChangeRequest');
-    Route::get('/standard-t-shirt-order-form', 'StandardTShirtOrderForm')->name('standardTShirtOrderForm');
-    Route::post('/standard-t-shirt-order-form', 'submitStandardTShirtOrder')->name('submitStandardTShirtOrder');
-    Route::get('/specialty-t-shirt-order-form', 'SpecialtyTShirtOrderForm')->name('specialtyTShirtOrderForm');
-    Route::post('/specialty-t-shirt-order-form', 'submitSpecialtyTShirtOrder')->name('submitSpecialtyTShirtOrder');
+    Route::any('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
+    Route::any('/maintenance-work-order-form', 'maintenanceWorkOrder')->name('maintenanceWorkOrder');
+    Route::any('/supply-order-form', 'supplyOrder')->name('supplyOrder');
+    Route::any('/snack-order-form', 'snackOrder')->name('snackOrder');
+    Route::any('/suggestion-form', 'suggestion')->name('suggestion');
+    Route::any('/time-clock-change-request-form', 'timeClockChangeRequest')->name('timeClockChangeRequest');
+    Route::any('/standard-t-shirt-order-form', 'standardTShirtOrder')->name('standardTShirtOrder');
+    Route::any('/specialty-t-shirt-order-form', 'specialtyTShirtOrder')->name('specialtyTShirtOrder');
     Route::post('/newsletter-subscribe', 'subscribeNewsletter')->name('subscribeNewsletter');
 });
+
+// Auth Routes (Breeze)
+require __DIR__ . '/auth.php';
+
+// Dashboard Redirect (for backward compatibility)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('dashboard');
+});
+
+// Profile Routes (Authenticated)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+

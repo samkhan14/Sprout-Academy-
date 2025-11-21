@@ -12,7 +12,7 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_maintenance_work_order">
-                <form id="maintenanceWorkOrderForm" method="POST" action="{{ route('form.submitMaintenanceWorkOrder') }}"
+                <form id="maintenanceWorkOrderForm" method="POST" action="{{ route('form.maintenanceWorkOrder') }}"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-wrapper">

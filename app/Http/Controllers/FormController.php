@@ -5,38 +5,419 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MaintenanceWorkOrder;
 use App\Models\Suggestion;
+use App\Models\TimeOffRequestForm;
 use App\Models\TimeClockChangeRequest;
 use App\Models\StandardTShirtOrder;
 use App\Models\SpecialtyTShirtOrder;
 use App\Models\NewsletterSubscription;
+use App\Models\SnackOrder;
+use App\Models\SupplyOrder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
-    public function TimeOffRequestForm()
+    public function TimeOffRequestForm(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|email|max:255',
+                    'location' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'todays_date' => 'required|date',
+                    'start_date' => 'required|date|after_or_equal:todays_date',
+                    'end_date' => 'required|date|after_or_equal:start_date',
+                    'paid_unpaid' => 'required|string|in:paid,unpaid',
+                    'reason' => 'nullable|string|max:5000',
+                    'director_signature' => 'nullable|string|max:255',
+                ], [
+                    'name.required' => 'Name is required.',
+                    'email.required' => 'Email is required.',
+                    'email.email' => 'Please enter a valid email address.',
+                    'location.required' => 'Location is required.',
+                    'todays_date.required' => 'Today\'s date is required.',
+                    'start_date.required' => 'Start date is required.',
+                    'start_date.after_or_equal' => 'Start date must be today or later.',
+                    'end_date.required' => 'End date is required.',
+                    'end_date.after_or_equal' => 'End date must be on or after start date.',
+                    'paid_unpaid.required' => 'Please select paid or unpaid.',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors()], 422);
+                }
+
+                // Create time off request
+                $timeOffRequest = TimeOffRequestForm::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'location' => $request->location,
+                    'todays_date' => $request->todays_date,
+                    'start_date' => $request->start_date,
+                    'end_date' => $request->end_date,
+                    'paid_unpaid' => $request->paid_unpaid,
+                    'reason' => $request->reason,
+                    'director_signature' => $request->director_signature,
+                ]);
+
+                return response()->json(['message' => 'Time off request submitted successfully!'], 200);
+
+            } catch (\Exception $e) {
+                Log::error('Error submitting time off request form: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'request_data' => $request->all(),
+                ]);
+                return response()->json(['message' => 'An error occurred while submitting the form.'], 500);
+            }
+        }
+
+        // Handle GET request - Display form
         return view('frontend.pages.forms.time_off_request_form');
     }
 
-    public function MaintenanceWorkOrderForm()
+    /**
+     * Maintenance Work Order Form - Display and Submit
+     */
+    public function maintenanceWorkOrder(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'todays_date' => 'required|date',
+                    'completion_date' => 'required|date|after_or_equal:todays_date',
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'phone_number' => 'required|string|max:20',
+                    'email' => 'required|email|max:255',
+                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'description' => 'nullable|string|max:5000',
+                    'attach_file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240', // 10MB max
+                    'area_repair' => 'required|string|in:plumbing,electrical,hvac,painting,carpentry,other',
+                ], [
+                    'todays_date.required' => 'Today\'s date is required.',
+                    'todays_date.date' => 'Today\'s date must be a valid date.',
+                    'completion_date.required' => 'Completion date is required.',
+                    'completion_date.date' => 'Completion date must be a valid date.',
+                    'completion_date.after_or_equal' => 'Completion date must be today or later.',
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'phone_number.required' => 'Phone number is required.',
+                    'email.required' => 'Email is required.',
+                    'email.email' => 'Please enter a valid email address.',
+                    'location.required' => 'Location is required.',
+                    'location.in' => 'Please select a valid location.',
+                    'attach_file.file' => 'The file must be a valid file.',
+                    'attach_file.mimes' => 'The file must be a PDF, DOC, DOCX, JPG, JPEG, or PNG file.',
+                    'attach_file.max' => 'The file size must not exceed 10MB.',
+                    'area_repair.required' => 'Area repair is required.',
+                    'area_repair.in' => 'Please select a valid area of repair.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Handle file upload
+                $filePath = null;
+                if ($request->hasFile('attach_file')) {
+                    $file = $request->file('attach_file');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $filePath = $file->storeAs('maintenance_work_orders', $fileName, 'public');
+                }
+
+                // Create maintenance work order
+                $workOrder = MaintenanceWorkOrder::create([
+                    'todays_date' => $request->todays_date,
+                    'completion_date' => $request->completion_date,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'phone_number' => $request->phone_number,
+                    'email' => $request->email,
+                    'location' => $request->location,
+                    'description' => $request->description,
+                    'file_path' => $filePath,
+                    'area_repair' => $request->area_repair,
+                ]);
+
+                // Log success
+                Log::info('Maintenance work order submitted', [
+                    'id' => $workOrder->id,
+                    'email' => $workOrder->email,
+                    'location' => $workOrder->location,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your maintenance work order has been submitted successfully!',
+                    'data' => [
+                        'id' => $workOrder->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Maintenance work order submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         return view('frontend.pages.forms.maintenance_work_order_form');
     }
 
-    public function SuggestionForm()
+    /**
+     * Suggestion Form - Display and Submit
+     */
+    public function suggestion(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'subject' => 'required|string|max:255',
+                    'description' => 'nullable|string|max:5000',
+                ], [
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'subject.required' => 'Subject is required.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Create suggestion
+                $suggestion = Suggestion::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'subject' => $request->subject,
+                    'description' => $request->description,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your suggestion has been submitted successfully!',
+                    'data' => [
+                        'id' => $suggestion->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Suggestion submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         return view('frontend.pages.forms.suggestion_form');
     }
 
-    public function TimeClockChangeRequestForm()
+    /**
+     * Time Clock Change Request Form - Display and Submit
+     */
+    public function timeClockChangeRequest(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'date_to_be_changed' => 'required|date',
+                    'clock_in_time' => 'required|date_format:H:i',
+                    'clock_out_for_lunch' => 'nullable|date_format:H:i',
+                    'clock_in_from_lunch' => 'nullable|date_format:H:i',
+                    'clock_out_time' => 'nullable|date_format:H:i',
+                    'reason_for_change' => 'required|string|max:255',
+                    'supervisor_first_name' => 'nullable|string|max:255',
+                    'supervisor_last_name' => 'nullable|string|max:255',
+                ], [
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'location.required' => 'Center location is required.',
+                    'location.in' => 'Please select a valid center location.',
+                    'date_to_be_changed.required' => 'Date to be changed is required.',
+                    'date_to_be_changed.date' => 'Date to be changed must be a valid date.',
+                    'clock_in_time.required' => 'Clock in time is required.',
+                    'clock_in_time.date_format' => 'Clock in time must be in valid time format.',
+                    'clock_out_for_lunch.date_format' => 'Clock out for lunch must be in valid time format.',
+                    'clock_in_from_lunch.date_format' => 'Clock in from lunch must be in valid time format.',
+                    'clock_out_time.date_format' => 'Clock out time must be in valid time format.',
+                    'reason_for_change.required' => 'Reason for change is required.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Create time clock change request
+                $timeClockChangeRequest = TimeClockChangeRequest::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'location' => $request->location,
+                    'date_to_be_changed' => $request->date_to_be_changed,
+                    'clock_in_time' => $request->clock_in_time,
+                    'clock_out_for_lunch' => $request->clock_out_for_lunch,
+                    'clock_in_from_lunch' => $request->clock_in_from_lunch,
+                    'clock_out_time' => $request->clock_out_time,
+                    'reason_for_change' => $request->reason_for_change,
+                    'supervisor_first_name' => $request->supervisor_first_name,
+                    'supervisor_last_name' => $request->supervisor_last_name,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your time clock change request has been submitted successfully!',
+                    'data' => [
+                        'id' => $timeClockChangeRequest->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Time clock change request submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         return view('frontend.pages.forms.time_clock_change_request_form');
     }
 
-    public function SupplyOrderForm()
+    /**
+     * Supply Order Form - Display and Submit
+     */
+    public function supplyOrder(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'choose_your_center' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'other' => 'nullable|string|max:5000',
+                ], [
+                    'choose_your_center.required' => 'Please choose your center.',
+                    'choose_your_center.in' => 'Please select a valid center.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Collect all order items (only non-zero values)
+                $orderItems = [];
+                $allFields = $request->all();
+
+                foreach ($allFields as $key => $value) {
+                    // Skip system fields
+                    if (in_array($key, ['_token', 'choose_your_center', 'other'])) {
+                        continue;
+                    }
+
+                    // Only include numeric values > 0
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $orderItems[$key] = (int) $value;
+                    }
+                }
+
+                // Check if at least one item is ordered
+                if (empty($orderItems)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please order at least one item.'
+                    ], 422);
+                }
+
+                // Create supply order
+                $order = SupplyOrder::create([
+                    'location' => $request->choose_your_center,
+                    'order_items' => $orderItems,
+                    'other' => $request->other,
+                ]);
+
+                // Log success
+                Log::info('Supply order submitted', [
+                    'id' => $order->id,
+                    'location' => $order->location,
+                ]);
+
+                return response()->json([
+                    'message' => 'Your supply order has been submitted successfully!'
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Supply order submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         $formFields = [
             'number_inputs' => [
                 'left_column' => [
@@ -113,8 +494,89 @@ class FormController extends Controller
         return view('frontend.pages.forms.supply_order_form', compact('formFields'));
     }
 
-    public function SnackOrderForm()
+    /**
+     * Snack Order Form - Display and Submit
+     */
+    public function snackOrder(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'choose_your_center' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'other' => 'nullable|string|max:5000',
+                ], [
+                    'choose_your_center.required' => 'Please choose your center.',
+                    'choose_your_center.in' => 'Please select a valid center.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Collect all order items (only non-zero values)
+                $orderItems = [];
+                $allFields = $request->all();
+
+                foreach ($allFields as $key => $value) {
+                    // Skip system fields
+                    if (in_array($key, ['_token', 'choose_your_center', 'other'])) {
+                        continue;
+                    }
+
+                    // Only include numeric values > 0
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $orderItems[$key] = (int) $value;
+                    }
+                }
+
+                // Check if at least one item is ordered
+                if (empty($orderItems)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please order at least one item.'
+                    ], 422);
+                }
+
+                // Create snack order
+                $order = SnackOrder::create([
+                    'location' => $request->choose_your_center,
+                    'order_items' => $orderItems,
+                    'other' => $request->other,
+                ]);
+
+                // Log success
+                Log::info('Snack order submitted', [
+                    'id' => $order->id,
+                    'location' => $order->location,
+                ]);
+
+                return response()->json([
+                    'message' => 'Your snack order has been submitted successfully!'
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Snack order submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         $formFields = [
             'number_inputs' => [
                 'left_column' => [
@@ -164,390 +626,154 @@ class FormController extends Controller
         return view('frontend.pages.forms.snack_order_form', compact('formFields'));
     }
 
-    public function StandardTShirtOrderForm()
+    /**
+     * Standard T-Shirt Order Form - Display and Submit
+     */
+    public function standardTShirtOrder(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
+                    'colors' => 'required|array|min:1',
+                    'colors.*' => 'string',
+                    'special_instructions' => 'nullable|string|max:5000',
+                ], [
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'location.required' => 'Location is required.',
+                    'location.in' => 'Please select a valid location.',
+                    'size.required' => 'Size is required.',
+                    'size.in' => 'Please select a valid size.',
+                    'colors.required' => 'Please select at least one color.',
+                    'colors.array' => 'Colors must be an array.',
+                    'colors.min' => 'Please select at least one color.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Create standard t-shirt order
+                $order = StandardTShirtOrder::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'location' => $request->location,
+                    'size' => $request->size,
+                    'colors' => $request->colors,
+                    'special_instructions' => $request->special_instructions,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your standard t-shirt order has been submitted successfully!',
+                    'data' => [
+                        'id' => $order->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Standard t-shirt order submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         return view('frontend.pages.forms.standard_t_shirt_order_form');
     }
 
-    public function SpecialtyTShirtOrderForm()
+    /**
+     * Specialty T-Shirt Order Form - Display and Submit
+     */
+    public function specialtyTShirtOrder(Request $request)
     {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
+                    'themes' => 'required|array|min:1',
+                    'themes.*' => 'string',
+                    'special_instructions' => 'nullable|string|max:5000',
+                ], [
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'location.required' => 'Location is required.',
+                    'location.in' => 'Please select a valid location.',
+                    'size.required' => 'Size is required.',
+                    'size.in' => 'Please select a valid size.',
+                    'themes.required' => 'Please select at least one theme/holiday.',
+                    'themes.array' => 'Themes must be an array.',
+                    'themes.min' => 'Please select at least one theme/holiday.',
+                ]);
+
+                // If validation fails, return errors
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed. Please check your input.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Create specialty t-shirt order
+                $order = SpecialtyTShirtOrder::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'location' => $request->location,
+                    'size' => $request->size,
+                    'themes' => $request->themes,
+                    'special_instructions' => $request->special_instructions,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your specialty t-shirt order has been submitted successfully!',
+                    'data' => [
+                        'id' => $order->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Specialty t-shirt order submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
         return view('frontend.pages.forms.specialty_t_shirt_order_form');
-    }
-
-    /**
-     * Submit Maintenance Work Order Form
-     */
-    public function submitMaintenanceWorkOrder(Request $request)
-    {
-        try {
-            // Validation rules
-            $validator = Validator::make($request->all(), [
-                'todays_date' => 'required|date',
-                'completion_date' => 'required|date|after_or_equal:todays_date',
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:20',
-                'email' => 'required|email|max:255',
-                'location' => 'required|string|in:seminole,orlando,tampa',
-                'description' => 'nullable|string|max:5000',
-                'attach_file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240', // 10MB max
-                'area_repair' => 'required|string|in:plumbing,electrical,hvac,painting,carpentry,other',
-            ], [
-                'todays_date.required' => 'Today\'s date is required.',
-                'todays_date.date' => 'Today\'s date must be a valid date.',
-                'completion_date.required' => 'Completion date is required.',
-                'completion_date.date' => 'Completion date must be a valid date.',
-                'completion_date.after_or_equal' => 'Completion date must be today or later.',
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'phone_number.required' => 'Phone number is required.',
-                'email.required' => 'Email is required.',
-                'email.email' => 'Please enter a valid email address.',
-                'location.required' => 'Location is required.',
-                'location.in' => 'Please select a valid location.',
-                'attach_file.file' => 'The file must be a valid file.',
-                'attach_file.mimes' => 'The file must be a PDF, DOC, DOCX, JPG, JPEG, or PNG file.',
-                'attach_file.max' => 'The file size must not exceed 10MB.',
-                'area_repair.required' => 'Area repair is required.',
-                'area_repair.in' => 'Please select a valid area of repair.',
-            ]);
-
-            // If validation fails, return errors
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed. Please check your input.',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            // Handle file upload
-            $filePath = null;
-            if ($request->hasFile('attach_file')) {
-                $file = $request->file('attach_file');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('maintenance_work_orders', $fileName, 'public');
-            }
-
-            // Create maintenance work order
-            $workOrder = MaintenanceWorkOrder::create([
-                'todays_date' => $request->todays_date,
-                'completion_date' => $request->completion_date,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'phone_number' => $request->phone_number,
-                'email' => $request->email,
-                'location' => $request->location,
-                'description' => $request->description,
-                'file_path' => $filePath,
-                'area_repair' => $request->area_repair,
-            ]);
-
-            // Log success
-            Log::info('Maintenance work order submitted', [
-                'id' => $workOrder->id,
-                'email' => $workOrder->email,
-                'location' => $workOrder->location,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your maintenance work order has been submitted successfully!',
-                'data' => [
-                    'id' => $workOrder->id,
-                ]
-            ], 200);
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error('Maintenance work order submission failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while submitting your form. Please try again later.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
-    }
-
-    /**
-     * Submit Suggestion Form
-     */
-    public function submitSuggestion(Request $request)
-    {
-        try {
-            // Validation rules
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'subject' => 'required|string|max:255',
-                'description' => 'nullable|string|max:5000',
-            ], [
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'subject.required' => 'Subject is required.',
-            ]);
-
-            // If validation fails, return errors
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed. Please check your input.',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            // Create suggestion
-            $suggestion = Suggestion::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'subject' => $request->subject,
-                'description' => $request->description,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your suggestion has been submitted successfully!',
-                'data' => [
-                    'id' => $suggestion->id,
-                ]
-            ], 200);
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error('Suggestion submission failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while submitting your form. Please try again later.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
-    }
-
-    /**
-     * Submit Time Clock Change Request Form
-     */
-    public function submitTimeClockChangeRequest(Request $request)
-    {
-        try {
-            // Validation rules
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'location' => 'required|string|in:seminole,orlando,tampa',
-                'date_to_be_changed' => 'required|date',
-                'clock_in_time' => 'required|date_format:H:i',
-                'clock_out_for_lunch' => 'nullable|date_format:H:i',
-                'clock_in_from_lunch' => 'nullable|date_format:H:i',
-                'clock_out_time' => 'nullable|date_format:H:i',
-                'reason_for_change' => 'required|string|max:255',
-                'supervisor_first_name' => 'nullable|string|max:255',
-                'supervisor_last_name' => 'nullable|string|max:255',
-            ], [
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'location.required' => 'Center location is required.',
-                'location.in' => 'Please select a valid center location.',
-                'date_to_be_changed.required' => 'Date to be changed is required.',
-                'date_to_be_changed.date' => 'Date to be changed must be a valid date.',
-                'clock_in_time.required' => 'Clock in time is required.',
-                'clock_in_time.date_format' => 'Clock in time must be in valid time format.',
-                'clock_out_for_lunch.date_format' => 'Clock out for lunch must be in valid time format.',
-                'clock_in_from_lunch.date_format' => 'Clock in from lunch must be in valid time format.',
-                'clock_out_time.date_format' => 'Clock out time must be in valid time format.',
-                'reason_for_change.required' => 'Reason for change is required.',
-            ]);
-
-            // If validation fails, return errors
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed. Please check your input.',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            // Create time clock change request
-            $timeClockChangeRequest = TimeClockChangeRequest::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'location' => $request->location,
-                'date_to_be_changed' => $request->date_to_be_changed,
-                'clock_in_time' => $request->clock_in_time,
-                'clock_out_for_lunch' => $request->clock_out_for_lunch,
-                'clock_in_from_lunch' => $request->clock_in_from_lunch,
-                'clock_out_time' => $request->clock_out_time,
-                'reason_for_change' => $request->reason_for_change,
-                'supervisor_first_name' => $request->supervisor_first_name,
-                'supervisor_last_name' => $request->supervisor_last_name,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your time clock change request has been submitted successfully!',
-                'data' => [
-                    'id' => $timeClockChangeRequest->id,
-                ]
-            ], 200);
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error('Time clock change request submission failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while submitting your form. Please try again later.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
-    }
-
-    /**
-     * Submit Standard T-Shirt Order Form
-     */
-    public function submitStandardTShirtOrder(Request $request)
-    {
-        try {
-            // Validation rules
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'location' => 'required|string|in:seminole,orlando,tampa',
-                'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
-                'colors' => 'required|array|min:1',
-                'colors.*' => 'string',
-                'special_instructions' => 'nullable|string|max:5000',
-            ], [
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'location.required' => 'Location is required.',
-                'location.in' => 'Please select a valid location.',
-                'size.required' => 'Size is required.',
-                'size.in' => 'Please select a valid size.',
-                'colors.required' => 'Please select at least one color.',
-                'colors.array' => 'Colors must be an array.',
-                'colors.min' => 'Please select at least one color.',
-            ]);
-
-            // If validation fails, return errors
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed. Please check your input.',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            // Create standard t-shirt order
-            $order = StandardTShirtOrder::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'location' => $request->location,
-                'size' => $request->size,
-                'colors' => $request->colors,
-                'special_instructions' => $request->special_instructions,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your standard t-shirt order has been submitted successfully!',
-                'data' => [
-                    'id' => $order->id,
-                ]
-            ], 200);
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error('Standard t-shirt order submission failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while submitting your form. Please try again later.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
-    }
-
-    /**
-     * Submit Specialty T-Shirt Order Form
-     */
-    public function submitSpecialtyTShirtOrder(Request $request)
-    {
-        try {
-            // Validation rules
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'location' => 'required|string|in:seminole,orlando,tampa',
-                'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
-                'themes' => 'required|array|min:1',
-                'themes.*' => 'string',
-                'special_instructions' => 'nullable|string|max:5000',
-            ], [
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'location.required' => 'Location is required.',
-                'location.in' => 'Please select a valid location.',
-                'size.required' => 'Size is required.',
-                'size.in' => 'Please select a valid size.',
-                'themes.required' => 'Please select at least one theme/holiday.',
-                'themes.array' => 'Themes must be an array.',
-                'themes.min' => 'Please select at least one theme/holiday.',
-            ]);
-
-            // If validation fails, return errors
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed. Please check your input.',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            // Create specialty t-shirt order
-            $order = SpecialtyTShirtOrder::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'location' => $request->location,
-                'size' => $request->size,
-                'themes' => $request->themes,
-                'special_instructions' => $request->special_instructions,
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your specialty t-shirt order has been submitted successfully!',
-                'data' => [
-                    'id' => $order->id,
-                ]
-            ], 200);
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error('Specialty t-shirt order submission failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while submitting your form. Please try again later.',
-                'error' => config('app.debug') ? $e->getMessage() : null
-            ], 500);
-        }
     }
 
     /**

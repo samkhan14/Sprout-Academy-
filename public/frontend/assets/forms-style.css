@@ -1064,8 +1064,13 @@
         flex-wrap: wrap;
     }
 
+    .site_form .form-left {
+        width: 100%;
+        display: block;
+    }
+
     .site_form .date-split-input {
-        max-width: 60px;
+        max-width: 100px;
         padding: 10px 6px;
         font-size: 13px;
     }
@@ -1082,9 +1087,13 @@
 
     .site_form .time-split-input,
     .site_form .time-split-select {
-        max-width: 60px;
+        max-width: 100px;
         padding: 10px 6px;
         font-size: 13px;
+    }
+
+    .site_form .time-split-wrapper {
+        gap: 5px;
     }
 
     .site_form .time-split-icon {
@@ -1095,6 +1104,18 @@
     .site_form .time-split-icon svg {
         width: 14px;
         height: 14px;
+    }
+
+    .form-header-section {
+        height: auto;
+    }
+
+    .form-header-content h1 {
+        font-size: 30px;
+    }
+
+    .form-header-content p {
+        font-size: 15px;
     }
 }
 

@@ -12,7 +12,7 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_suggestion">
-                <form id="suggestionForm" method="POST" action="{{ route('form.submitSuggestion') }}" novalidate>
+                <form id="suggestionForm" method="POST" action="{{ route('form.suggestion') }}" novalidate>
                     @csrf
                     <div class="form-wrapper">
                         <!-- Left Form Section -->

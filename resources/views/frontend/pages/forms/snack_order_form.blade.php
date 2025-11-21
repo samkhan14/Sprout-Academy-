@@ -12,7 +12,7 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_snack_order">
-                <form id="snackOrderForm" method="POST" action="#" novalidate>
+                <form id="snackOrderForm" method="POST" action="{{ route('form.snackOrder') }}" novalidate>
                     @csrf
 
                     {{-- Choose Your Center - Full Width --}}
