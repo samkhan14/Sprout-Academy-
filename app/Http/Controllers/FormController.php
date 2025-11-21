@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MaintenanceWorkOrder;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
@@ -163,6 +167,105 @@ class FormController extends Controller
     public function SpecialtyTShirtOrderForm()
     {
         return view('frontend.pages.forms.specialty_t_shirt_order_form');
+    }
+
+    /**
+     * Submit Maintenance Work Order Form
+     */
+    public function submitMaintenanceWorkOrder(Request $request)
+    {
+        try {
+            // Validation rules
+            $validator = Validator::make($request->all(), [
+                'todays_date' => 'required|date',
+                'completion_date' => 'required|date|after_or_equal:todays_date',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'phone_number' => 'required|string|max:20',
+                'email' => 'required|email|max:255',
+                'location' => 'required|string|in:seminole,orlando,tampa',
+                'description' => 'nullable|string|max:5000',
+                'attach_file' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240', // 10MB max
+                'area_repair' => 'required|string|in:plumbing,electrical,hvac,painting,carpentry,other',
+            ], [
+                'todays_date.required' => 'Today\'s date is required.',
+                'todays_date.date' => 'Today\'s date must be a valid date.',
+                'completion_date.required' => 'Completion date is required.',
+                'completion_date.date' => 'Completion date must be a valid date.',
+                'completion_date.after_or_equal' => 'Completion date must be today or later.',
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'phone_number.required' => 'Phone number is required.',
+                'email.required' => 'Email is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'location.required' => 'Location is required.',
+                'location.in' => 'Please select a valid location.',
+                'attach_file.file' => 'The file must be a valid file.',
+                'attach_file.mimes' => 'The file must be a PDF, DOC, DOCX, JPG, JPEG, or PNG file.',
+                'attach_file.max' => 'The file size must not exceed 10MB.',
+                'area_repair.required' => 'Area repair is required.',
+                'area_repair.in' => 'Please select a valid area of repair.',
+            ]);
+
+            // If validation fails, return errors
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed. Please check your input.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Handle file upload
+            $filePath = null;
+            if ($request->hasFile('attach_file')) {
+                $file = $request->file('attach_file');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('maintenance_work_orders', $fileName, 'public');
+            }
+
+            // Create maintenance work order
+            $workOrder = MaintenanceWorkOrder::create([
+                'todays_date' => $request->todays_date,
+                'completion_date' => $request->completion_date,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'location' => $request->location,
+                'description' => $request->description,
+                'file_path' => $filePath,
+                'area_repair' => $request->area_repair,
+            ]);
+
+            // Log success
+            Log::info('Maintenance work order submitted', [
+                'id' => $workOrder->id,
+                'email' => $workOrder->email,
+                'location' => $workOrder->location,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your maintenance work order has been submitted successfully!',
+                'data' => [
+                    'id' => $workOrder->id,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Maintenance work order submission failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while submitting your form. Please try again later.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
 
 }

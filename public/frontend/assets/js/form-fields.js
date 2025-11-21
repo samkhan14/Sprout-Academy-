@@ -20,9 +20,11 @@
             const datePickerInput = document.getElementById(
                 `${fieldId}DatePicker`
             );
-            const calendarIcon = document.getElementById(
-                `${fieldId}CalendarIcon`
-            );
+
+            // Use data-date-trigger attribute for more reliable selection
+            const calendarIcon =
+                wrapper.querySelector(`[data-date-trigger="${fieldId}"]`) ||
+                document.getElementById(`${fieldId}CalendarIcon`);
 
             if (
                 !monthInput ||
@@ -30,8 +32,12 @@
                 !yearInput ||
                 !datePickerInput ||
                 !calendarIcon
-            )
+            ) {
+                console.warn(
+                    `Date picker initialization failed for field: ${fieldId}`
+                );
                 return;
+            }
 
             // Get default date and min date from data attributes
             const defaultDate = wrapper.dataset.defaultDate || null;
@@ -68,15 +74,31 @@
                 },
             });
 
-            // Open calendar on icon click
-            calendarIcon.addEventListener("click", function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+            // Function to open calendar
+            function openCalendar() {
                 datePicker.open();
                 setTimeout(
                     () => positionCalendar(datePicker, calendarIcon),
                     10
                 );
+            }
+
+            // Open calendar on icon click
+            calendarIcon.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openCalendar();
+            });
+
+            // Open calendar when clicking on any date input field
+            [monthInput, dayInput, yearInput].forEach((input) => {
+                if (input) {
+                    input.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openCalendar();
+                    });
+                }
             });
 
             // Setup date input handlers

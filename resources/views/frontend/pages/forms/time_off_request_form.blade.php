@@ -37,26 +37,32 @@
                                 </select>
                             </div>
 
-                            <div class="form-field">
-                                <label for="today">Todays Date*</label>
-                                <div class="date-input-wrapper">
-                                    <input type="text" id="today" class="form-input" readonly />
-                                </div>
-                            </div>
+                            {{-- Today's Date using Component --}}
+                            @include('frontend.components.form_components.date-split-field', [
+                                'fieldId' => 'today',
+                                'label' => 'Todays Date',
+                                'required' => true,
+                                'defaultDate' => 'today',
+                                'minDate' => null,
+                            ])
 
-                            <div class="form-field">
-                                <label for="startDate">Start Of Date Requested Off *</label>
-                                <div class="date-input-wrapper">
-                                    <input type="text" id="startDate" class="form-input" readonly />
-                                </div>
-                            </div>
+                            {{-- Start Date using Component --}}
+                            @include('frontend.components.form_components.date-split-field', [
+                                'fieldId' => 'startDate',
+                                'label' => 'Start Of Date Requested Off',
+                                'required' => true,
+                                'defaultDate' => null,
+                                'minDate' => 'today',
+                            ])
 
-                            <div class="form-field">
-                                <label for="endDate">End Of Date Requested Off *</label>
-                                <div class="date-input-wrapper">
-                                    <input type="text" id="endDate" class="form-input" readonly />
-                                </div>
-                            </div>
+                            {{-- End Date using Component --}}
+                            @include('frontend.components.form_components.date-split-field', [
+                                'fieldId' => 'endDate',
+                                'label' => 'End Of Date Requested Off',
+                                'required' => true,
+                                'defaultDate' => null,
+                                'minDate' => 'today',
+                            ])
 
                             <div class="form-field form-field-full">
                                 <label for="paidUnpaid">Paid Or Unpaid? *</label>

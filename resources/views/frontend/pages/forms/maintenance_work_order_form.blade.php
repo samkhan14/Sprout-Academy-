@@ -12,15 +12,20 @@
     <section class="form-section form-section-gradient">
         <div class="container">
             <div class="site_form site_form_maintenance_work_order">
-                <form id="maintenanceWorkOrderForm">
+                <form id="maintenanceWorkOrderForm" method="POST" action="{{ route('form.submitMaintenanceWorkOrder') }}"
+                    enctype="multipart/form-data">
+                    @csrf
                     <div class="form-wrapper">
                         <!-- Left Form Section -->
                         <div class="form-left">
+                            {{-- Success/Error Messages --}}
+                            <div id="formMessage" class="form-message" style="display: none;"></div>
+
                             <div class="form-grid">
 
                                 {{-- Date Field using Component --}}
                                 @include('frontend.components.form_components.date-split-field', [
-                                    'fieldId' => 'todaysDate*',
+                                    'fieldId' => 'todaysDate',
                                     'label' => 'Today\'s Date',
                                     'required' => true,
                                     'defaultDate' => 'today',
@@ -35,33 +40,37 @@
                                     'minDate' => null,
                                 ])
 
+                                {{-- Hidden date inputs for form submission --}}
+                                <input type="hidden" id="todaysDateFormatted" name="todays_date" />
+                                <input type="hidden" id="completionDateFormatted" name="completion_date" />
 
                                 {{-- First Name / Last Name --}}
                                 <div class="form-field">
                                     <label for="firstName">First Name*</label>
-                                    <input type="text" id="firstName" class="form-input" />
+                                    <input type="text" id="firstName" name="first_name" class="form-input" required />
                                 </div>
 
                                 <div class="form-field">
                                     <label for="lastName">Last Name*</label>
-                                    <input type="text" id="lastName" class="form-input" />
+                                    <input type="text" id="lastName" name="last_name" class="form-input" required />
                                 </div>
 
                                 {{-- Phone Number / Email --}}
                                 <div class="form-field">
                                     <label for="phoneNumber">Phone Number*</label>
-                                    <input type="tel" id="phoneNumber" class="form-input" />
+                                    <input type="tel" id="phoneNumber" name="phone_number" class="form-input"
+                                        required />
                                 </div>
 
                                 <div class="form-field">
                                     <label for="email">Email*</label>
-                                    <input type="email" id="email" class="form-input" />
+                                    <input type="email" id="email" name="email" class="form-input" required />
                                 </div>
 
                                 {{-- Location --}}
                                 <div class="form-field form-field-full">
                                     <label for="location">Location*</label>
-                                    <select id="location" class="form-select">
+                                    <select id="location" name="location" class="form-select" required>
                                         <option value="">Select Your Center</option>
                                         <option value="seminole">Seminole</option>
                                         <option value="orlando">Orlando</option>
@@ -73,7 +82,7 @@
                                 <div class="form-field form-field-full">
                                     <label for="description">Description Of Work Needed:</label>
                                     <div class="textarea-wrapper">
-                                        <textarea id="description" class="form-textarea" placeholder="Type here"></textarea>
+                                        <textarea id="description" name="description" class="form-textarea" placeholder="Type here"></textarea>
                                     </div>
                                 </div>
 
@@ -81,7 +90,7 @@
                                 <div class="form-field">
                                     <label for="attachFile">Attach A File*</label>
                                     <div class="file-upload-wrapper">
-                                        <input type="file" id="attachFile" class="form-file-input" />
+                                        <input type="file" id="attachFile" name="attach_file" class="form-file-input" />
                                         <label for="attachFile" class="form-file-label">
                                             <span class="file-upload-text" id="fileUploadText">Choose a File to
                                                 Upload</span>
@@ -97,7 +106,7 @@
 
                                 <div class="form-field">
                                     <label for="areaRepair">Area Repair Needed*</label>
-                                    <select id="areaRepair" class="form-select">
+                                    <select id="areaRepair" name="area_repair" class="form-select" required>
                                         <option value="">Select area of repair</option>
                                         <option value="plumbing">Plumbing</option>
                                         <option value="electrical">Electrical</option>
@@ -109,7 +118,15 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="submit-btn" id="submitBtn">Submit Now</button>
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span class="btn-text">Submit Now</span>
+                                <span class="btn-spinner" style="display: none;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2">
+                                        <path d="M21 12a9 9 0 11-6.219-8.56" />
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -120,7 +137,6 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-
                 // File upload handler
                 const attachFileInput = document.getElementById('attachFile');
                 const fileUploadText = document.getElementById('fileUploadText');
@@ -152,31 +168,120 @@
                     });
                 }
 
-                // Form validation
+                // Form submission with AJAX
                 const form = document.getElementById('maintenanceWorkOrderForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const btnSpinner = submitBtn.querySelector('.btn-spinner');
+                const formMessage = document.getElementById('formMessage');
+
                 if (form) {
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
 
-                        // Basic validation
-                        const firstName = document.getElementById('firstName').value.trim();
-                        const lastName = document.getElementById('lastName').value.trim();
-                        const phoneNumber = document.getElementById('phoneNumber').value.trim();
-                        const email = document.getElementById('email').value.trim();
-                        const location = document.getElementById('location').value.trim();
-                        const attachFile = document.getElementById('attachFile').files.length;
-                        const completionDate = document.getElementById('completionDate').value.trim();
-                        const description = document.getElementById('description').value.trim();
-                        const attachFile = document.getElementById('attachFile').files.length;
-                        const areaRepair = document.getElementById('areaRepair').value.trim();
+                        // Hide previous messages
+                        formMessage.style.display = 'none';
+                        formMessage.className = 'form-message';
 
-                        if (!firstName || !lastName || !phoneNumber || !email || !location || !attachFile ||
-                            !completionDate || !description || !areaRepair) {
-                            alert('Please fill in all required fields');
-                            return;
-                        }
+                        // Combine date fields (MM, DD, YY) into formatted dates
+                        const todayMonth = document.getElementById('todaysDateMonth').value;
+                        const todayDay = document.getElementById('todaysDateDay').value;
+                        const todayYear = document.getElementById('todaysDateYear').value;
+                        const completionMonth = document.getElementById('completionDateMonth').value;
+                        const completionDay = document.getElementById('completionDateDay').value;
+                        const completionYear = document.getElementById('completionDateYear').value;
 
-                        alert('Form submitted successfully!');
+                        // Convert YY to YYYY (assuming 20XX for years)
+                        const todayFullYear = '20' + todayYear;
+                        const completionFullYear = '20' + completionYear;
+
+                        // Format as YYYY-MM-DD
+                        const todayFormatted =
+                            `${todayFullYear}-${todayMonth.padStart(2, '0')}-${todayDay.padStart(2, '0')}`;
+                        const completionFormatted =
+                            `${completionFullYear}-${completionMonth.padStart(2, '0')}-${completionDay.padStart(2, '0')}`;
+
+                        document.getElementById('todaysDateFormatted').value = todayFormatted;
+                        document.getElementById('completionDateFormatted').value = completionFormatted;
+
+                        // Show spinner and disable button
+                        btnText.style.display = 'none';
+                        btnSpinner.style.display = 'inline-block';
+                        submitBtn.disabled = true;
+
+                        // Create FormData
+                        const formData = new FormData(form);
+
+                        // AJAX submission
+                        fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Hide spinner and enable button
+                                btnText.style.display = 'inline-block';
+                                btnSpinner.style.display = 'none';
+                                submitBtn.disabled = false;
+
+                                if (data.success) {
+                                    // Show success message
+                                    formMessage.textContent = data.message;
+                                    formMessage.className = 'form-message success';
+                                    formMessage.style.display = 'block';
+
+                                    // Reset form
+                                    form.reset();
+
+                                    // Reset file upload text
+                                    if (fileUploadText) {
+                                        fileUploadText.textContent = 'Choose a File to Upload';
+                                    }
+
+                                    // Redirect to thank you page after 2 seconds
+                                    setTimeout(() => {
+                                        window.location.href = '{{ route('frontend.thankYou') }}';
+                                    }, 2000);
+                                } else {
+                                    // Show error message
+                                    let errorMessage = data.message ||
+                                        'An error occurred. Please try again.';
+
+                                    // Add validation errors if present
+                                    if (data.errors) {
+                                        const errorList = Object.values(data.errors).flat().join('<br>');
+                                        errorMessage += '<br>' + errorList;
+                                    }
+
+                                    formMessage.innerHTML = errorMessage;
+                                    formMessage.className = 'form-message error';
+                                    formMessage.style.display = 'block';
+
+                                    // Scroll to message
+                                    formMessage.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'nearest'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                // Hide spinner and enable button
+                                btnText.style.display = 'inline-block';
+                                btnSpinner.style.display = 'none';
+                                submitBtn.disabled = false;
+
+                                // Show error message
+                                formMessage.textContent =
+                                    'An error occurred while submitting the form. Please try again later.';
+                                formMessage.className = 'form-message error';
+                                formMessage.style.display = 'block';
+
+                                console.error('Error:', error);
+                            });
                     });
                 }
             });

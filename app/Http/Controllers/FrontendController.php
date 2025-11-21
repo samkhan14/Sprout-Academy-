@@ -115,4 +115,9 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.employee_forms');
     }
+
+    public function ThankYou()
+    {
+        return view('frontend.pages.thank-you');
+    }
 }

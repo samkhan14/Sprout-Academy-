@@ -27,6 +27,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
     Route::get('/employee-forms', 'EmployeeForms')->name('employeeForms');
+    Route::get('/thank-you', 'ThankYou')->name('thankYou');
 
 });
 
@@ -34,6 +35,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 Route::controller(FormController::class)->name('form.')->group(function () {
     Route::get('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
     Route::get('/maintenance-work-order-form', 'MaintenanceWorkOrderForm')->name('maintenanceWorkOrderForm');
+    Route::post('/maintenance-work-order-form', 'submitMaintenanceWorkOrder')->name('submitMaintenanceWorkOrder');
     Route::get('/supply-order-form', 'SupplyOrderForm')->name('supplyOrderForm');
     Route::get('/snack-order-form', 'SnackOrderForm')->name('snackOrderForm');
     Route::get('/suggestion-form', 'SuggestionForm')->name('suggestionForm');
