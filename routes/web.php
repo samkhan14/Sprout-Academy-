@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EnrollmentController;
 
 
 
@@ -63,5 +64,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Enrollment Routes
+Route::controller(EnrollmentController::class)->prefix('enrollment')->name('enrollment.')->group(function () {
+    Route::get('/{location}', 'showEnrollmentForm')->name('form');
+    Route::post('/{location}/step1', 'saveStep1')->name('saveStep1');
+    Route::get('/{location}/step2', 'showStep2')->name('step2');
+    Route::post('/{location}/step2', 'saveStep2')->name('saveStep2');
+    Route::get('/{location}/step3', 'showStep3')->name('step3');
+    Route::post('/{location}/step3', 'saveStep3')->name('saveStep3');
+    Route::get('/{location}/step4', 'showStep4')->name('step4');
+    Route::post('/{location}/submit', 'submitEnrollment')->name('submit');
+    Route::get('/{location}/thank-you', 'thankYou')->name('thankYou');
 });
 
