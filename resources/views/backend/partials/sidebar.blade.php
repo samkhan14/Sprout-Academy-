@@ -9,6 +9,13 @@
                     Dashboard
                 </a>
 
+                <div class="sb-sidenav-menu-heading">Enrollments</div>
+                <a class="nav-link {{ request()->routeIs('admin.enrollments.*') ? 'active' : '' }}"
+                    href="{{ route('admin.enrollments.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-graduate"></i></div>
+                    Enrollments
+                </a>
+
                 <div class="sb-sidenav-menu-heading">Forms</div>
                 <a class="nav-link {{ request()->routeIs('admin.forms.*') ? '' : 'collapsed' }}" href="#"
                     data-bs-toggle="collapse" data-bs-target="#collapseForms"

@@ -113,6 +113,10 @@ class FrontendController extends Controller
 
     public function EmployeeForms()
     {
+        // This route is already protected by auth middleware, but adding extra check
+        if (!auth()->check()) {
+            abort(403, 'Unauthorized access. Please login to view employee forms.');
+        }
         return view('frontend.pages.employee_forms');
     }
 

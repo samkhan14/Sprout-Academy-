@@ -11,6 +11,7 @@ use App\Models\SpecialtyTShirtOrder;
 use App\Models\SnackOrder;
 use App\Models\SupplyOrder;
 use App\Models\NewsletterSubscription;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,6 +19,8 @@ class AdminController extends Controller
     public function dashboard()
     {
         $stats = [
+            'enrollments' => Enrollment::count(),
+            'enrollments_submitted' => Enrollment::where('status', 'submitted')->count(),
             'maintenance_work_orders' => MaintenanceWorkOrder::count(),
             'suggestions' => Suggestion::count(),
             'time_clock_change_requests' => TimeClockChangeRequest::count(),

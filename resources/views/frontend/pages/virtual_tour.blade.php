@@ -59,7 +59,8 @@
                         </div>
                     </div>
                     <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('enrollment.form', ['location' => 'seminole', 'ref' => 'virtual-tour']) }}"
+                            class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locations') }}#seminole" class="btn btn-foundation">More Information</a>
                     </div>
                 </div>
@@ -136,7 +137,8 @@
                         </div>
                     </div>
                     <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('enrollment.form', ['location' => 'clearwater', 'ref' => 'virtual-tour']) }}"
+                            class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locations') }}#clearwater" class="btn btn-foundation">More
                             Information</a>
                     </div>
@@ -184,7 +186,8 @@
                         </div>
                     </div>
                     <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('enrollment.form', ['location' => 'pinellas-park', 'ref' => 'virtual-tour']) }}"
+                            class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locations') }}#pinellas-park" class="btn btn-foundation">More
                             Information</a>
                     </div>
@@ -262,7 +265,8 @@
                         </div>
                     </div>
                     <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'virtual-tour']) }}"
+                            class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-foundation">More
                             Information</a>
                     </div>
@@ -310,7 +314,8 @@
                         </div>
                     </div>
                     <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                        <a href="{{ route('enrollment.form', ['location' => 'largo', 'ref' => 'virtual-tour']) }}"
+                            class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locations') }}#largo" class="btn btn-foundation">More Information</a>
                     </div>
                 </div>

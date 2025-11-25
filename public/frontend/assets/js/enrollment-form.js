@@ -294,10 +294,38 @@
                 return;
             }
 
-            // Format all contact dates of birth
-            const contactGroups = document.querySelectorAll(".contact-field-group");
-            contactGroups.forEach((group, index) => {
-                formatDateOfBirth(`contactDateOfBirth${index}`);
+            // Ensure all checkbox arrays have values for proper indexing
+            // This ensures unchecked checkboxes still send a value to maintain array index alignment
+            const contactGroups = document.querySelectorAll('.contact-field-group');
+            contactGroups.forEach((group) => {
+                // Get all toggle checkboxes in this group
+                const livesWith = group.querySelector('input[name="contact_lives_with[]"]');
+                const isEmergency = group.querySelector('input[name="contact_is_emergency[]"]');
+                const isPickup = group.querySelector('input[name="contact_is_pickup[]"]');
+
+                // If checkbox is not checked, add hidden input with value 0 to maintain array index
+                // Check if hidden input already exists to avoid duplicates
+                if (livesWith && !livesWith.checked && !group.querySelector('input[name="contact_lives_with[]"][type="hidden"]')) {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'contact_lives_with[]';
+                    hidden.value = '0';
+                    group.appendChild(hidden);
+                }
+                if (isEmergency && !isEmergency.checked && !group.querySelector('input[name="contact_is_emergency[]"][type="hidden"]')) {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'contact_is_emergency[]';
+                    hidden.value = '0';
+                    group.appendChild(hidden);
+                }
+                if (isPickup && !isPickup.checked && !group.querySelector('input[name="contact_is_pickup[]"][type="hidden"]')) {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'contact_is_pickup[]';
+                    hidden.value = '0';
+                    group.appendChild(hidden);
+                }
             });
 
             // Disable submit button

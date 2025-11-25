@@ -72,10 +72,23 @@ class EnrollmentController extends Controller
         $address = null;
         $phones = collect([]); // Initialize as collection
 
+        // Capture referrer from query parameter (ref=locations or ref=virtual-tour)
+        $referrer = $request->query('ref', null);
+        if ($referrer) {
+            $request->session()->put('enrollment_referrer', $referrer);
+        } else {
+            // If no ref parameter, check session
+            $referrer = $request->session()->get('enrollment_referrer');
+        }
+
         if ($enrollmentId) {
-            $enrollment = Enrollment::with(['contacts' => function($query) {
-                $query->where('is_primary', true);
-            }, 'addresses', 'phones'])->find($enrollmentId);
+            $enrollment = Enrollment::with([
+                'contacts' => function ($query) {
+                    $query->where('is_primary', true);
+                },
+                'addresses',
+                'phones'
+            ])->find($enrollmentId);
             if ($enrollment) {
                 $primaryContact = $enrollment->contacts ? $enrollment->contacts->where('is_primary', true)->first() : null;
                 $address = $enrollment->addresses()->where('is_physical', true)->first();
@@ -91,6 +104,7 @@ class EnrollmentController extends Controller
             'address' => $address,
             'phones' => $phones,
             'currentStep' => 1,
+            'referrer' => $referrer,
         ]);
     }
 
@@ -117,6 +131,7 @@ class EnrollmentController extends Controller
                 'phone_type.*' => 'nullable|string|max:50',
                 'phone_area_code.*' => 'nullable|string|max:3',
                 'phone_number.*' => 'nullable|string|max:20',
+                'referrer' => 'nullable|string|max:255',
             ]);
 
             if ($validator->fails()) {
@@ -129,11 +144,18 @@ class EnrollmentController extends Controller
 
             // Get or create enrollment
             $enrollmentId = $request->session()->get('enrollment_id');
+            $referrer = $request->input('referrer') ?? $request->session()->get('enrollment_referrer');
+
             if ($enrollmentId) {
                 $enrollment = Enrollment::find($enrollmentId);
+                // Update referrer if not already set
+                if ($enrollment && !$enrollment->referrer && $referrer) {
+                    $enrollment->update(['referrer' => $referrer]);
+                }
             } else {
                 $enrollment = Enrollment::create([
                     'location' => $location,
+                    'referrer' => $referrer,
                     'status' => 'draft',
                     'current_step' => 1,
                 ]);
@@ -205,7 +227,7 @@ class EnrollmentController extends Controller
             if ($request->phone_type) {
                 // Delete existing phones for this contact
                 $enrollment->phones()->where('enrollment_contact_id', $primaryContact->id)->delete();
-                
+
                 foreach ($request->phone_type as $index => $type) {
                     if ($type && $request->phone_area_code[$index] && $request->phone_number[$index]) {
                         EnrollmentPhone::create([
@@ -253,7 +275,7 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-        
+
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
@@ -369,14 +391,16 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-        
+
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
 
-        $enrollment = Enrollment::with(['contacts' => function($query) {
-            $query->where('is_primary', false);
-        }])->find($enrollmentId);
+        $enrollment = Enrollment::with([
+            'contacts' => function ($query) {
+                $query->where('is_primary', false);
+            }
+        ])->find($enrollmentId);
 
         if (!$enrollment) {
             return redirect()->route('enrollment.form', ['location' => $location]);
@@ -439,6 +463,11 @@ class EnrollmentController extends Controller
 
             // Create new emergency contacts
             if ($request->contact_first_name) {
+                // Get all checkbox arrays - these may have missing indices for unchecked boxes
+                $livesWith = $request->contact_lives_with ?? [];
+                $isEmergency = $request->contact_is_emergency ?? [];
+                $isPickup = $request->contact_is_pickup ?? [];
+
                 foreach ($request->contact_first_name as $index => $firstName) {
                     $profileImagePath = null;
                     if ($request->hasFile("contact_profile_image.$index")) {
@@ -447,18 +476,38 @@ class EnrollmentController extends Controller
                         $profileImagePath = $file->storeAs('enrollments/contacts', $filename, 'public');
                     }
 
+                    // Handle checkbox values - checkboxes only send values when checked
+                    // So we check if the index exists in the array and if the value is truthy
+                    $livesWithValue = false;
+                    if (isset($livesWith[$index])) {
+                        $val = $livesWith[$index];
+                        $livesWithValue = ($val == "1" || $val === true || $val === 1 || $val === "on");
+                    }
+
+                    $isEmergencyValue = false;
+                    if (isset($isEmergency[$index])) {
+                        $val = $isEmergency[$index];
+                        $isEmergencyValue = ($val == "1" || $val === true || $val === 1 || $val === "on");
+                    }
+
+                    $isPickupValue = false;
+                    if (isset($isPickup[$index])) {
+                        $val = $isPickup[$index];
+                        $isPickupValue = ($val == "1" || $val === true || $val === 1 || $val === "on");
+                    }
+
                     EnrollmentContact::create([
                         'enrollment_id' => $enrollment->id,
                         'first_name' => $firstName,
                         'middle_initial' => $request->contact_middle_initial[$index] ?? null,
-                        'last_name' => $request->contact_last_name[$index],
+                        'last_name' => $request->contact_last_name[$index] ?? '',
                         'gender' => $request->contact_gender[$index] ?? null,
                         'date_of_birth' => $request->contact_date_of_birth[$index] ?? null,
                         'profile_image' => $profileImagePath,
                         'relationship_type' => $request->contact_relationship_type[$index] ?? null,
-                        'lives_with' => $request->contact_lives_with[$index] ?? false,
-                        'is_emergency_contact' => $request->contact_is_emergency[$index] ?? false,
-                        'is_authorized_pickup' => $request->contact_is_pickup[$index] ?? false,
+                        'lives_with' => $livesWithValue,
+                        'is_emergency_contact' => $isEmergencyValue,
+                        'is_authorized_pickup' => $isPickupValue,
                         'is_primary' => false,
                         'contact_order' => $index,
                     ]);
@@ -497,13 +546,13 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-        
+
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
 
         $enrollment = Enrollment::with([
-            'contacts' => function($query) {
+            'contacts' => function ($query) {
                 $query->orderBy('is_primary', 'desc');
             },
             'children',
@@ -545,14 +594,25 @@ class EnrollmentController extends Controller
                 ], 404);
             }
 
-            // Update enrollment status
-            $enrollment->update([
+            // Get referrer from session if not already saved
+            $referrer = $request->session()->get('enrollment_referrer');
+
+            // Update enrollment status and referrer
+            $updateData = [
                 'status' => 'submitted',
                 'current_step' => 4,
-            ]);
+            ];
+
+            // Update referrer if not already set or if we have a new one
+            if ($referrer && (!$enrollment->referrer || $enrollment->referrer !== $referrer)) {
+                $updateData['referrer'] = $referrer;
+            }
+
+            $enrollment->update($updateData);
 
             // Clear session
             $request->session()->forget('enrollment_id');
+            $request->session()->forget('enrollment_referrer');
 
             return response()->json([
                 'success' => true,
@@ -583,7 +643,7 @@ class EnrollmentController extends Controller
     public function thankYou(Request $request, $location)
     {
         $locationData = $this->getLocationData($location);
-        
+
         return view('frontend.pages.enrollment.thank_you', [
             'location' => $location,
             'locationData' => $locationData,

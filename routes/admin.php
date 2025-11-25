@@ -3,10 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FormDataController;
+use App\Http\Controllers\Admin\AdminEnrollmentController;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // Enrollment Routes
+    Route::controller(AdminEnrollmentController::class)->prefix('enrollments')->name('enrollments.')->group(function () {
+        Route::any('/', 'index')->name('index');
+        Route::get('/{id}', 'show')->name('show');
+    });
 
     // Form Data Routes (Optimized - Single route for view and data)
     Route::controller(FormDataController::class)->prefix('forms')->name('forms.')->group(function () {

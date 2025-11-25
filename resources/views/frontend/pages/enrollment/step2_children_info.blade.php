@@ -3,12 +3,9 @@
 @section('title', 'Enrollment - Children Info - ' . $locationData['name'])
 
 @section('content')
-    <!-- Inner Page Header -->
-    <section class="enrollment-header" style="background: linear-gradient(90deg, #1a5f7a 0%, #6daa44 100%);">
-        <div class="container">
-            <h1 class="enrollment-header-title">THE SPROUT ACADEMY - {{ $locationData['name'] }}</h1>
-        </div>
-    </section>
+    @include('frontend.components.form_header', [
+        'title' => 'THE SPROUT ACADEMY - ' . $locationData['name'],
+    ])
 
     <!-- Enrollment Form Section -->
     <section class="enrollment-form-section">
@@ -18,12 +15,13 @@
                 @include('frontend.components.enrollment.progress-bar', ['currentStep' => $currentStep])
 
                 <!-- Form -->
-                <form id="enrollmentStep2Form" class="enrollment-form" method="POST" action="{{ route('enrollment.saveStep2', ['location' => $location]) }}" enctype="multipart/form-data">
+                <form id="enrollmentStep2Form" class="enrollment-form site_form" method="POST"
+                    action="{{ route('enrollment.saveStep2', ['location' => $location]) }}" enctype="multipart/form-data">
                     @csrf
-                    <div id="formMessage" class="enrollment-message" style="display: none;"></div>
+                    <div id="formMessage" class="form-message" style="display: none;"></div>
 
                     <!-- Child Info -->
-                    <div class="enrollment-section">
+                    <div class="enrollment-section" id="enrollment-form-primary-account-person">
                         <div class="section-header">
                             <i class="fas fa-child section-icon"></i>
                             <h2 class="section-title">Child Info</h2>
@@ -36,43 +34,37 @@
                             @if (isset($children) && count($children) > 0)
                                 @foreach ($children as $index => $child)
                                     <div class="child-field-group" data-child-index="{{ $index }}">
-                                        <div class="form-row">
+                                        <div class="form-grid">
                                             <div class="form-field">
                                                 <label>First Name*</label>
-                                                <input type="text" name="child_first_name[]" class="form-input" 
+                                                <input type="text" name="child_first_name[]" class="form-input"
                                                     value="{{ $child->first_name }}" required />
                                             </div>
                                             <div class="form-field">
                                                 <label>M.I.</label>
-                                                <input type="text" name="child_middle_initial[]" class="form-input" 
+                                                <input type="text" name="child_middle_initial[]" class="form-input"
                                                     value="{{ $child->middle_initial ?? '' }}" maxlength="1" />
                                             </div>
                                             <div class="form-field">
                                                 <label>Last Name*</label>
-                                                <input type="text" name="child_last_name[]" class="form-input" 
+                                                <input type="text" name="child_last_name[]" class="form-input"
                                                     value="{{ $child->last_name }}" required />
                                             </div>
                                             <div class="form-field">
                                                 <label>Gender</label>
                                                 <select name="child_gender[]" class="form-select">
                                                     <option value="">Select Gender</option>
-                                                    <option value="male" {{ $child->gender == 'male' ? 'selected' : '' }}>Male</option>
-                                                    <option value="female" {{ $child->gender == 'female' ? 'selected' : '' }}>Female</option>
-                                                    <option value="other" {{ $child->gender == 'other' ? 'selected' : '' }}>Other</option>
+                                                    <option value="male" {{ $child->gender == 'male' ? 'selected' : '' }}>
+                                                        Male</option>
+                                                    <option value="female"
+                                                        {{ $child->gender == 'female' ? 'selected' : '' }}>Female</option>
+                                                    <option value="other"
+                                                        {{ $child->gender == 'other' ? 'selected' : '' }}>Other</option>
                                                 </select>
                                             </div>
                                             <div class="form-field">
                                                 <label>Date Of Birth</label>
-                                                @include('frontend.components.form_components.date-split-field', [
-                                                    'fieldId' => 'childDateOfBirth' . $index,
-                                                    'label' => '',
-                                                    'required' => false,
-                                                    'defaultDate' => null,
-                                                    'minDate' => null,
-                                                    'wrapperClass' => '',
-                                                ])
-                                                <input type="hidden" name="child_date_of_birth[]" 
-                                                    id="childDateOfBirth{{ $index }}Formatted"
+                                                <input type="date" name="child_date_of_birth[]" class="form-input"
                                                     value="{{ $child->date_of_birth ? $child->date_of_birth->format('Y-m-d') : '' }}" />
                                             </div>
                                         </div>
@@ -80,9 +72,11 @@
                                         <!-- Profile Picture -->
                                         <div class="profile-section">
                                             @include('frontend.components.enrollment.profile-picture', [
-                                                'imageUrl' => $child->profile_image 
-                                                    ? \Illuminate\Support\Facades\Storage::url($child->profile_image) 
-                                                    : asset('frontend/assets/images/default-profile.png'),
+                                                'imageUrl' => $child->profile_image
+                                                    ? \Illuminate\Support\Facades\Storage::url(
+                                                        $child->profile_image)
+                                                    : asset(
+                                                        'frontend/assets/home_page_images/default-profile.png'),
                                                 'name' => $child->first_name . ' ' . $child->last_name,
                                                 'fieldName' => 'child_profile_image[]',
                                                 'showChangeButton' => true,
@@ -90,20 +84,22 @@
                                         </div>
 
                                         @if ($index > 0)
-                                            <button type="button" class="btn-remove-child" onclick="removeChildField(this)">Remove Child</button>
+                                            <button type="button" class="btn-remove-child"
+                                                onclick="removeChildField(this)">Remove Child</button>
                                         @endif
                                     </div>
                                 @endforeach
                             @else
                                 <div class="child-field-group" data-child-index="0">
-                                    <div class="form-row">
+                                    <div class="form-grid">
                                         <div class="form-field">
                                             <label>First Name*</label>
                                             <input type="text" name="child_first_name[]" class="form-input" required />
                                         </div>
                                         <div class="form-field">
                                             <label>M.I.</label>
-                                            <input type="text" name="child_middle_initial[]" class="form-input" maxlength="1" />
+                                            <input type="text" name="child_middle_initial[]" class="form-input"
+                                                maxlength="1" />
                                         </div>
                                         <div class="form-field">
                                             <label>Last Name*</label>
@@ -120,22 +116,15 @@
                                         </div>
                                         <div class="form-field">
                                             <label>Date Of Birth</label>
-                                            @include('frontend.components.form_components.date-split-field', [
-                                                'fieldId' => 'childDateOfBirth0',
-                                                'label' => '',
-                                                'required' => false,
-                                                'defaultDate' => null,
-                                                'minDate' => null,
-                                                'wrapperClass' => '',
-                                            ])
-                                            <input type="hidden" name="child_date_of_birth[]" id="childDateOfBirth0Formatted" />
+                                            <input type="date" name="child_date_of_birth[]" class="form-input" />
                                         </div>
                                     </div>
 
                                     <!-- Profile Picture -->
                                     <div class="profile-section">
                                         @include('frontend.components.enrollment.profile-picture', [
-                                            'imageUrl' => asset('frontend/assets/images/default-profile.png'),
+                                            'imageUrl' => asset(
+                                                'frontend/assets/home_page_images/default-profile.png'),
                                             'name' => '',
                                             'fieldName' => 'child_profile_image[]',
                                             'showChangeButton' => true,
@@ -145,18 +134,19 @@
                             @endif
                         </div>
 
-                        <button type="button" class="btn-add-child" onclick="addChildField()">
-                            <i class="fas fa-plus"></i> Save & Add Next Child
-                        </button>
+                        <div
+                            style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 15px;">
+                            <i class="fas fa-plus btn-add-phone-icon" onclick="addChildField()"></i>
+                            <button type="button" class="btn-add-phone-text" onclick="addChildField()">
+                                Save & Add Next Child
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="enrollment-actions">
                         <button type="submit" class="btn-enrollment btn-step3" data-action="step3">
                             SAVE & GO TO STEP 3
-                        </button>
-                        <button type="submit" class="btn-enrollment btn-review" data-action="review">
-                            SAVE & GO TO REVIEW
                         </button>
                     </div>
                 </form>
@@ -166,18 +156,18 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('frontend/assets/js/enrollment-form.js') }}"></script>
-<script>
-    let childIndex = {{ isset($children) && count($children) > 0 ? count($children) : 1 }};
+    <script src="{{ asset('frontend/assets/js/enrollment-form.js') }}"></script>
+    <script>
+        let childIndex = {{ isset($children) && count($children) > 0 ? count($children) : 1 }};
 
-    function addChildField() {
-        const container = document.getElementById('childrenFieldsContainer');
-        const index = childIndex++;
-        const newGroup = document.createElement('div');
-        newGroup.className = 'child-field-group';
-        newGroup.setAttribute('data-child-index', index);
-        newGroup.innerHTML = `
-            <div class="form-row">
+        function addChildField() {
+            const container = document.getElementById('childrenFieldsContainer');
+            const index = childIndex++;
+            const newGroup = document.createElement('div');
+            newGroup.className = 'child-field-group';
+            newGroup.setAttribute('data-child-index', index);
+            newGroup.innerHTML = `
+            <div class="form-grid">
                 <div class="form-field">
                     <label>First Name*</label>
                     <input type="text" name="child_first_name[]" class="form-input" required />
@@ -201,27 +191,14 @@
                 </div>
                 <div class="form-field">
                     <label>Date Of Birth</label>
-                    <div class="date-split-wrapper" data-date-field="childDateOfBirth${index}">
-                        <input type="text" id="childDateOfBirth${index}Month" class="form-input date-split-input" placeholder="MM" maxlength="2" />
-                        <input type="text" id="childDateOfBirth${index}Day" class="form-input date-split-input" placeholder="DD" maxlength="2" />
-                        <input type="text" id="childDateOfBirth${index}Year" class="form-input date-split-input" placeholder="YY" maxlength="2" />
-                        <input type="text" id="childDateOfBirth${index}DatePicker" class="form-input date-picker-hidden" style="display: none;" />
-                        <div class="date-split-icon" id="childDateOfBirth${index}CalendarIcon" data-date-trigger="childDateOfBirth${index}" style="cursor: pointer;">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                        </div>
-                    </div>
-                    <input type="hidden" name="child_date_of_birth[]" id="childDateOfBirth${index}Formatted" />
+                    <input type="date" name="child_date_of_birth[]" class="form-input" />
                 </div>
             </div>
             <div class="profile-section">
                 <div class="profile-picture-wrapper">
                     <div class="profile-picture-container">
-                        <img src="{{ asset('frontend/assets/images/default-profile.png') }}" alt="" class="profile-picture" />
+                        <img src="{{ asset('frontend/assets/home_page_images/default-profile.png') }}" alt=""
+                            class="profile-picture" />
                         <input type="file" name="child_profile_image[]" accept="image/*" class="profile-picture-input" style="display: none;" />
                     </div>
                     <button type="button" class="btn-change-image" onclick="this.previousElementSibling.querySelector('input').click()">Change Image</button>
@@ -229,12 +206,32 @@
             </div>
             <button type="button" class="btn-remove-child" onclick="removeChildField(this)">Remove Child</button>
         `;
-        container.appendChild(newGroup);
-    }
+            container.appendChild(newGroup);
 
-    function removeChildField(button) {
-        button.closest('.child-field-group').remove();
-    }
-</script>
+            // Attach image preview event listener to the new file input
+            const newFileInput = newGroup.querySelector('input[type="file"][accept="image/*"]');
+            if (newFileInput) {
+                newFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const container = newFileInput.closest('.profile-picture-container');
+                            if (container) {
+                                const img = container.querySelector('.profile-picture');
+                                if (img) {
+                                    img.src = e.target.result;
+                                }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+
+        function removeChildField(button) {
+            button.closest('.child-field-group').remove();
+        }
+    </script>
 @endpush
-

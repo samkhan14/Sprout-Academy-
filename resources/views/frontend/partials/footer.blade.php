@@ -54,7 +54,9 @@
                     <li><a href="{{ route('frontend.ourPrograms') }}">Programs</a></li>
                     <li><a href="#enroll">Enroll Now</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
-                    <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
+                    @auth
+                        <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
+                    @endauth
                 </ul>
             </div>
 

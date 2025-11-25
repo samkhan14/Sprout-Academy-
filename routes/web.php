@@ -30,9 +30,12 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('our-programs/education-for-5-12-year-old', 'EducationFor512YearOld')->name('educationFor512YearOld');
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
-    Route::get('/employee-forms', 'EmployeeForms')->name('employeeForms');
     Route::get('/thank-you', 'ThankYou')->name('thankYou');
+});
 
+// Employee Forms - Only for authenticated users
+Route::middleware('auth')->group(function () {
+    Route::get('/employee-forms', [FrontendController::class, 'EmployeeForms'])->name('frontend.employeeForms');
 });
 
 

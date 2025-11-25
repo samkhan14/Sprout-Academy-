@@ -30,9 +30,18 @@
                 <ul class="navbar-nav align-items-lg-center">
                     <!-- For Parents - Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ request()->routeIs('frontend.parents') ? 'active' : '' }}"
-                            href="#" id="parentsDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        @php
+                            $isParentsActive =
+                                request()->routeIs('frontend.virtualTour') ||
+                                request()->routeIs('frontend.theSproutAcademyDifference') ||
+                                request()->routeIs('frontend.weCareForYourChild') ||
+                                request()->routeIs('frontend.tuitionCosts') ||
+                                request()->routeIs('frontend.meetTheTeam') ||
+                                request()->routeIs('frontend.meetTheOwner') ||
+                                request()->routeIs('frontend.downloadForms');
+                        @endphp
+                        <a class="nav-link dropdown-toggle {{ $isParentsActive ? 'active' : '' }}" href="#"
+                            id="parentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             For Parents
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="parentsDropdown">
@@ -66,9 +75,16 @@
 
                     <!-- Programs & Curriculum -->
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.ourPrograms') ? 'active' : '' }}"
+                        @php
+                            $isProgramsActive =
+                                request()->routeIs('frontend.ourPrograms') ||
+                                request()->routeIs('frontend.infantToddlerEducation') ||
+                                request()->routeIs('frontend.preschoolEarlyEducation') ||
+                                request()->routeIs('frontend.educationFor512YearOld');
+                        @endphp
+                        <a class="nav-link {{ $isProgramsActive ? 'active' : '' }}"
                             href="{{ route('frontend.ourPrograms') }}"
-                            @if (request()->routeIs('frontend.ourPrograms')) aria-current="page" @endif>
+                            @if ($isProgramsActive) aria-current="page" @endif>
                             Programs & Curriculum
                         </a>
                     </li>

@@ -9,6 +9,7 @@ class Enrollment extends Model
 {
     protected $fillable = [
         'location',
+        'referrer',
         'status',
         'current_step',
     ];
