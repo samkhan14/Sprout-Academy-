@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="review-card-content">
                                     <div class="review-profile">
-                                        <img src="{{ $primaryContact && $primaryContact->profile_image ? \Illuminate\Support\Facades\Storage::url($primaryContact->profile_image) : asset('frontend/assets/images/default-profile.png') }}"
+                                        <img src="{{ $primaryContact && $primaryContact->profile_image ? \Illuminate\Support\Facades\Storage::url($primaryContact->profile_image) : asset('frontend/assets/home_page_images/default-profile.png') }}"
                                             alt="{{ $primaryContact && $primaryContact->first_name ? $primaryContact->first_name : 'Profile' }}"
                                             class="review-profile-image" />
                                         <div class="review-profile-info">
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="review-card-content">
                                         <div class="review-profile">
-                                            <img src="{{ $child->profile_image ? \Illuminate\Support\Facades\Storage::url($child->profile_image) : asset('frontend/assets/images/default-profile.png') }}"
+                                            <img src="{{ $child->profile_image ? \Illuminate\Support\Facades\Storage::url($child->profile_image) : asset('frontend/assets/home_page_images/default-profile.png') }}"
                                                 alt="{{ $child->first_name ?? 'Child' }}" class="review-profile-image" />
                                             <div class="review-profile-info">
                                                 <div class="review-name">{{ $child->first_name ?? 'N/A' }}</div>
@@ -114,13 +114,13 @@
                                     <div class="review-card-header">
                                         <h3 class="review-card-title">EMERGENCY CONTACTS</h3>
                                     </div>
+                                    @if ($contact->relationship_type)
+                                        <div class="review-relationship-badge">
+                                            {{ ucfirst($contact->relationship_type) }} to</div>
+                                    @endif
                                     <div class="review-card-content">
                                         <div class="review-profile">
-                                            @if ($contact->relationship_type)
-                                                <div class="review-relationship-badge">
-                                                    {{ ucfirst($contact->relationship_type) }} to</div>
-                                            @endif
-                                            <img src="{{ $contact->profile_image ? \Illuminate\Support\Facades\Storage::url($contact->profile_image) : asset('frontend/assets/images/default-profile.png') }}"
+                                            <img src="{{ $contact->profile_image ? \Illuminate\Support\Facades\Storage::url($contact->profile_image) : asset('frontend/assets/home_page_images/default-profile.png') }}"
                                                 alt="{{ $contact->first_name ?? 'Contact' }}"
                                                 class="review-profile-image" />
                                             <div class="review-profile-info">
@@ -151,12 +151,12 @@
                                         <h3 class="review-card-title">RELATIONSHIP</h3>
                                     </div>
                                     <div class="review-card-content">
+                                        @if ($contact->relationship_type)
+                                            <div class="review-relationship-badge">
+                                                {{ ucfirst($contact->relationship_type) }} to</div>
+                                        @endif
                                         <div class="review-profile">
-                                            @if ($contact->relationship_type)
-                                                <div class="review-relationship-badge">
-                                                    {{ ucfirst($contact->relationship_type) }} to</div>
-                                            @endif
-                                            <img src="{{ $contact->profile_image ? \Illuminate\Support\Facades\Storage::url($contact->profile_image) : asset('frontend/assets/images/default-profile.png') }}"
+                                            <img src="{{ $contact->profile_image ? \Illuminate\Support\Facades\Storage::url($contact->profile_image) : asset('frontend/assets/home_page_images/default-profile.png') }}"
                                                 alt="{{ $contact->first_name ?? 'Contact' }}"
                                                 class="review-profile-image" />
                                             <div class="review-profile-info">

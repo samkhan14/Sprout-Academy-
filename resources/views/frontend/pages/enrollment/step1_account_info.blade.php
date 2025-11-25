@@ -32,7 +32,7 @@
                         <div class="enrollment-section" id="enrollment-form-primary-account-person">
                             <div class="section-header">
                                 <i class="fas fa-user section-icon"></i>
-                                <h2 class="section-title">PRIMARY ACCOUNT PERSON</h2>
+                                <h2 class="section-title-inner">PRIMARY ACCOUNT PERSON</h2>
                             </div>
                             <div class="section-required-note">
                                 <span class="required-asterisk">*</span> Indicates Required Field
@@ -105,7 +105,7 @@
                         <div class="enrollment-section" id="enrollment-form-address">
                             <div class="section-header">
                                 <i class="fas fa-map-marker-alt section-icon"></i>
-                                <h2 class="section-title">ADDRESS</h2>
+                                <h2 class="section-title-inner">ADDRESS</h2>
                             </div>
 
                             <!-- First Row: 2 Address Fields -->
@@ -164,7 +164,7 @@
                         <div class="enrollment-section" id="enrollment-form-phone">
                             <div class="section-header">
                                 <i class="fas fa-phone section-icon"></i>
-                                <h2 class="section-title">PHONE</h2>
+                                <h2 class="section-title-inner">PHONE</h2>
                             </div>
 
                             <div id="phoneFieldsContainer">

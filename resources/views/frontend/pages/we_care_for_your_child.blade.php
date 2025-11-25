@@ -17,7 +17,7 @@
         <div class="container">
             <div class="section-heading-wrapper we_care_page">
                 <img src="{{ asset('frontend/assets/home_page_images/lock.png') }}" alt="Icon" class="section-icon-left">
-                <h2 class="section-title">We Care for Your Child The Way
+                <h2 class="section-title-inner">We Care for Your Child The Way
                     You Would</h2>
                 <img src="{{ asset('frontend/assets/home_page_images/star.png') }}" alt="Icon" class="section-icon-right">
             </div>

@@ -24,7 +24,7 @@
                     <div class="enrollment-section" id="enrollment-form-primary-account-person">
                         <div class="section-header">
                             <i class="fas fa-child section-icon"></i>
-                            <h2 class="section-title">Child Info</h2>
+                            <h2 class="section-title-inner">Child Info</h2>
                         </div>
                         <div class="section-required-note">
                             <span class="required-asterisk">*</span> Indicates Required Field

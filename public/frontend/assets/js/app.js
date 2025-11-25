@@ -251,16 +251,51 @@
     // ========================================
     // Add Active State to Current Nav Item
     // ========================================
+    // Note: Server-side Blade template handles active states via route names
+    // This JS only ensures only ONE nav item is active at a time
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll(".nav-link");
 
-    navLinks.forEach((link) => {
-        const linkPath = new URL(link.href).pathname;
-        if (linkPath === currentPath) {
-            link.classList.add("active");
-            link.setAttribute("aria-current", "page");
-        }
-    });
+    // First, collect all currently active links
+    const activeLinks = Array.from(navLinks).filter((link) =>
+        link.classList.contains("active")
+    );
+
+    // If multiple links are active, remove active from all except the one matching current path
+    if (activeLinks.length > 1) {
+        let foundMatch = false;
+
+        navLinks.forEach((link) => {
+            // Skip dropdown toggles and invalid links
+            if (
+                link.classList.contains("dropdown-toggle") ||
+                !link.href ||
+                link.href === "#" ||
+                link.href.includes("javascript:")
+            ) {
+                return;
+            }
+
+            try {
+                const linkPath = new URL(link.href).pathname;
+
+                // If this link matches current path and we haven't found a match yet, keep it active
+                if (linkPath === currentPath && !foundMatch) {
+                    foundMatch = true;
+                    link.classList.add("active");
+                    link.setAttribute("aria-current", "page");
+                } else {
+                    // Remove active from all other links
+                    link.classList.remove("active");
+                    link.removeAttribute("aria-current");
+                }
+            } catch (e) {
+                // Invalid URL, remove active state
+                link.classList.remove("active");
+                link.removeAttribute("aria-current");
+            }
+        });
+    }
 
     // ========================================
     // Testimonial Carousel Auto-scroll

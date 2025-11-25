@@ -15,7 +15,7 @@
         <div class="container">
             <div class="section-heading-wrapper">
                 <img src="{{ asset('frontend/assets/home_page_images/lock.png') }}" alt="Icon" class="section-icon-left">
-                <h2 class="section-title">WHY CHOOSE THE SPROUT ACADEMY?</h2>
+                <h2 class="section-title-inner">WHY CHOOSE THE SPROUT ACADEMY?</h2>
                 <img src="{{ asset('frontend/assets/home_page_images/star.png') }}" alt="Icon" class="section-icon-right">
             </div>
 
@@ -173,7 +173,7 @@
                 <div class="benefits-receive-header">
                     <img src="{{ asset('frontend/assets/home_page_images/123.png') }}" alt="Lightbulb Icon"
                         class="section-icon-left">
-                    <h2 class="section-title">THE BENEFITS YOU'LL RECEIVE</h2>
+                    <h2 class="section-title-inner">THE BENEFITS YOU'LL RECEIVE</h2>
                     <img src="{{ asset('frontend/assets/home_page_images/star.png') }}" alt="Star Icon"
                         class="section-icon-right">
                 </div>

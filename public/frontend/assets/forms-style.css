@@ -1443,7 +1443,8 @@
    ======================================== */
 
 /* Enrollment Form Section */
-.enrollment-form-section {
+.enrollment-form-section,
+.enrollment-review-section {
     background: linear-gradient(180deg, #e8f4f8 0%, #fff4e6 100%);
     min-height: 100vh;
     padding: 10px 0 60px;
@@ -1476,7 +1477,8 @@
     z-index: 1;
 }
 
-.enrollment-form-wrapper {
+.enrollment-form-wrapper,
+.enrollment-review-wrapper {
     max-width: 1200px;
     margin: 0 auto;
     background: transparent;
@@ -1648,7 +1650,7 @@
     color: #333333;
 }
 
-.section-title {
+.section-title-inner {
     font-size: 1.3rem;
     font-weight: 700;
     color: #333333;
@@ -2094,22 +2096,6 @@
     display: block;
 }
 
-/* Review Section */
-.enrollment-review-section {
-    background: linear-gradient(180deg, #e8f4f8 0%, #fff4e6 100%);
-    min-height: 100vh;
-    padding: 40px 0 60px;
-}
-
-.enrollment-review-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
 .review-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2124,9 +2110,7 @@
 }
 
 .location-info-card {
-    background: #f8f9fa;
     padding: 20px;
-    border-radius: 8px;
 }
 
 .location-info-item {
@@ -2144,6 +2128,9 @@
     font-size: 1.5rem;
     color: #ed9b04;
     margin-top: 5px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 32px;
 }
 
 .location-info-details {
@@ -2153,16 +2140,16 @@
 }
 
 .location-label {
-    font-size: 0.85rem;
+    font-size: 22px;
     font-weight: 700;
-    color: #666;
+    color: #0a2239;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .location-value {
-    font-size: 1rem;
-    color: #333;
+    font-size: 1.3rem;
+    color: #000;
     font-weight: 600;
 }
 
@@ -2170,13 +2157,13 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
 }
 
 .review-card {
-    background: #f8f9fa;
-    border-radius: 8px;
     padding: 20px;
-    border: 1px solid #e0e0e0;
 }
 
 .review-card-header {
@@ -2281,7 +2268,7 @@
 }
 
 .thank-you-content {
-    max-width: 800px;
+    max-width: unset;
     margin: 0 auto;
     text-align: center;
     position: relative;
@@ -2404,6 +2391,15 @@
     margin-bottom: 30px;
 }
 
+.enrollment-review-wrapper .vt-location-viewer {
+    border-color: #fff;
+    border-width: 3px;
+}
+
+.enrollment-review-wrapper .vt-location-viewer .location-map-iframe {
+    height: 500px;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
     .review-content {
@@ -2482,7 +2478,7 @@
         font-size: 1.5rem;
     }
 
-    .section-title {
+    .section-title-inner {
         font-size: 1.2rem;
     }
 

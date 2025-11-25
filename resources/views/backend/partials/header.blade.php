@@ -1,8 +1,8 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="{{ route('admin.dashboard') }}">
-        <img src="{{ asset('frontend/assets/home_page_images/header-logo-colored.png') }}" alt="The Sprout Academy"
-            height="30" class="me-2">
+        {{-- <img src="{{ asset('frontend/assets/home_page_images/header-logo-colored.png') }}" alt="The Sprout Academy"
+            height="30" class="me-2"> --}}
         The Sprout Academy
     </a>
 
@@ -33,11 +33,6 @@
                 <li>
                     <a class="dropdown-item" href="{{ route('profile.edit') }}">
                         <i class="fas fa-user me-2"></i>Profile
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#!">
-                        <i class="fas fa-cog me-2"></i>Settings
                     </a>
                 </li>
                 <li>

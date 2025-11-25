@@ -16,9 +16,10 @@ class AdminEnrollmentController extends Controller
     {
         if ($request->ajax() || $request->wantsJson()) {
             $enrollments = Enrollment::with([
-                'contacts' => function($query) {
+                'contacts' => function ($query) {
                     $query->where('is_primary', true);
                 },
+                'contacts.phones',
                 'phones',
                 'children'
             ])->select('enrollments.*');
@@ -32,6 +33,15 @@ class AdminEnrollmentController extends Controller
                     return 'N/A';
                 })
                 ->addColumn('phone', function ($enrollment) {
+                    // Get phone from primary contact if available, otherwise from enrollment phones
+                    $primaryContact = $enrollment->contacts->where('is_primary', true)->first();
+                    if ($primaryContact && $primaryContact->phones) {
+                        $phone = $primaryContact->phones->first();
+                        if ($phone && $phone->area_code && $phone->phone_number) {
+                            return '(' . $phone->area_code . ') ' . $phone->phone_number;
+                        }
+                    }
+                    // Fallback to enrollment phones
                     $phone = $enrollment->phones->first();
                     if ($phone && $phone->area_code && $phone->phone_number) {
                         return '(' . $phone->area_code . ') ' . $phone->phone_number;
@@ -77,7 +87,7 @@ class AdminEnrollmentController extends Controller
     public function show($id)
     {
         $enrollment = Enrollment::with([
-            'contacts' => function($query) {
+            'contacts' => function ($query) {
                 $query->orderBy('is_primary', 'desc');
             },
             'children',

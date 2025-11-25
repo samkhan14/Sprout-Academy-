@@ -18,7 +18,7 @@
 
                 <!-- Instructions -->
                 <div class="section-header mt-5">
-                    <h2 class="section-title">First Contact Person (Yourself)</h2>
+                    <h2 class="section-title-inner">First Contact Person (Yourself)</h2>
                 </div>
                 <div class="enrollment-instructions">
                     <ol>
