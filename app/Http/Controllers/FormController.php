@@ -51,7 +51,7 @@ class FormController extends Controller
                     return response()->json(['errors' => $validator->errors()], 422);
                 }
 
-                // Create time off request
+                // Create time off request with default pending status
                 $timeOffRequest = TimeOffRequestForm::create([
                     'name' => $request->name,
                     'email' => $request->email,
@@ -62,6 +62,7 @@ class FormController extends Controller
                     'paid_unpaid' => $request->paid_unpaid,
                     'reason' => $request->reason,
                     'director_signature' => $request->director_signature,
+                    'status' => 'pending', // Default status
                 ]);
 
                 return response()->json(['message' => 'Time off request submitted successfully!'], 200);
@@ -77,6 +78,41 @@ class FormController extends Controller
 
         // Handle GET request - Display form
         return view('frontend.pages.forms.time_off_request_form');
+    }
+
+    /**
+     * Get time off requests for calendar display
+     */
+    public function getTimeOffRequestsForCalendar(Request $request)
+    {
+        $location = $request->get('location');
+        $month = $request->get('month', date('m'));
+        $year = $request->get('year', date('Y'));
+
+        // Get all requests that fall in this month (including those that span months)
+        $allRequests = TimeOffRequestForm::where(function ($q) use ($month, $year) {
+            $q->where(function ($subQ) use ($month, $year) {
+                $subQ->whereYear('start_date', $year)
+                    ->whereMonth('start_date', $month);
+            })->orWhere(function ($subQ) use ($month, $year) {
+                $subQ->whereYear('end_date', $year)
+                    ->whereMonth('end_date', $month);
+            });
+        });
+
+        if ($location) {
+            $allRequests->where('location', $location);
+        }
+
+        return response()->json($allRequests->get()->map(function ($req) {
+            return [
+                'id' => $req->id,
+                'name' => $req->name,
+                'start_date' => $req->start_date->format('Y-m-d'),
+                'end_date' => $req->end_date->format('Y-m-d'),
+                'status' => $req->status,
+            ];
+        }));
     }
 
     /**

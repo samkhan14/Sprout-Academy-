@@ -10,6 +10,27 @@ use Yajra\DataTables\Facades\DataTables;
 class AdminEnrollmentController extends Controller
 {
     /**
+     * Get available locations for filter dropdown
+     */
+    public function getLocations()
+    {
+        $locations = Enrollment::select('location')
+            ->distinct()
+            ->whereNotNull('location')
+            ->orderBy('location')
+            ->pluck('location')
+            ->map(function ($location) {
+                return [
+                    'value' => $location,
+                    'label' => strtoupper(str_replace('-', ' ', $location))
+                ];
+            })
+            ->values();
+
+        return response()->json($locations);
+    }
+
+    /**
      * Display list of all enrollments
      */
     public function index(Request $request)
@@ -19,10 +40,13 @@ class AdminEnrollmentController extends Controller
                 'contacts' => function ($query) {
                     $query->where('is_primary', true);
                 },
-                'contacts.phones',
-                'phones',
                 'children'
             ])->select('enrollments.*');
+
+            // Apply location filter if provided
+            if ($request->has('location') && $request->location !== '' && $request->location !== 'all') {
+                $enrollments->where('location', $request->location);
+            }
 
             return DataTables::of($enrollments)
                 ->addColumn('primary_contact', function ($enrollment) {
@@ -32,32 +56,11 @@ class AdminEnrollmentController extends Controller
                     }
                     return 'N/A';
                 })
-                ->addColumn('phone', function ($enrollment) {
-                    // Get phone from primary contact if available, otherwise from enrollment phones
-                    $primaryContact = $enrollment->contacts->where('is_primary', true)->first();
-                    if ($primaryContact && $primaryContact->phones) {
-                        $phone = $primaryContact->phones->first();
-                        if ($phone && $phone->area_code && $phone->phone_number) {
-                            return '(' . $phone->area_code . ') ' . $phone->phone_number;
-                        }
-                    }
-                    // Fallback to enrollment phones
-                    $phone = $enrollment->phones->first();
-                    if ($phone && $phone->area_code && $phone->phone_number) {
-                        return '(' . $phone->area_code . ') ' . $phone->phone_number;
-                    }
-                    return 'N/A';
-                })
                 ->addColumn('children_count', function ($enrollment) {
                     return $enrollment->children->count();
                 })
-                ->addColumn('contacts_count', function ($enrollment) {
-                    // Load all contacts to count non-primary ones
-                    $enrollment->load('contacts');
-                    return $enrollment->contacts->where('is_primary', false)->count();
-                })
                 ->editColumn('location', function ($enrollment) {
-                    return strtoupper($enrollment->location);
+                    return strtoupper(str_replace('-', ' ', $enrollment->location));
                 })
                 ->editColumn('status', function ($enrollment) {
                     $badgeClass = $enrollment->status === 'submitted' ? 'success' : 'warning';
@@ -90,6 +93,7 @@ class AdminEnrollmentController extends Controller
             'contacts' => function ($query) {
                 $query->orderBy('is_primary', 'desc');
             },
+            'contacts.phones',
             'children',
             'addresses',
             'phones'

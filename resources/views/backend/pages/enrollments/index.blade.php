@@ -10,9 +10,18 @@
     </ol>
 
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-user-graduate me-1"></i>
-            All Enrollments
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-user-graduate me-1"></i>
+                All Enrollments
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <label for="locationFilter" class="mb-0 me-2">Filter by Location:</label>
+                <select id="locationFilter" class="form-select form-select-sm" style="width: auto; min-width: 200px;">
+                    <option value="all">All Locations</option>
+                    <!-- Options will be loaded via AJAX -->
+                </select>
+            </div>
         </div>
         <div class="card-body">
             <table id="datatablesSimple" class="table table-bordered table-striped" style="width:100%">
@@ -20,11 +29,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Primary Contact</th>
-                        <th>Phone</th>
                         <th>Location</th>
                         <th>Status</th>
                         <th>Children</th>
-                        <th>Emergency Contacts</th>
                         <th>Referrer</th>
                         <th>Created At</th>
                         <th>Action</th>
@@ -41,10 +48,38 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#datatablesSimple').DataTable({
+            let dataTable;
+            
+            // Load locations for filter dropdown
+            $.ajax({
+                url: "{{ route('admin.enrollments.locations') }}",
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    const locationFilter = $('#locationFilter');
+                    response.forEach(function(location) {
+                        locationFilter.append(
+                            $('<option></option>')
+                                .attr('value', location.value)
+                                .text(location.label)
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading locations:', error);
+                }
+            });
+
+            // Initialize DataTable
+            dataTable = $('#datatablesSimple').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.enrollments.index') }}",
+                ajax: {
+                    url: "{{ route('admin.enrollments.index') }}",
+                    data: function(d) {
+                        d.location = $('#locationFilter').val();
+                    }
+                },
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -52,10 +87,6 @@
                     {
                         data: 'primary_contact',
                         name: 'primary_contact'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone'
                     },
                     {
                         data: 'location',
@@ -68,11 +99,6 @@
                     {
                         data: 'children_count',
                         name: 'children_count',
-                        orderable: false
-                    },
-                    {
-                        data: 'contacts_count',
-                        name: 'contacts_count',
                         orderable: false
                     },
                     {
@@ -93,6 +119,11 @@
                 order: [
                     [0, 'desc']
                 ]
+            });
+
+            // Handle location filter change
+            $('#locationFilter').on('change', function() {
+                dataTable.ajax.reload();
             });
         });
     </script>

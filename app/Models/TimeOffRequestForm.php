@@ -18,11 +18,19 @@ class TimeOffRequestForm extends Model
         'paid_unpaid',
         'reason',
         'director_signature',
+        'status',
+        'approved_by',
+        'rejected_by',
+        'approved_at',
+        'rejected_at',
+        'rejection_reason',
     ];
 
     protected $casts = [
         'todays_date' => 'date',
         'start_date' => 'date',
         'end_date' => 'date',
+        'approved_at' => 'datetime',
+        'rejected_at' => 'datetime',
     ];
 }

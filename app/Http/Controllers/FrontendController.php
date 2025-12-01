@@ -124,4 +124,9 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.thank-you');
     }
+
+    public function Enroll()
+    {
+        return view('frontend.pages.enrollment');
+    }
 }

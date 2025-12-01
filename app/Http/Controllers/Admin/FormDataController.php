@@ -105,13 +105,83 @@ class FormDataController extends Controller
                 ->editColumn('end_date', function ($request) {
                     return $request->end_date ? $request->end_date->format('M d, Y') : '';
                 })
+                ->editColumn('status', function ($request) {
+                    $badgeClass = 'warning';
+                    if ($request->status === 'approved') {
+                        $badgeClass = 'success';
+                    } elseif ($request->status === 'rejected') {
+                        $badgeClass = 'danger';
+                    }
+                    return '<span class="badge bg-' . $badgeClass . '">' . ucfirst($request->status) . '</span>';
+                })
                 ->editColumn('created_at', function ($request) {
                     return $request->created_at->format('M d, Y h:i A');
                 })
+                ->addColumn('action', function ($request) {
+                    $html = '<div class="btn-group" role="group">';
+                    if ($request->status === 'pending') {
+                        $html .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $request->id . '" title="Approve">
+                            <i class="fas fa-check"></i>
+                        </button>';
+                        $html .= '<button type="button" class="btn btn-sm btn-danger reject-btn" data-id="' . $request->id . '" title="Reject">
+                            <i class="fas fa-times"></i>
+                        </button>';
+                    } else {
+                        $html .= '<span class="text-muted">' . ucfirst($request->status) . '</span>';
+                    }
+                    $html .= '</div>';
+                    return $html;
+                })
+                ->rawColumns(['status', 'action'])
                 ->make(true);
         }
 
         return view('backend.pages.forms.time-off-requests');
+    }
+
+    // Approve Time Off Request
+    public function approveTimeOffRequest(Request $request, $id)
+    {
+        try {
+            $timeOffRequest = TimeOffRequestForm::findOrFail($id);
+
+            if ($timeOffRequest->status !== 'pending') {
+                return response()->json(['message' => 'Request is not pending.'], 400);
+            }
+
+            $timeOffRequest->update([
+                'status' => 'approved',
+                'approved_by' => auth()->id(),
+                'approved_at' => now(),
+            ]);
+
+            return response()->json(['message' => 'Time off request approved successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error approving request: ' . $e->getMessage()], 500);
+        }
+    }
+
+    // Reject Time Off Request
+    public function rejectTimeOffRequest(Request $request, $id)
+    {
+        try {
+            $timeOffRequest = TimeOffRequestForm::findOrFail($id);
+
+            if ($timeOffRequest->status !== 'pending') {
+                return response()->json(['message' => 'Request is not pending.'], 400);
+            }
+
+            $timeOffRequest->update([
+                'status' => 'rejected',
+                'rejected_by' => auth()->id(),
+                'rejected_at' => now(),
+                'rejection_reason' => $request->input('rejection_reason'),
+            ]);
+
+            return response()->json(['message' => 'Time off request rejected successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error rejecting request: ' . $e->getMessage()], 500);
+        }
     }
 
     // Standard T-Shirt Orders

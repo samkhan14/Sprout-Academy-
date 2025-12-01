@@ -109,12 +109,15 @@
 
                     <!-- Enroll Button (Teal) -->
                     <li class="nav-item ms-lg-3">
-                        <a class="btn btn-enroll" href="#enroll">Enroll</a>
+                        <a class="btn btn-enroll  @if (request()->routeIs('frontend.enroll')) active @endif"
+                            href="{{ route('frontend.enroll') }}"
+                            @if (request()->routeIs('frontend.enroll')) aria-current="page" @endif>Enroll</a>
                     </li>
 
                     <!-- Sprout Foundation Button (Orange) -->
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-foundation" href="#foundation">Sprout Foundation</a>
+                        <a class="btn btn-foundation" href="https://sproutvine.com/" target="_blank">Sprout
+                            Foundation</a>
                     </li>
                 </ul>
             </div>

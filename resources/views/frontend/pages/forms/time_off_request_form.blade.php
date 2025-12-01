@@ -112,6 +112,34 @@
 
                             <button type="submit" class="submit-btn" id="submitBtn">Submit Now</button>
                         </div>
+
+                        <!-- Right Calendar Widget Section -->
+                        <div class="form-right">
+                            <div class="calendar-widget">
+                                <div class="calendar-header">
+                                    <label>Date</label>
+                                    <span class="info-icon">i</span>
+                                </div>
+
+                                <div class="calendar-datetime-input">
+                                    <input type="text" id="calendarDateTimeDisplay" class="form-input"
+                                        placeholder="MM/DD HH:MM AM/PM" readonly />
+                                </div>
+
+                                <div id="calendarWidget"></div>
+
+                                <div class="calendar-footer">
+                                    <div class="calendar-footer-item">
+                                        <label>Date</label>
+                                        <input type="text" id="calendarDateDisplay" class="form-input" readonly />
+                                    </div>
+                                    <div class="calendar-footer-item">
+                                        <label>Time</label>
+                                        <input type="text" id="calendarTimeDisplay" class="form-input" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -122,6 +150,182 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ========================================
+            // CALENDAR WIDGET INITIALIZATION (Right Side)
+            // ========================================
+            let calendarWidgetInstance = null;
+            let timePickerInstance = null;
+
+            // Initialize calendar widget
+            const now = new Date();
+            const defaultDate = now;
+            const defaultTime = now.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+
+            // Function to fetch and display time off requests on calendar
+            function loadTimeOffRequests(month, year) {
+                const location = document.getElementById('location')?.value || '';
+                const apiUrl = "{{ route('form.timeOffRequests.calendar') }}";
+
+                fetch(`${apiUrl}?location=${location}&month=${month}&year=${year}`)
+                    .then(response => response.json())
+                    .then(requests => {
+                        // Clear existing badges
+                        document.querySelectorAll('.flatpickr-day .time-off-badge').forEach(badge => badge
+                            .remove());
+
+                        // Add badges for each request
+                        requests.forEach(request => {
+                            const startDate = new Date(request.start_date + 'T00:00:00');
+                            const endDate = new Date(request.end_date + 'T00:00:00');
+
+                            // Get all dates in the range
+                            const currentDate = new Date(startDate);
+                            while (currentDate <= endDate) {
+                                const dateYear = currentDate.getFullYear();
+                                const dateMonth = currentDate.getMonth() + 1;
+                                const dateDay = currentDate.getDate();
+
+                                // Only show badges for dates in the current calendar month
+                                if (dateYear == year && dateMonth == parseInt(month)) {
+                                    // Find day element by matching date
+                                    const allDays = document.querySelectorAll(
+                                        '.flatpickr-day:not(.prevMonthDay):not(.nextMonthDay)');
+                                    allDays.forEach(dayElement => {
+                                        const dayText = dayElement.textContent.trim();
+                                        const dayNum = parseInt(dayText);
+
+                                        if (dayNum === dateDay) {
+                                            // Verify it's the correct date by checking aria-label
+                                            const ariaLabel = dayElement.getAttribute(
+                                                'aria-label') || '';
+                                            if (ariaLabel.includes(dateYear.toString()) &&
+                                                (ariaLabel.includes(dateMonth.toString()) ||
+                                                    ariaLabel.toLowerCase().includes(['january',
+                                                        'february', 'march', 'april', 'may',
+                                                        'june', 'july', 'august',
+                                                        'september', 'october', 'november',
+                                                        'december'
+                                                    ][dateMonth - 1].toLowerCase()))) {
+                                                // Check if badge already exists
+                                                let badge = dayElement.querySelector(
+                                                    '.time-off-badge');
+                                                if (!badge) {
+                                                    badge = document.createElement('span');
+                                                    badge.className =
+                                                        `time-off-badge status-${request.status}`;
+                                                    badge.setAttribute('title',
+                                                        `${request.name} - ${request.status}`
+                                                    );
+                                                    dayElement.appendChild(badge);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                                currentDate.setDate(currentDate.getDate() + 1);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading time off requests:', error);
+                    });
+            }
+
+            // Initialize main calendar
+            calendarWidgetInstance = flatpickr('#calendarWidget', {
+                inline: true,
+                defaultDate: defaultDate,
+                dateFormat: 'm/d/Y',
+                onChange: function(selectedDates, dateStr) {
+                    if (selectedDates.length > 0) {
+                        const date = selectedDates[0];
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const year = date.getFullYear();
+                        const fullDate = month + '/' + day + '/' + year;
+                        const shortDate = month + '/' + day;
+
+                        // Update date display
+                        document.getElementById('calendarDateDisplay').value = fullDate;
+
+                        // Update combined display
+                        const timeValue = document.getElementById('calendarTimeDisplay').value ||
+                            defaultTime;
+                        document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' +
+                            timeValue;
+                    }
+                },
+                onMonthChange: function(selectedDates, dateStr, instance) {
+                    const month = String(instance.currentMonth + 1).padStart(2, '0');
+                    const year = instance.currentYear;
+                    loadTimeOffRequests(month, year);
+                },
+                onYearChange: function(selectedDates, dateStr, instance) {
+                    const month = String(instance.currentMonth + 1).padStart(2, '0');
+                    const year = instance.currentYear;
+                    loadTimeOffRequests(month, year);
+                },
+                onReady: function(selectedDates, dateStr, instance) {
+                    // Load requests for current month
+                    const month = String(instance.currentMonth + 1).padStart(2, '0');
+                    const year = instance.currentYear;
+                    loadTimeOffRequests(month, year);
+                }
+            });
+
+            // Initialize time picker - make it open on click of time display
+            const timeDisplayInput = document.getElementById('calendarTimeDisplay');
+            timePickerInstance = flatpickr(timeDisplayInput, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'h:i K',
+                defaultDate: defaultDate,
+                time_24hr: false,
+                clickOpens: true,
+                onChange: function(selectedDates, timeStr) {
+                    const dateValue = document.getElementById('calendarDateDisplay').value;
+                    if (dateValue) {
+                        const shortDate = dateValue.substring(0, 5); // Get MM/DD part
+                        document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' +
+                            timeStr;
+                    } else {
+                        // If no date selected, use today's date
+                        const today = new Date();
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const day = String(today.getDate()).padStart(2, '0');
+                        document.getElementById('calendarDateTimeDisplay').value = month + '/' + day +
+                            ' ' + timeStr;
+                    }
+                }
+            });
+
+            // Make combined datetime display open time picker on click
+            document.getElementById('calendarDateTimeDisplay').addEventListener('click', function() {
+                if (timePickerInstance) {
+                    timePickerInstance.open();
+                }
+            });
+
+            // Set initial values
+            const initialDate = now;
+            const month = String(initialDate.getMonth() + 1).padStart(2, '0');
+            const day = String(initialDate.getDate()).padStart(2, '0');
+            const year = initialDate.getFullYear();
+            const fullDate = month + '/' + day + '/' + year;
+            const shortDate = month + '/' + day;
+
+            document.getElementById('calendarDateDisplay').value = fullDate;
+            document.getElementById('calendarTimeDisplay').value = defaultTime;
+            document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' + defaultTime;
+
+            // ========================================
+            // FORM SUBMISSION HANDLER
+            // ========================================
             const form = document.getElementById('timeOffRequestForm');
             const submitBtn = document.getElementById('submitBtn');
             const spinner = document.createElement('span');

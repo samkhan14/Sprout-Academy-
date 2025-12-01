@@ -292,7 +292,8 @@
                         <div class="location-overlay-content">
                             <h3 class="location-overlay-title">SEMINOLE</h3>
                             <p class="location-overlay-address">9259 Park Blvd Seminole, FL 33777</p>
-                            <a href="{{ route('frontend.locations') }}#seminole" class="btn btn-secondary">Schedule a
+                            <a href="{{ route('enrollment.form', ['location' => 'seminole', 'ref' => 'home']) }}"
+                                class="btn btn-secondary">Schedule a
                                 Tour</a>
                         </div>
                     </div>
@@ -315,7 +316,8 @@
                         <div class="location-overlay-content">
                             <h3 class="location-overlay-title">PINELLAS PARK</h3>
                             <p class="location-overlay-address">Pinellas Park Location</p>
-                            <a href="{{ route('frontend.locations') }}#pinellas-park" class="btn btn-secondary">Schedule
+                            <a href="{{ route('enrollment.form', ['location' => 'pinellas-park', 'ref' => 'home']) }}"
+                                class="btn btn-secondary">Schedule
                                 a Tour</a>
                         </div>
                     </div>
@@ -337,7 +339,8 @@
                         <div class="location-overlay-content">
                             <h3 class="location-overlay-title">MONTESSORI</h3>
                             <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
+                                class="btn btn-secondary">Schedule a
                                 Tour</a>
                         </div>
                     </div>
@@ -359,7 +362,8 @@
                         <div class="location-overlay-content">
                             <h3 class="location-overlay-title">MONTESSORI</h3>
                             <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
+                                class="btn btn-secondary">Schedule a
                                 Tour</a>
                         </div>
                     </div>
@@ -381,7 +385,8 @@
                         <div class="location-overlay-content">
                             <h3 class="location-overlay-title">MONTESSORI</h3>
                             <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('frontend.locations') }}#montessori" class="btn btn-secondary">Schedule a
+                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
+                                class="btn btn-secondary">Schedule a
                                 Tour</a>
                         </div>
                     </div>

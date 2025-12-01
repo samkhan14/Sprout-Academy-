@@ -31,6 +31,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/for-parents', 'Parents')->name('parents');
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
     Route::get('/thank-you', 'ThankYou')->name('thankYou');
+    Route::get('/enroll', 'Enroll')->name('enroll');
 });
 
 // Employee Forms - Only for authenticated users
@@ -50,6 +51,7 @@ Route::controller(FormController::class)->name('form.')->group(function () {
     Route::any('/standard-t-shirt-order-form', 'standardTShirtOrder')->name('standardTShirtOrder');
     Route::any('/specialty-t-shirt-order-form', 'specialtyTShirtOrder')->name('specialtyTShirtOrder');
     Route::post('/newsletter-subscribe', 'subscribeNewsletter')->name('subscribeNewsletter');
+    Route::get('/api/time-off-requests/calendar', 'getTimeOffRequestsForCalendar')->name('timeOffRequests.calendar');
 });
 
 // Auth Routes (Breeze)

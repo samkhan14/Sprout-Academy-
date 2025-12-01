@@ -2251,10 +2251,11 @@ img {
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 0;
-    height: 53%;
+    height: 70%;
     display: flex;
     align-items: flex-end;
-    width: 89%;
+    width: 88%;
+    /* padding-top: 10px !important; */
 }
 
 .location-card:hover .location-overlay {
@@ -2265,7 +2266,7 @@ img {
     width: 100%;
     text-align: left;
     position: relative;
-    top: 0%;
+    top: -28%;
 }
 
 .location-overlay-title {
@@ -2280,7 +2281,7 @@ img {
 .location-overlay-address {
     font-size: 1.125rem;
     color: var(--color-white);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     line-height: 1.6;
     font-weight: 800;
     position: relative;

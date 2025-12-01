@@ -99,7 +99,20 @@
     @endif
 
     <!-- Phone Numbers Card -->
-    @if($enrollment->phones->count() > 0)
+    @php
+        $allPhones = collect();
+        // Add enrollment phones
+        if($enrollment->phones) {
+            $allPhones = $allPhones->merge($enrollment->phones);
+        }
+        // Add contact phones
+        foreach($enrollment->contacts as $contact) {
+            if($contact->phones) {
+                $allPhones = $allPhones->merge($contact->phones);
+            }
+        }
+    @endphp
+    @if($allPhones->count() > 0)
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-phone me-1"></i>
@@ -110,17 +123,31 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Contact</th>
                             <th>Type</th>
                             <th>Area Code</th>
                             <th>Phone Number</th>
+                            <th>Formatted</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($enrollment->phones as $phone)
+                        @foreach($allPhones as $phone)
+                            @php
+                                $contact = $phone->contact ?? null;
+                                $contactName = $contact ? $contact->first_name . ' ' . $contact->last_name : 'Primary Account';
+                            @endphp
                             <tr>
+                                <td>{{ $contactName }}</td>
                                 <td>{{ ucfirst($phone->type ?? 'N/A') }}</td>
                                 <td>{{ $phone->area_code ?? 'N/A' }}</td>
                                 <td>{{ $phone->phone_number ?? 'N/A' }}</td>
+                                <td>
+                                    @if($phone->area_code && $phone->phone_number)
+                                        ({{ $phone->area_code }}) {{ $phone->phone_number }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

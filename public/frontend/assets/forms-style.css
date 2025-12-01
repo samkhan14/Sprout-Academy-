@@ -769,6 +769,48 @@
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 20px;
+}
+
+/* Calendar Widget for Time Off Form */
+.site_form_time_off_request .calendar-widget {
+    background: #f5f5f0;
+}
+
+/* Calendar Widget Calendar Container */
+.site_form_time_off_request #calendarWidget {
+    margin: 20px 0;
+}
+
+.site_form_time_off_request #calendarWidget .flatpickr-calendar {
+    position: relative !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.site_form_time_off_request #calendarWidget .flatpickr-calendar.inline {
+    display: block;
+}
+
+/* Calendar DateTime Display Input */
+.site_form_time_off_request #calendarDateTimeDisplay {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 45px;
+    background: #ffffff;
+    border: 1px solid var(--input-border);
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+/* Make time display clickable */
+.site_form_time_off_request #calendarTimeDisplay {
+    cursor: pointer;
 }
 
 .site_form .calendar-header {
@@ -923,6 +965,37 @@
 .site_form .flatpickr-day.today.selected {
     background: var(--selected-bg);
     border-color: var(--selected-border);
+}
+
+/* Time Off Request Badges on Calendar */
+.site_form .flatpickr-day {
+    position: relative;
+    min-height: 36px;
+    padding-bottom: 8px;
+}
+
+.site_form .flatpickr-day .time-off-badge {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: block;
+    z-index: 10;
+}
+
+.site_form .flatpickr-day .time-off-badge.status-pending {
+    background-color: #ffc107;
+}
+
+.site_form .flatpickr-day .time-off-badge.status-approved {
+    background-color: #28a745;
+}
+
+.site_form .flatpickr-day .time-off-badge.status-rejected {
+    background-color: #dc3545;
 }
 
 /* Date/Time Display Below Calendar */

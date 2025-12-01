@@ -12,6 +12,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Enrollment Routes
     Route::controller(AdminEnrollmentController::class)->prefix('enrollments')->name('enrollments.')->group(function () {
         Route::any('/', 'index')->name('index');
+        Route::get('/locations', 'getLocations')->name('locations');
         Route::get('/{id}', 'show')->name('show');
     });
 
@@ -21,6 +22,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::any('/suggestions', 'suggestions')->name('suggestions');
         Route::any('/time-clock-change-requests', 'timeClockChangeRequests')->name('time-clock-change-requests');
         Route::any('/time-off-requests', 'timeOffRequests')->name('time-off-requests');
+        Route::post('/time-off-requests/{id}/approve', 'approveTimeOffRequest')->name('time-off-requests.approve');
+        Route::post('/time-off-requests/{id}/reject', 'rejectTimeOffRequest')->name('time-off-requests.reject');
         Route::any('/standard-t-shirt-orders', 'standardTShirtOrders')->name('standard-t-shirt-orders');
         Route::any('/specialty-t-shirt-orders', 'specialtyTShirtOrders')->name('specialty-t-shirt-orders');
         Route::any('/supply-orders', 'supplyOrders')->name('supply-orders');
