@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TimeOffRequestForm extends Model
 {
     protected $table = 'time_off_requests';
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'location',
@@ -25,6 +27,14 @@ class TimeOffRequestForm extends Model
         'rejected_at',
         'rejection_reason',
     ];
+
+    /**
+     * Get the user that owns the time off request.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected $casts = [
         'todays_date' => 'date',

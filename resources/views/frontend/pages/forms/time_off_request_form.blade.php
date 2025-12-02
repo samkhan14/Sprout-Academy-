@@ -14,7 +14,7 @@
         <div class="container">
             <div class="site_form site_form_time_off_request">
                 <form id="timeOffRequestForm" method="POST" action="{{ route('form.timeOffRequestForm') }}"
-                    enctype="multipart/form-data">
+                    enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="form-wrapper">
                         <!-- Left Form Section -->
@@ -25,18 +25,28 @@
                             <div class="form-grid">
                                 {{-- Name --}}
                                 <div class="form-field">
-                                    <label for="name">Name*</label>
-                                    <input type="text" id="name" name="name" class="form-input" required />
+                                    <label for="name">Name{{ auth()->check() ? '' : '*' }}</label>
+                                    <input type="text" id="name" name="name" class="form-input"
+                                        value="{{ auth()->check() ? auth()->user()->name : '' }}"
+                                        {{ auth()->check() ? 'readonly' : 'required' }} />
+                                    @if (auth()->check())
+                                        <small class="form-text text-muted">Pre-filled from your account</small>
+                                    @endif
                                 </div>
 
                                 {{-- Email --}}
                                 <div class="form-field">
-                                    <label for="email">Your Email*</label>
-                                    <input type="email" id="email" name="email" class="form-input" required />
+                                    <label for="email">Your Email{{ auth()->check() ? '' : '*' }}</label>
+                                    <input type="email" id="email" name="email" class="form-input"
+                                        value="{{ auth()->check() ? auth()->user()->email : '' }}"
+                                        {{ auth()->check() ? 'readonly' : 'required' }} />
+                                    @if (auth()->check())
+                                        <small class="form-text text-muted">Pre-filled from your account</small>
+                                    @endif
                                 </div>
 
                                 {{-- Location --}}
-                                <div class="form-field form-field-full">
+                                <div class="form-field">
                                     <label for="location">Location*</label>
                                     <select id="location" name="location" class="form-select" required>
                                         <option value="seminole" selected>Seminole</option>
@@ -48,41 +58,23 @@
                                     </select>
                                 </div>
 
-                                {{-- Today's Date using Component --}}
-                                @include('frontend.components.form_components.date-split-field', [
-                                    'fieldId' => 'today',
-                                    'label' => 'Todays Date',
-                                    'required' => true,
-                                    'defaultDate' => 'today',
-                                    'minDate' => null,
-                                ])
+                                {{-- Today's Date --}}
+                                <div class="form-field">
+                                    <label for="today">Todays Date*</label>
+                                    <input type="date" id="today" name="todays_date" class="form-input" required />
+                                </div>
 
-                                {{-- Hidden date input for form submission --}}
-                                <input type="hidden" id="todayFormatted" name="todays_date" />
+                                {{-- Start Date --}}
+                                <div class="form-field">
+                                    <label for="startDate">Start Of Date Requested Off*</label>
+                                    <input type="date" id="startDate" name="start_date" class="form-input" required />
+                                </div>
 
-                                {{-- Start Date using Component --}}
-                                @include('frontend.components.form_components.date-split-field', [
-                                    'fieldId' => 'startDate',
-                                    'label' => 'Start Of Date Requested Off',
-                                    'required' => true,
-                                    'defaultDate' => null,
-                                    'minDate' => 'today',
-                                ])
-
-                                {{-- Hidden date input for form submission --}}
-                                <input type="hidden" id="startDateFormatted" name="start_date" />
-
-                                {{-- End Date using Component --}}
-                                @include('frontend.components.form_components.date-split-field', [
-                                    'fieldId' => 'endDate',
-                                    'label' => 'End Of Date Requested Off',
-                                    'required' => true,
-                                    'defaultDate' => null,
-                                    'minDate' => 'today',
-                                ])
-
-                                {{-- Hidden date input for form submission --}}
-                                <input type="hidden" id="endDateFormatted" name="end_date" />
+                                {{-- End Date --}}
+                                <div class="form-field">
+                                    <label for="endDate">End Of Date Requested Off*</label>
+                                    <input type="date" id="endDate" name="end_date" class="form-input" required />
+                                </div>
 
                                 {{-- Paid Or Unpaid --}}
                                 <div class="form-field form-field-full">
@@ -116,26 +108,29 @@
                         <!-- Right Calendar Widget Section -->
                         <div class="form-right">
                             <div class="calendar-widget">
+                                <!-- Label outside the white card -->
                                 <div class="calendar-header">
                                     <label>Date</label>
                                     <span class="info-icon">i</span>
                                 </div>
 
-                                <div class="calendar-datetime-input">
-                                    <input type="text" id="calendarDateTimeDisplay" class="form-input"
-                                        placeholder="MM/DD HH:MM AM/PM" readonly />
-                                </div>
+                                <!-- White Card containing all calendar elements -->
+                                <div class="calendar-card">
+                                    <!-- Calendar Grid -->
+                                    <div id="calendarWidget"></div>
 
-                                <div id="calendarWidget"></div>
-
-                                <div class="calendar-footer">
-                                    <div class="calendar-footer-item">
-                                        <label>Date</label>
-                                        <input type="text" id="calendarDateDisplay" class="form-input" readonly />
-                                    </div>
-                                    <div class="calendar-footer-item">
-                                        <label>Time</label>
-                                        <input type="text" id="calendarTimeDisplay" class="form-input" readonly />
+                                    <!-- Bottom Date and Time Inputs -->
+                                    <div class="calendar-footer">
+                                        <div class="calendar-footer-item">
+                                            <label>Date</label>
+                                            <input type="text" id="calendarDateDisplay"
+                                                class="form-input calendar-footer-input" readonly />
+                                        </div>
+                                        <div class="calendar-footer-item">
+                                            <label>Time</label>
+                                            <input type="text" id="calendarTimeDisplay"
+                                                class="form-input calendar-footer-input" readonly />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -171,14 +166,35 @@
                 const apiUrl = "{{ route('form.timeOffRequests.calendar') }}";
 
                 fetch(`${apiUrl}?location=${location}&month=${month}&year=${year}`)
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        return response.json();
+                    })
                     .then(requests => {
-                        // Clear existing badges
-                        document.querySelectorAll('.flatpickr-day .time-off-badge').forEach(badge => badge
-                            .remove());
 
-                        // Add badges for each request
+                        // Clear existing tooltips and indicators
+                        document.querySelectorAll('.flatpickr-day .time-off-tooltip').forEach(el => el
+                            .remove());
+                        document.querySelectorAll('.flatpickr-day .time-off-indicator').forEach(el => el
+                            .remove());
+                        document.querySelectorAll('.flatpickr-day').forEach(day => {
+                            day.classList.remove('has-time-off');
+                        });
+
+                        if (!requests || requests.length === 0) {
+                            console.log('No approved requests found for this month');
+                            return;
+                        }
+
+                        // Group requests by date
+                        const requestsByDate = {};
+
                         requests.forEach(request => {
+                            if (!request.start_date || !request.end_date) {
+                                console.warn('Invalid request data:', request);
+                                return;
+                            }
+
                             const startDate = new Date(request.start_date + 'T00:00:00');
                             const endDate = new Date(request.end_date + 'T00:00:00');
 
@@ -189,50 +205,254 @@
                                 const dateMonth = currentDate.getMonth() + 1;
                                 const dateDay = currentDate.getDate();
 
-                                // Only show badges for dates in the current calendar month
+                                // Only show for dates in the current calendar month
                                 if (dateYear == year && dateMonth == parseInt(month)) {
-                                    // Find day element by matching date
-                                    const allDays = document.querySelectorAll(
-                                        '.flatpickr-day:not(.prevMonthDay):not(.nextMonthDay)');
-                                    allDays.forEach(dayElement => {
-                                        const dayText = dayElement.textContent.trim();
-                                        const dayNum = parseInt(dayText);
-
-                                        if (dayNum === dateDay) {
-                                            // Verify it's the correct date by checking aria-label
-                                            const ariaLabel = dayElement.getAttribute(
-                                                'aria-label') || '';
-                                            if (ariaLabel.includes(dateYear.toString()) &&
-                                                (ariaLabel.includes(dateMonth.toString()) ||
-                                                    ariaLabel.toLowerCase().includes(['january',
-                                                        'february', 'march', 'april', 'may',
-                                                        'june', 'july', 'august',
-                                                        'september', 'october', 'november',
-                                                        'december'
-                                                    ][dateMonth - 1].toLowerCase()))) {
-                                                // Check if badge already exists
-                                                let badge = dayElement.querySelector(
-                                                    '.time-off-badge');
-                                                if (!badge) {
-                                                    badge = document.createElement('span');
-                                                    badge.className =
-                                                        `time-off-badge status-${request.status}`;
-                                                    badge.setAttribute('title',
-                                                        `${request.name} - ${request.status}`
-                                                    );
-                                                    dayElement.appendChild(badge);
-                                                }
-                                            }
-                                        }
-                                    });
+                                    const dateKey =
+                                        `${dateYear}-${String(dateMonth).padStart(2, '0')}-${String(dateDay).padStart(2, '0')}`;
+                                    if (!requestsByDate[dateKey]) {
+                                        requestsByDate[dateKey] = [];
+                                    }
+                                    if (request.name) {
+                                        requestsByDate[dateKey].push(request.name);
+                                    }
                                 }
 
                                 currentDate.setDate(currentDate.getDate() + 1);
                             }
                         });
+
+                        // Add tooltip and indicator to calendar days
+                        // Use a small delay to ensure calendar is fully rendered
+                        setTimeout(() => {
+                            Object.keys(requestsByDate).forEach(dateKey => {
+                                const [y, m, d] = dateKey.split('-');
+                                const dateDay = parseInt(d);
+                                const dateMonth = parseInt(m);
+                                const dateYear = parseInt(y);
+
+                                // Create target date for comparison
+                                const targetDate = new Date(dateYear, dateMonth - 1, dateDay);
+                                const targetDateStr =
+                                    `${dateYear}-${String(dateMonth).padStart(2, '0')}-${String(dateDay).padStart(2, '0')}`;
+
+                                // Find day element by matching date
+                                const allDays = document.querySelectorAll(
+                                    '.flatpickr-day:not(.prevMonthDay):not(.nextMonthDay)');
+
+                                allDays.forEach(dayElement => {
+                                    const dayText = dayElement.textContent.trim();
+                                    const dayNum = parseInt(dayText);
+
+                                    if (dayNum === dateDay) {
+                                        // Get date from aria-label or try to construct from calendar context
+                                        const ariaLabel = dayElement.getAttribute(
+                                            'aria-label') || '';
+
+                                        // Try to extract date from aria-label (format: "January 15, 2024")
+                                        let isMatch = false;
+
+                                        if (ariaLabel) {
+                                            // Parse aria-label to get the date
+                                            const ariaDateMatch = ariaLabel.match(
+                                                /(\w+)\s+(\d+),\s+(\d+)/);
+                                            if (ariaDateMatch) {
+                                                const monthNames = ['january',
+                                                    'february', 'march', 'april',
+                                                    'may', 'june',
+                                                    'july', 'august', 'september',
+                                                    'october', 'november',
+                                                    'december'
+                                                ];
+                                                const monthName = ariaDateMatch[1]
+                                                    .toLowerCase();
+                                                const monthIndex = monthNames.indexOf(
+                                                    monthName);
+                                                const ariaDay = parseInt(ariaDateMatch[
+                                                    2]);
+                                                const ariaYear = parseInt(ariaDateMatch[
+                                                    3]);
+
+                                                if (monthIndex === dateMonth - 1 &&
+                                                    ariaDay === dateDay && ariaYear ===
+                                                    dateYear) {
+                                                    isMatch = true;
+                                                }
+                                            } else {
+                                                // Fallback: check if year and month are mentioned
+                                                if (ariaLabel.includes(dateYear
+                                                        .toString()) &&
+                                                    (ariaLabel.includes(dateMonth
+                                                            .toString()) ||
+                                                        ariaLabel.toLowerCase()
+                                                        .includes(['january',
+                                                                'february', 'march',
+                                                                'april', 'may',
+                                                                'june', 'july',
+                                                                'august', 'september',
+                                                                'october', 'november',
+                                                                'december'
+                                                            ][dateMonth - 1]
+                                                            .toLowerCase()))) {
+                                                    isMatch = true;
+                                                }
+                                            }
+                                        } else {
+                                            // If no aria-label, try to match by calendar context
+                                            // Check if calendar instance is available and get date from it
+                                            if (calendarWidgetInstance) {
+                                                const calendarDate =
+                                                    calendarWidgetInstance.parseDate(
+                                                        dayElement);
+                                                if (calendarDate) {
+                                                    const calYear = calendarDate
+                                                        .getFullYear();
+                                                    const calMonth = calendarDate
+                                                        .getMonth() + 1;
+                                                    const calDay = calendarDate
+                                                        .getDate();
+
+                                                    if (calYear === dateYear &&
+                                                        calMonth === dateMonth &&
+                                                        calDay === dateDay) {
+                                                        isMatch = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if (isMatch) {
+                                            // Mark day as having time off - adds dark blue background
+                                            dayElement.classList.add('has-time-off');
+
+                                            // Remove existing tooltip if any
+                                            const existingTooltip = dayElement
+                                                .querySelector('.time-off-tooltip');
+                                            if (existingTooltip) {
+                                                existingTooltip.remove();
+                                            }
+
+                                            // Make day non-clickable
+                                            dayElement.style.pointerEvents = 'auto';
+                                            dayElement.style.cursor = 'default';
+
+                                            // Prevent flatpickr from handling clicks on this day
+                                            dayElement.addEventListener('click',
+                                                function(e) {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    e.stopImmediatePropagation();
+                                                    return false;
+                                                }, true);
+
+                                            // Create tooltip that will be appended to body to avoid clipping
+                                            const namesList = requestsByDate[dateKey]
+                                                .join(', ');
+                                            dayElement.setAttribute(
+                                                'data-time-off-names', namesList);
+
+                                            // Create a global tooltip element (reused for all days) - create once
+                                            if (!window.timeOffGlobalTooltip) {
+                                                window.timeOffGlobalTooltip = document
+                                                    .createElement('div');
+                                                window.timeOffGlobalTooltip.id =
+                                                    'time-off-global-tooltip';
+                                                window.timeOffGlobalTooltip.className =
+                                                    'time-off-global-tooltip';
+                                                document.body.appendChild(window
+                                                    .timeOffGlobalTooltip);
+                                            }
+
+                                            // Function to update tooltip position
+                                            const updateTooltipPosition = function() {
+                                                const rect = dayElement
+                                                    .getBoundingClientRect();
+                                                window.timeOffGlobalTooltip
+                                                    .textContent = namesList;
+                                                window.timeOffGlobalTooltip.style
+                                                    .left = (rect.left + rect
+                                                        .width / 2) + 'px';
+                                                window.timeOffGlobalTooltip.style
+                                                    .top = (rect.top - 10) + 'px';
+                                                window.timeOffGlobalTooltip.style
+                                                    .transform =
+                                                    'translate(-50%, -100%)';
+                                            };
+
+                                            // Add hover event listeners
+                                            dayElement.addEventListener('mouseenter',
+                                                function(e) {
+                                                    e.stopPropagation();
+                                                    updateTooltipPosition();
+                                                    window.timeOffGlobalTooltip
+                                                        .style.display = 'block';
+                                                }, true);
+
+                                            dayElement.addEventListener('mouseleave',
+                                                function(e) {
+                                                    e.stopPropagation();
+                                                    window.timeOffGlobalTooltip
+                                                        .style.display = 'none';
+                                                }, true);
+
+                                            // Update position on scroll/resize for this day
+                                            const updateOnScroll = function() {
+                                                if (window.timeOffGlobalTooltip
+                                                    .style.display === 'block' &&
+                                                    dayElement.matches(':hover')) {
+                                                    updateTooltipPosition();
+                                                }
+                                            };
+
+                                            window.addEventListener('scroll',
+                                                updateOnScroll, true);
+                                            window.addEventListener('resize',
+                                                updateOnScroll);
+
+                                            // Prevent click from removing the has-time-off class
+                                            // Use MutationObserver to watch for class changes
+                                            const observer = new MutationObserver(
+                                                function(mutations) {
+                                                    mutations.forEach(function(
+                                                        mutation) {
+                                                        if (mutation
+                                                            .type ===
+                                                            'attributes' &&
+                                                            mutation
+                                                            .attributeName ===
+                                                            'class') {
+                                                            if (!dayElement
+                                                                .classList
+                                                                .contains(
+                                                                    'has-time-off'
+                                                                )) {
+                                                                // Restore the class immediately
+                                                                dayElement
+                                                                    .classList
+                                                                    .add(
+                                                                        'has-time-off'
+                                                                    );
+                                                            }
+                                                        }
+                                                    });
+                                                });
+
+                                            observer.observe(dayElement, {
+                                                attributes: true,
+                                                attributeFilter: ['class']
+                                            });
+
+                                            console.log(
+                                                `Added tooltip for date: ${targetDateStr}`
+                                            );
+                                        }
+                                    }
+                                });
+                            });
+                        }, 100);
                     })
                     .catch(error => {
                         console.error('Error loading time off requests:', error);
+                        console.error('Error details:', error.message, error.stack);
                     });
             }
 
@@ -248,16 +468,9 @@
                         const day = String(date.getDate()).padStart(2, '0');
                         const year = date.getFullYear();
                         const fullDate = month + '/' + day + '/' + year;
-                        const shortDate = month + '/' + day;
 
                         // Update date display
                         document.getElementById('calendarDateDisplay').value = fullDate;
-
-                        // Update combined display
-                        const timeValue = document.getElementById('calendarTimeDisplay').value ||
-                            defaultTime;
-                        document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' +
-                            timeValue;
                     }
                 },
                 onMonthChange: function(selectedDates, dateStr, instance) {
@@ -288,26 +501,8 @@
                 time_24hr: false,
                 clickOpens: true,
                 onChange: function(selectedDates, timeStr) {
-                    const dateValue = document.getElementById('calendarDateDisplay').value;
-                    if (dateValue) {
-                        const shortDate = dateValue.substring(0, 5); // Get MM/DD part
-                        document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' +
-                            timeStr;
-                    } else {
-                        // If no date selected, use today's date
-                        const today = new Date();
-                        const month = String(today.getMonth() + 1).padStart(2, '0');
-                        const day = String(today.getDate()).padStart(2, '0');
-                        document.getElementById('calendarDateTimeDisplay').value = month + '/' + day +
-                            ' ' + timeStr;
-                    }
-                }
-            });
-
-            // Make combined datetime display open time picker on click
-            document.getElementById('calendarDateTimeDisplay').addEventListener('click', function() {
-                if (timePickerInstance) {
-                    timePickerInstance.open();
+                    // Time picker updates the time display directly
+                    // No need to update combined display since it's removed
                 }
             });
 
@@ -317,11 +512,42 @@
             const day = String(initialDate.getDate()).padStart(2, '0');
             const year = initialDate.getFullYear();
             const fullDate = month + '/' + day + '/' + year;
-            const shortDate = month + '/' + day;
 
             document.getElementById('calendarDateDisplay').value = fullDate;
             document.getElementById('calendarTimeDisplay').value = defaultTime;
-            document.getElementById('calendarDateTimeDisplay').value = shortDate + ' ' + defaultTime;
+
+            // Set today's date field to today
+            const todayInput = document.getElementById('today');
+            if (todayInput) {
+                const todayDateStr = `${year}-${month}-${day}`;
+                todayInput.value = todayDateStr;
+                todayInput.setAttribute('min', todayDateStr);
+            }
+
+            // Set min date for start and end date fields
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+            if (startDateInput) {
+                const todayDateStr = `${year}-${month}-${day}`;
+                startDateInput.setAttribute('min', todayDateStr);
+            }
+            if (endDateInput) {
+                const todayDateStr = `${year}-${month}-${day}`;
+                endDateInput.setAttribute('min', todayDateStr);
+            }
+
+            // Reload calendar when location changes
+            const locationSelect = document.getElementById('location');
+            if (locationSelect) {
+                locationSelect.addEventListener('change', function() {
+                    if (calendarWidgetInstance) {
+                        const currentMonth = String(calendarWidgetInstance.currentMonth + 1).padStart(2,
+                            '0');
+                        const currentYear = calendarWidgetInstance.currentYear;
+                        loadTimeOffRequests(currentMonth, currentYear);
+                    }
+                });
+            }
 
             // ========================================
             // FORM SUBMISSION HANDLER
@@ -336,38 +562,37 @@
             if (form) {
                 form.addEventListener('submit', async function(event) {
                     event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+
+                    // Check form validity first
+                    if (!form.checkValidity()) {
+                        console.log('Form validation failed');
+                        form.reportValidity();
+                        return false;
+                    }
+
+
+                    if (submitBtn.disabled) {
+                        console.log('Form already submitting, ignoring duplicate submission');
+                        return false;
+                    }
+
                     submitBtn.disabled = true;
-                    submitBtn.prepend(spinner);
-
-                    // Combine split date fields into single date strings
-                    const todayMonth = document.getElementById('todayMonth')?.value;
-                    const todayDay = document.getElementById('todayDay')?.value;
-                    const todayYear = document.getElementById('todayYear')?.value;
-                    const todayFormattedEl = document.getElementById('todayFormatted');
-                    if (todayMonth && todayDay && todayYear && todayFormattedEl) {
-                        todayFormattedEl.value =
-                            `20${todayYear}-${todayMonth.padStart(2, '0')}-${todayDay.padStart(2, '0')}`;
+                    if (spinner && !spinner.parentNode) {
+                        submitBtn.prepend(spinner);
                     }
 
-                    const startDateMonth = document.getElementById('startDateMonth')?.value;
-                    const startDateDay = document.getElementById('startDateDay')?.value;
-                    const startDateYear = document.getElementById('startDateYear')?.value;
-                    const startDateFormattedEl = document.getElementById('startDateFormatted');
-                    if (startDateMonth && startDateDay && startDateYear && startDateFormattedEl) {
-                        startDateFormattedEl.value =
-                            `20${startDateYear}-${startDateMonth.padStart(2, '0')}-${startDateDay.padStart(2, '0')}`;
-                    }
-
-                    const endDateMonth = document.getElementById('endDateMonth')?.value;
-                    const endDateDay = document.getElementById('endDateDay')?.value;
-                    const endDateYear = document.getElementById('endDateYear')?.value;
-                    const endDateFormattedEl = document.getElementById('endDateFormatted');
-                    if (endDateMonth && endDateDay && endDateYear && endDateFormattedEl) {
-                        endDateFormattedEl.value =
-                            `20${endDateYear}-${endDateMonth.padStart(2, '0')}-${endDateDay.padStart(2, '0')}`;
-                    }
+                    // Date fields are now simple date inputs, no need to format
+                    // The form will submit them directly in YYYY-MM-DD format
 
                     const formData = new FormData(form);
+
+                    // Debug: Log form data
+                    console.log('Form submission started');
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
 
                     // Get CSRF token
                     const csrfToken = document.querySelector('meta[name="csrf-token"]');
@@ -385,6 +610,7 @@
                     }
 
                     try {
+                        console.log('Sending request to:', "{{ route('form.timeOffRequestForm') }}");
                         const response = await fetch("{{ route('form.timeOffRequestForm') }}", {
                             method: 'POST',
                             headers: {
@@ -395,18 +621,6 @@
                             body: formData
                         });
 
-                        let result;
-                        const contentType = response.headers.get('content-type');
-                        if (contentType && contentType.includes('application/json')) {
-                            result = await response.json();
-                        } else {
-                            // If response is not JSON, it might be an HTML error page
-                            const text = await response.text();
-                            throw new Error(
-                                'Server returned non-JSON response. Please check the form and try again.'
-                            );
-                        }
-
                         const messageDiv = document.getElementById('formMessage');
                         if (!messageDiv) {
                             console.error('Message div not found');
@@ -415,36 +629,136 @@
                             return;
                         }
 
-                        if (response.ok) {
+                        // Check if response is OK first
+                        if (!response.ok) {
+                            console.error('Response not OK:', response.status, response.statusText);
+                            let errorMessage = 'Form submission failed.';
+
+                            try {
+                                const contentType = response.headers.get('content-type');
+                                if (contentType && contentType.includes('application/json')) {
+                                    const errorResult = await response.json();
+                                    if (errorResult.errors) {
+                                        errorMessage += '\n' + Object.values(errorResult.errors).flat()
+                                            .join('\n');
+                                    } else if (errorResult.message) {
+                                        errorMessage += '\n' + errorResult.message;
+                                    }
+                                } else {
+                                    const text = await response.text();
+                                    console.error('Non-JSON error response:', text.substring(0, 200));
+                                }
+                            } catch (parseError) {
+                                console.error('Error parsing error response:', parseError);
+                                errorMessage += '\nStatus: ' + response.status + ' ' + response
+                                    .statusText;
+                            }
+
+                            messageDiv.className = 'form-message form-message-error';
+                            messageDiv.textContent = errorMessage;
+                            messageDiv.style.display = 'block';
+                            submitBtn.disabled = false;
+                            spinner.remove();
+                            return;
+                        }
+
+                        // Response is OK, parse JSON
+                        let result;
+                        const contentType = response.headers.get('content-type');
+                        if (contentType && contentType.includes('application/json')) {
+                            result = await response.json();
+                            console.log('Success result:', result);
+                        } else {
+                            // If response is not JSON, it might be an HTML error page
+                            const text = await response.text();
+                            console.error('Non-JSON success response:', text.substring(0, 200));
+                            throw new Error(
+                                'Server returned non-JSON response. Please check the form and try again.'
+                            );
+                        }
+
+                        // Only show success if we have a valid result
+                        if (result && (result.message || response.ok)) {
                             messageDiv.className = 'form-message form-message-success';
                             messageDiv.textContent = result.message || 'Form submitted successfully!';
                             messageDiv.style.display = 'block';
 
+                            // Reset form
                             form.reset();
-                            // Optionally redirect to a thank you page
+
+                            // Reset today's date to current date
+                            const todayInput = document.getElementById('today');
+                            if (todayInput) {
+                                const now = new Date();
+                                const month = String(now.getMonth() + 1).padStart(2, '0');
+                                const day = String(now.getDate()).padStart(2, '0');
+                                const year = now.getFullYear();
+                                const todayDateStr = `${year}-${month}-${day}`;
+                                todayInput.value = todayDateStr;
+                                todayInput.setAttribute('min', todayDateStr);
+                            }
+
+                            // Reset min dates for start and end date fields
+                            const startDateInput = document.getElementById('startDate');
+                            const endDateInput = document.getElementById('endDate');
+                            if (startDateInput) {
+                                const now = new Date();
+                                const month = String(now.getMonth() + 1).padStart(2, '0');
+                                const day = String(now.getDate()).padStart(2, '0');
+                                const year = now.getFullYear();
+                                const todayDateStr = `${year}-${month}-${day}`;
+                                startDateInput.setAttribute('min', todayDateStr);
+                                startDateInput.value = '';
+                            }
+                            if (endDateInput) {
+                                const now = new Date();
+                                const month = String(now.getMonth() + 1).padStart(2, '0');
+                                const day = String(now.getDate()).padStart(2, '0');
+                                const year = now.getFullYear();
+                                const todayDateStr = `${year}-${month}-${day}`;
+                                endDateInput.setAttribute('min', todayDateStr);
+                                endDateInput.value = '';
+                            }
+
+                            // Reload calendar to show new request (if approved)
+                            if (calendarWidgetInstance) {
+                                const currentMonth = String(calendarWidgetInstance.currentMonth + 1)
+                                    .padStart(2, '0');
+                                const currentYear = calendarWidgetInstance.currentYear;
+                                loadTimeOffRequests(currentMonth, currentYear);
+                            }
+
+                            // Redirect to thank you page after 2 seconds
                             setTimeout(() => {
                                 window.location.href = "{{ route('frontend.thankYou') }}";
                             }, 2000);
                         } else {
+                            // This should not happen if response.ok is true, but just in case
+                            console.error('Unexpected: response.ok is true but result is invalid:',
+                                result);
                             messageDiv.className = 'form-message form-message-error';
-                            let errorMessage = 'Form submission failed.';
-                            if (result.errors) {
-                                errorMessage += '\n' + Object.values(result.errors).flat().join('\n');
-                            } else if (result.message) {
-                                errorMessage += '\n' + result.message;
-                            }
-                            messageDiv.textContent = errorMessage;
+                            messageDiv.textContent =
+                                'Form submission failed. Invalid response from server.';
                             messageDiv.style.display = 'block';
+                            submitBtn.disabled = false;
+                            spinner.remove();
                         }
                     } catch (error) {
-                        console.error('Error:', error);
+                        console.error('Error in form submission:', error);
+                        console.error('Error details:', error.message);
+                        if (error.stack) {
+                            console.error('Stack trace:', error.stack);
+                        }
+
                         const messageDiv = document.getElementById('formMessage');
                         if (messageDiv) {
                             messageDiv.className = 'form-message form-message-error';
-                            messageDiv.textContent = 'An unexpected error occurred. Please try again.';
+                            messageDiv.textContent = 'An unexpected error occurred: ' + error.message +
+                                '. Please check your connection and try again.';
                             messageDiv.style.display = 'block';
                         }
-                    } finally {
+
+                        // Make sure button is re-enabled on error
                         if (submitBtn) {
                             submitBtn.disabled = false;
                         }

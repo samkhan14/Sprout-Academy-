@@ -16,6 +16,13 @@
                     Enrollments
                 </a>
 
+                <div class="sb-sidenav-menu-heading">User Management</div>
+                <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
+                    href="{{ route('admin.users.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Employee Users
+                </a>
+
                 <div class="sb-sidenav-menu-heading">Forms</div>
                 <a class="nav-link {{ request()->routeIs('admin.forms.*') ? '' : 'collapsed' }}" href="#"
                     data-bs-toggle="collapse" data-bs-target="#collapseForms"

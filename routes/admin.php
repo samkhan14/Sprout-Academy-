@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Admin\FormDataController;
 use App\Http\Controllers\Admin\AdminEnrollmentController;
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
@@ -29,5 +30,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::any('/supply-orders', 'supplyOrders')->name('supply-orders');
         Route::any('/snack-orders', 'snackOrders')->name('snack-orders');
         Route::any('/newsletter-subscriptions', 'newsletterSubscriptions')->name('newsletter-subscriptions');
+    });
+
+    // User Management - Admin can create employee users
+    Route::controller(UserManagementController::class)->prefix('users')->name('users.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
     });
 });

@@ -147,35 +147,35 @@
         });
 
         // Submit button handler
-        document.getElementById('submitBtn').addEventListener('click', function(e) {
-            e.preventDefault();
+        // document.getElementById('submitBtn').addEventListener('click', function(e) {
+        //     e.preventDefault();
 
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const location = document.getElementById('location').value.trim();
-            const startDate = document.getElementById('startDate').value.trim();
-            const endDate = document.getElementById('endDate').value.trim();
+        //     const name = document.getElementById('name').value.trim();
+        //     const email = document.getElementById('email').value.trim();
+        //     const location = document.getElementById('location').value.trim();
+        //     const startDate = document.getElementById('startDate').value.trim();
+        //     const endDate = document.getElementById('endDate').value.trim();
 
-            if (!name || !email) {
-                alert('Please fill in Name and Email fields');
-                return;
-            }
+        //     if (!name || !email) {
+        //         alert('Please fill in Name and Email fields');
+        //         return;
+        //     }
 
-            if (!location) {
-                alert('Please select a Location');
-                return;
-            }
+        //     if (!location) {
+        //         alert('Please select a Location');
+        //         return;
+        //     }
 
-            if (!startDate || !endDate) {
-                alert('Please select Start and End dates');
-                return;
-            }
+        //     if (!startDate || !endDate) {
+        //         alert('Please select Start and End dates');
+        //         return;
+        //     }
 
-            // Simulate director signature after submission
-            document.getElementById('directorSignature').value = 'Director Approved - ' + new Date()
-                .toLocaleDateString();
-            alert('Form submitted successfully!');
-        });
+        //     // Simulate director signature after submission
+        //     document.getElementById('directorSignature').value = 'Director Approved - ' + new Date()
+        //         .toLocaleDateString();
+        //     // alert('Form submitted successfully!');
+        // });
     </script>
 
     @stack('scripts')

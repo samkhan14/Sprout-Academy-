@@ -15,6 +15,7 @@ use App\Models\SupplyOrder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class FormController extends Controller
 {
@@ -23,10 +24,9 @@ class FormController extends Controller
         // Handle POST request - Form submission
         if ($request->isMethod('post')) {
             try {
-                // Validation rules
-                $validator = Validator::make($request->all(), [
-                    'name' => 'required|string|max:255',
-                    'email' => 'required|email|max:255',
+                // If user is logged in, name and email are optional (will use user's data)
+                $user = auth()->user();
+                $validationRules = [
                     'location' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
                     'todays_date' => 'required|date',
                     'start_date' => 'required|date|after_or_equal:todays_date',
@@ -34,7 +34,19 @@ class FormController extends Controller
                     'paid_unpaid' => 'required|string|in:paid,unpaid',
                     'reason' => 'nullable|string|max:5000',
                     'director_signature' => 'nullable|string|max:255',
-                ], [
+                ];
+
+                if (!$user) {
+                    // If not logged in, name and email are required
+                    $validationRules['name'] = 'required|string|max:255';
+                    $validationRules['email'] = 'required|email|max:255';
+                } else {
+                    // If logged in, name and email are optional
+                    $validationRules['name'] = 'nullable|string|max:255';
+                    $validationRules['email'] = 'nullable|email|max:255';
+                }
+
+                $validator = Validator::make($request->all(), $validationRules, [
                     'name.required' => 'Name is required.',
                     'email.required' => 'Email is required.',
                     'email.email' => 'Please enter a valid email address.',
@@ -51,10 +63,18 @@ class FormController extends Controller
                     return response()->json(['errors' => $validator->errors()], 422);
                 }
 
+                // Get logged in user if any
+                $user = auth()->user();
+
+                // If user is logged in, use their data
+                $name = $user ? $user->name : $request->name;
+                $email = $user ? $user->email : $request->email;
+
                 // Create time off request with default pending status
                 $timeOffRequest = TimeOffRequestForm::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
+                    'user_id' => $user ? $user->id : null,
+                    'name' => $name,
+                    'email' => $email,
                     'location' => $request->location,
                     'todays_date' => $request->todays_date,
                     'start_date' => $request->start_date,
@@ -89,30 +109,41 @@ class FormController extends Controller
         $month = $request->get('month', date('m'));
         $year = $request->get('year', date('Y'));
 
-        // Get all requests that fall in this month (including those that span months)
-        $allRequests = TimeOffRequestForm::where(function ($q) use ($month, $year) {
-            $q->where(function ($subQ) use ($month, $year) {
-                $subQ->whereYear('start_date', $year)
-                    ->whereMonth('start_date', $month);
-            })->orWhere(function ($subQ) use ($month, $year) {
-                $subQ->whereYear('end_date', $year)
-                    ->whereMonth('end_date', $month);
+        // Convert month to integer for comparison
+        $monthInt = (int) $month;
+        $yearInt = (int) $year;
+
+        // Get all approved requests that overlap with the requested month/year
+        // A request overlaps if:
+        // 1. It starts in this month/year, OR
+        // 2. It ends in this month/year, OR
+        // 3. It starts before this month and ends after this month
+        $startOfMonth = Carbon::create($yearInt, $monthInt, 1)->startOfDay();
+        $endOfMonth = Carbon::create($yearInt, $monthInt, 1)->endOfMonth()->endOfDay();
+
+        // Build query - Show all approved requests regardless of location
+        // Location filter removed so all approved requests show on calendar
+        $query = TimeOffRequestForm::where('status', 'approved')
+            ->where(function ($q) use ($startOfMonth, $endOfMonth) {
+                $q->where(function ($subQ) use ($startOfMonth, $endOfMonth) {
+                    // Request starts before or on the end of month and ends on or after start of month
+                    $subQ->where('start_date', '<=', $endOfMonth)
+                        ->where('end_date', '>=', $startOfMonth);
+                });
             });
-        });
 
-        if ($location) {
-            $allRequests->where('location', $location);
-        }
-
-        return response()->json($allRequests->get()->map(function ($req) {
+        $results = $query->get()->map(function ($req) {
             return [
                 'id' => $req->id,
                 'name' => $req->name,
+                'location' => $req->location,
                 'start_date' => $req->start_date->format('Y-m-d'),
                 'end_date' => $req->end_date->format('Y-m-d'),
                 'status' => $req->status,
             ];
-        }));
+        });
+
+        return response()->json($results);
     }
 
     /**
