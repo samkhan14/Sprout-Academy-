@@ -151,6 +151,34 @@
             let calendarWidgetInstance = null;
             let timePickerInstance = null;
 
+            // Function to make all calendar days non-clickable (but allow hover for tooltips)
+            function makeDaysNonClickable(instance) {
+                if (!instance || !instance.calendarContainer) return;
+                
+                const allDays = instance.calendarContainer.querySelectorAll('.flatpickr-day');
+                allDays.forEach(day => {
+                    // Allow hover events but prevent click selection
+                    day.style.cursor = 'default';
+                    // Prevent flatpickr from selecting dates on click
+                    day.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        // Remove selected class if it gets added
+                        day.classList.remove('selected');
+                        return false;
+                    }, true);
+                    
+                    // Also prevent mousedown which flatpickr uses
+                    day.addEventListener('mousedown', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        return false;
+                    }, true);
+                });
+            }
+
             // Initialize calendar widget
             const now = new Date();
             const defaultDate = now;
@@ -224,6 +252,10 @@
                         // Add tooltip and indicator to calendar days
                         // Use a small delay to ensure calendar is fully rendered
                         setTimeout(() => {
+                            // Ensure all days are non-clickable
+                            if (calendarWidgetInstance) {
+                                makeDaysNonClickable(calendarWidgetInstance);
+                            }
                             Object.keys(requestsByDate).forEach(dateKey => {
                                 const [y, m, d] = dateKey.split('-');
                                 const dateDay = parseInt(d);
@@ -331,12 +363,22 @@
                                                 existingTooltip.remove();
                                             }
 
-                                            // Make day non-clickable
-                                            dayElement.style.pointerEvents = 'auto';
+                                            // Make day non-clickable but allow hover
                                             dayElement.style.cursor = 'default';
 
                                             // Prevent flatpickr from handling clicks on this day
                                             dayElement.addEventListener('click',
+                                                function(e) {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    e.stopImmediatePropagation();
+                                                    // Remove selected class
+                                                    dayElement.classList.remove('selected');
+                                                    return false;
+                                                }, true);
+                                            
+                                            // Also prevent mousedown
+                                            dayElement.addEventListener('mousedown',
                                                 function(e) {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -408,7 +450,7 @@
                                             window.addEventListener('resize',
                                                 updateOnScroll);
 
-                                            // Prevent click from removing the has-time-off class
+                                            // Prevent click from removing the has-time-off class and prevent selection
                                             // Use MutationObserver to watch for class changes
                                             const observer = new MutationObserver(
                                                 function(mutations) {
@@ -420,6 +462,11 @@
                                                             mutation
                                                             .attributeName ===
                                                             'class') {
+                                                            // Remove selected class if it gets added
+                                                            if (dayElement.classList.contains('selected')) {
+                                                                dayElement.classList.remove('selected');
+                                                            }
+                                                            
                                                             if (!dayElement
                                                                 .classList
                                                                 .contains(
@@ -461,29 +508,54 @@
                 inline: true,
                 defaultDate: defaultDate,
                 dateFormat: 'm/d/Y',
+                clickOpens: false, // Disable date selection on click
                 onChange: function(selectedDates, dateStr) {
+                    // Prevent date selection - clear any selected dates
                     if (selectedDates.length > 0) {
-                        const date = selectedDates[0];
-                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const year = date.getFullYear();
-                        const fullDate = month + '/' + day + '/' + year;
-
-                        // Update date display
-                        document.getElementById('calendarDateDisplay').value = fullDate;
+                        // Clear selection immediately
+                        calendarWidgetInstance.clear();
+                        // Remove selected class from all days
+                        const allDays = calendarWidgetInstance.calendarContainer.querySelectorAll('.flatpickr-day.selected');
+                        allDays.forEach(day => day.classList.remove('selected'));
                     }
                 },
                 onMonthChange: function(selectedDates, dateStr, instance) {
+                    // Make all calendar days non-clickable after month change
+                    setTimeout(() => {
+                        makeDaysNonClickable(instance);
+                    }, 100);
+                    
                     const month = String(instance.currentMonth + 1).padStart(2, '0');
                     const year = instance.currentYear;
                     loadTimeOffRequests(month, year);
                 },
                 onYearChange: function(selectedDates, dateStr, instance) {
+                    // Make all calendar days non-clickable after year change
+                    setTimeout(() => {
+                        makeDaysNonClickable(instance);
+                    }, 100);
+                    
                     const month = String(instance.currentMonth + 1).padStart(2, '0');
                     const year = instance.currentYear;
                     loadTimeOffRequests(month, year);
                 },
                 onReady: function(selectedDates, dateStr, instance) {
+                    // Make all calendar days non-clickable
+                    makeDaysNonClickable(instance);
+                    
+                    // Fix dayContainer width to show 7 days properly
+                    setTimeout(() => {
+                        const dayContainer = instance.calendarContainer.querySelector('.dayContainer');
+                        if (dayContainer) {
+                            // Calculate width for 7 days: (day width + margin) * 7
+                            const dayWidth = 44; // 40px width + 2px margin on each side
+                            const containerWidth = dayWidth * 7;
+                            dayContainer.style.width = containerWidth + 'px';
+                            dayContainer.style.minWidth = containerWidth + 'px';
+                            dayContainer.style.maxWidth = containerWidth + 'px';
+                        }
+                    }, 100);
+
                     // Load requests for current month
                     const month = String(instance.currentMonth + 1).padStart(2, '0');
                     const year = instance.currentYear;

@@ -1004,6 +1004,20 @@
     max-width: 100% !important;
     background: #ffffff;
     overflow: visible !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+/* Ensure 7 days are visible in calendar */
+.site_form .flatpickr-days {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.site_form .dayContainer .flatpickr-day {
+    flex: 0 0 calc(14.2857% - 4px) !important; /* 100% / 7 days */
+    max-width: calc(14.2857% - 4px) !important;
 }
 
 /* Calendar Card specific styles - White background */
@@ -1033,6 +1047,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: default !important;
+}
+
+/* Prevent date selection on calendar widget */
+.site_form_time_off_request .calendar-card .flatpickr-day.selected {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--text-color) !important;
 }
 
 .site_form .flatpickr-day.prevMonthDay,

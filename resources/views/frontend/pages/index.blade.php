@@ -1,5 +1,9 @@
 @extends('frontend.partials.master')
 
+@php
+    use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('title', 'Home')
 
 @section('meta_description',
@@ -276,122 +280,37 @@
             </div>
 
             <div class="locations-grid">
-                <!-- Seminole -->
-                <div class="location-card">
-                    <div class="location-image-wrapper">
-                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
-                            alt="The Sprout Academy Seminole location exterior" class="location-image" loading="lazy">
-                    </div>
-                    <div class="location-bar">
-                        <span class="location-name">SEMINOLE</span>
-                        <button class="location-toggle" aria-label="Toggle location details">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="location-overlay">
-                        <div class="location-overlay-content">
-                            <h3 class="location-overlay-title">SEMINOLE</h3>
-                            <p class="location-overlay-address">9259 Park Blvd Seminole, FL 33777</p>
-                            <a href="{{ route('enrollment.form', ['location' => 'seminole', 'ref' => 'home']) }}"
-                                class="btn btn-secondary">Schedule a
-                                Tour</a>
+                @forelse ($locations as $location)
+                    <div class="location-card">
+                        <div class="location-image-wrapper">
+                            @if ($location->home_page_image)
+                                <img src="{{ Storage::url($location->home_page_image) }}"
+                                    alt="The Sprout Academy {{ $location->name }} location exterior" class="location-image" loading="lazy">
+                            @else
+                                <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
+                                    alt="The Sprout Academy {{ $location->name }} location exterior" class="location-image" loading="lazy">
+                            @endif
+                        </div>
+                        <div class="location-bar">
+                            <span class="location-name">{{ $location->name }}</span>
+                            <button class="location-toggle" aria-label="Toggle location details">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="location-overlay">
+                            <div class="location-overlay-content">
+                                <h3 class="location-overlay-title">{{ $location->name }}</h3>
+                                <p class="location-overlay-address">{{ $location->address }}</p>
+                                <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'home']) }}"
+                                    class="btn btn-secondary">Schedule a Tour</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Pinellas Park -->
-                <div class="location-card">
-                    <div class="location-image-wrapper">
-                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-3.png') }}"
-                            alt="The Sprout Academy Pinellas Park location exterior" class="location-image"
-                            loading="lazy">
+                @empty
+                    <div class="text-center py-5">
+                        <p>No locations available at this time.</p>
                     </div>
-                    <div class="location-bar">
-                        <span class="location-name">PINELLAS PARK</span>
-                        <button class="location-toggle" aria-label="Toggle location details">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="location-overlay">
-                        <div class="location-overlay-content">
-                            <h3 class="location-overlay-title">PINELLAS PARK</h3>
-                            <p class="location-overlay-address">Pinellas Park Location</p>
-                            <a href="{{ route('enrollment.form', ['location' => 'pinellas-park', 'ref' => 'home']) }}"
-                                class="btn btn-secondary">Schedule
-                                a Tour</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Montessori -->
-                <div class="location-card">
-                    <div class="location-image-wrapper">
-                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
-                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
-                    </div>
-                    <div class="location-bar">
-                        <span class="location-name">MONTESSORI</span>
-                        <button class="location-toggle" aria-label="Toggle location details">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="location-overlay">
-                        <div class="location-overlay-content">
-                            <h3 class="location-overlay-title">MONTESSORI</h3>
-                            <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
-                                class="btn btn-secondary">Schedule a
-                                Tour</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Montessori -->
-                <div class="location-card">
-                    <div class="location-image-wrapper">
-                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
-                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
-                    </div>
-                    <div class="location-bar">
-                        <span class="location-name">MONTESSORI</span>
-                        <button class="location-toggle" aria-label="Toggle location details">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="location-overlay">
-                        <div class="location-overlay-content">
-                            <h3 class="location-overlay-title">MONTESSORI</h3>
-                            <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
-                                class="btn btn-secondary">Schedule a
-                                Tour</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Montessori -->
-                <div class="location-card">
-                    <div class="location-image-wrapper">
-                        <img src="{{ asset('frontend/assets/home_page_images/sch-img-4.png') }}"
-                            alt="The Sprout Academy Montessori location exterior" class="location-image" loading="lazy">
-                    </div>
-                    <div class="location-bar">
-                        <span class="location-name">MONTESSORI</span>
-                        <button class="location-toggle" aria-label="Toggle location details">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="location-overlay">
-                        <div class="location-overlay-content">
-                            <h3 class="location-overlay-title">MONTESSORI</h3>
-                            <p class="location-overlay-address">Montessori Location</p>
-                            <a href="{{ route('enrollment.form', ['location' => 'montessori', 'ref' => 'home']) }}"
-                                class="btn btn-secondary">Schedule a
-                                Tour</a>
-                        </div>
-                    </div>
-                </div>
-
+                @endforelse
             </div>
         </div>
     </section>

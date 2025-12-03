@@ -186,13 +186,11 @@ class FormController extends Controller
                     'area_repair.in' => 'Please select a valid area of repair.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Handle file upload
@@ -271,13 +269,11 @@ class FormController extends Controller
                     'subject.required' => 'Subject is required.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Create suggestion
@@ -351,13 +347,11 @@ class FormController extends Controller
                     'reason_for_change.required' => 'Reason for change is required.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Create time clock change request
@@ -419,13 +413,11 @@ class FormController extends Controller
                     'choose_your_center.in' => 'Please select a valid center.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Collect all order items (only non-zero values)
@@ -446,10 +438,9 @@ class FormController extends Controller
 
                 // Check if at least one item is ordered
                 if (empty($orderItems)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Please order at least one item.'
-                    ], 422);
+                    return back()
+                        ->withErrors(['order_items' => 'Please order at least one item.'])
+                        ->withInput();
                 }
 
                 // Create supply order
@@ -465,9 +456,8 @@ class FormController extends Controller
                     'location' => $order->location,
                 ]);
 
-                return response()->json([
-                    'message' => 'Your supply order has been submitted successfully!'
-                ], 200);
+                return redirect()->route('frontend.thankYou')
+                    ->with('success', 'Your supply order has been submitted successfully!');
 
             } catch (\Exception $e) {
                 // Log error
@@ -476,11 +466,9 @@ class FormController extends Controller
                     'trace' => $e->getTraceAsString(),
                 ]);
 
-                return response()->json([
-                    'success' => false,
-                    'message' => 'An error occurred while submitting your form. Please try again later.',
-                    'error' => config('app.debug') ? $e->getMessage() : null
-                ], 500);
+                return back()
+                    ->withErrors(['error' => 'An error occurred while submitting your form. Please try again later.'])
+                    ->withInput();
             }
         }
 
@@ -578,13 +566,11 @@ class FormController extends Controller
                     'choose_your_center.in' => 'Please select a valid center.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Collect all order items (only non-zero values)
@@ -605,10 +591,9 @@ class FormController extends Controller
 
                 // Check if at least one item is ordered
                 if (empty($orderItems)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Please order at least one item.'
-                    ], 422);
+                    return back()
+                        ->withErrors(['order_items' => 'Please order at least one item.'])
+                        ->withInput();
                 }
 
                 // Create snack order
@@ -624,9 +609,8 @@ class FormController extends Controller
                     'location' => $order->location,
                 ]);
 
-                return response()->json([
-                    'message' => 'Your snack order has been submitted successfully!'
-                ], 200);
+                return redirect()->route('frontend.thankYou')
+                    ->with('success', 'Your snack order has been submitted successfully!');
 
             } catch (\Exception $e) {
                 // Log error
@@ -635,11 +619,9 @@ class FormController extends Controller
                     'trace' => $e->getTraceAsString(),
                 ]);
 
-                return response()->json([
-                    'success' => false,
-                    'message' => 'An error occurred while submitting your form. Please try again later.',
-                    'error' => config('app.debug') ? $e->getMessage() : null
-                ], 500);
+                return back()
+                    ->withErrors(['error' => 'An error occurred while submitting your form. Please try again later.'])
+                    ->withInput();
             }
         }
 
@@ -722,13 +704,11 @@ class FormController extends Controller
                     'colors.min' => 'Please select at least one color.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Create standard t-shirt order
@@ -797,13 +777,11 @@ class FormController extends Controller
                     'themes.min' => 'Please select at least one theme/holiday.',
                 ]);
 
-                // If validation fails, return errors
+                // If validation fails, return back with errors
                 if ($validator->fails()) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validation failed. Please check your input.',
-                        'errors' => $validator->errors()
-                    ], 422);
+                    return back()
+                        ->withErrors($validator)
+                        ->withInput();
                 }
 
                 // Create specialty t-shirt order

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
     public function index()
     {
-        return view('frontend.pages.index');
+        $locations = Location::active()->get();
+        return view('frontend.pages.index', compact('locations'));
     }
 
     public function Parents()
@@ -23,7 +25,8 @@ class FrontendController extends Controller
 
     public function Locations()
     {
-        return view('frontend.pages.locations');
+        $locations = Location::active()->get();
+        return view('frontend.pages.locations', compact('locations'));
     }
 
     public function Sproutvine()
@@ -33,7 +36,8 @@ class FrontendController extends Controller
 
     public function VirtualTour()
     {
-        return view('frontend.pages.virtual_tour');
+        $locations = Location::active()->get();
+        return view('frontend.pages.virtual_tour', compact('locations'));
     }
 
     public function TheSproutAcademyDifference()

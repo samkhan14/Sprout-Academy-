@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // Seed Admin User
         $this->call([
             AdminUserSeeder::class,
+            LocationSeeder::class,
         ]);
     }
 }
