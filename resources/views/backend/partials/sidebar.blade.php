@@ -78,6 +78,10 @@
                             href="{{ route('admin.forms.newsletter-subscriptions') }}">
                             <i class="fas fa-envelope me-2"></i>Newsletter Subscriptions
                         </a>
+                        <a class="nav-link {{ request()->routeIs('admin.forms.child-absent-forms') ? 'active' : '' }}"
+                            href="{{ route('admin.forms.child-absent-forms') }}">
+                            <i class="fas fa-child me-2"></i>Child Absent Forms
+                        </a>
                     </nav>
                 </div>
             </div>

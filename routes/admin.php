@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
         Route::any('/supply-orders', 'supplyOrders')->name('supply-orders');
         Route::any('/snack-orders', 'snackOrders')->name('snack-orders');
         Route::any('/newsletter-subscriptions', 'newsletterSubscriptions')->name('newsletter-subscriptions');
+        Route::any('/child-absent-forms', 'childAbsentForms')->name('child-absent-forms');
     });
 
     // User Management - Admin can create employee users

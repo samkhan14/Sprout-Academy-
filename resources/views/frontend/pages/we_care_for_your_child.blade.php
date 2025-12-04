@@ -26,7 +26,7 @@
             <div class="video-showcase-main">
                 <video class="main-video-player" poster="{{ asset('frontend/assets/home_page_images/singlevideo.png') }}"
                     controls preload="metadata">
-                    <source src="{{ asset('frontend/assets/videos/sprout-academy-video.mp4') }}" type="video/mp4">
+                    <source src="{{ asset('frontend/assets/home_page_images/vdo-3.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <button class="video-play-btn-main" aria-label="Play video">
@@ -52,7 +52,7 @@
                     <p class="info-card-text">
                         Education and development are important, but we know that nothing matters more than the safety,
                         security, & health of your child.
-                        <a href="#" class="info-read-more">Read More</a>
+                        {{-- <a href="#" class="info-read-more">Read More</a> --}}
                     </p>
                 </div>
 
@@ -68,7 +68,7 @@
                     <p class="info-card-text">
                         From first aid training for emergency situations to sanitation and ensuring a clean and healthy
                         environment for children, we have vast experience ensuring that every child is happy.
-                        <a href="#" class="info-read-more">Read More</a>
+                        {{-- <a href="#" class="info-read-more">Read More</a> --}}
                     </p>
                 </div>
 
@@ -84,7 +84,7 @@
                     <p class="info-card-text">
                         We invite you to learn more about ways we care for your child. Ask the local center director at your
                         location about our leadership in child care safety health and security.
-                        <a href="#" class="info-read-more">Read More</a>
+                        {{-- <a href="#" class="info-read-more">Read More</a> --}}
                     </p>
                 </div>
             </div>

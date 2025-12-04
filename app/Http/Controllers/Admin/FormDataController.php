@@ -12,7 +12,9 @@ use App\Models\SnackOrder;
 use App\Models\TimeOffRequestForm;
 use App\Models\SupplyOrder;
 use App\Models\NewsletterSubscription;
+use App\Models\ChildAbsentForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class FormDataController extends Controller
@@ -117,17 +119,17 @@ class FormDataController extends Controller
                 ->editColumn('created_at', function ($request) {
                     return $request->created_at->format('M d, Y h:i A');
                 })
-                ->addColumn('action', function ($request) {
+                ->addColumn('action', function ($timeOffRequest) {
                     $html = '<div class="btn-group" role="group">';
-                    if ($request->status === 'pending') {
-                        $html .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $request->id . '" title="Approve">
+                    if ($timeOffRequest->status === 'pending') {
+                        $html .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $timeOffRequest->id . '" title="Approve">
                             <i class="fas fa-check"></i>
                         </button>';
-                        $html .= '<button type="button" class="btn btn-sm btn-danger reject-btn" data-id="' . $request->id . '" title="Reject">
+                        $html .= '<button type="button" class="btn btn-sm btn-danger reject-btn" data-id="' . $timeOffRequest->id . '" title="Reject">
                             <i class="fas fa-times"></i>
                         </button>';
                     } else {
-                        $html .= '<span class="text-muted">' . ucfirst($request->status) . '</span>';
+                        $html .= '<span class="text-muted">' . ucfirst($timeOffRequest->status) . '</span>';
                     }
                     $html .= '</div>';
                     return $html;
@@ -151,7 +153,7 @@ class FormDataController extends Controller
 
             $timeOffRequest->update([
                 'status' => 'approved',
-                'approved_by' => auth()->id(),
+                'approved_by' => Auth::id(),
                 'approved_at' => now(),
             ]);
 
@@ -173,7 +175,7 @@ class FormDataController extends Controller
 
             $timeOffRequest->update([
                 'status' => 'rejected',
-                'rejected_by' => auth()->id(),
+                'rejected_by' => Auth::id(),
                 'rejected_at' => now(),
                 'rejection_reason' => $request->input('rejection_reason'),
             ]);
@@ -325,5 +327,30 @@ class FormDataController extends Controller
         }
 
         return view('backend.pages.forms.newsletter-subscriptions');
+    }
+
+    // Child Absent Forms
+    public function childAbsentForms(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $forms = ChildAbsentForm::select('*');
+
+            return DataTables::of($forms)
+                ->addColumn('full_name', function ($form) {
+                    return $form->first_name . ' ' . $form->last_name;
+                })
+                ->editColumn('date_of_expected_return', function ($form) {
+                    return $form->date_of_expected_return ? $form->date_of_expected_return->format('M d, Y') : '';
+                })
+                ->editColumn('location', function ($form) {
+                    return ucfirst(str_replace('-', ' ', $form->location));
+                })
+                ->editColumn('created_at', function ($form) {
+                    return $form->created_at->format('M d, Y h:i A');
+                })
+                ->make(true);
+        }
+
+        return view('backend.pages.forms.child-absent-forms');
     }
 }

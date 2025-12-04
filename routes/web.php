@@ -32,6 +32,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
     Route::get('/thank-you', 'ThankYou')->name('thankYou');
     Route::get('/enroll', 'Enroll')->name('enroll');
+    Route::any('/child-absent-form', 'ChildAbsentForm')->name('childAbsentForm');
 });
 
 // Employee Forms - Only for authenticated users

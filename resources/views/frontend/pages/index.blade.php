@@ -21,7 +21,7 @@
                 @include('frontend.components.green-badge', ['text' => 'WE GUIDE'])
                 <h1 class="hero-title">CHILDREN IN THE <br> RIGHT DIRECTION</h1>
                 {{-- <a href="#tour" class="btn btn-secondary btn-lg">Schedule a Tour</a> --}}
-                <a href="#tour" class="btn btn-foundation btn-lg">Schedule a Tour</a>
+                <a href="{{ route('frontend.enroll') }}" class="btn btn-foundation btn-lg">Schedule a Tour</a>
             </div>
         </div>
     </section>
@@ -91,7 +91,7 @@
 
             <div class="steps-cta">
                 <p class="steps-cta-text">So, what are you waiting for?</p>
-                <a href="#tour" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
+                <a href="{{ route('frontend.enroll') }}" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
             </div>
         </div>
     </section>
@@ -159,8 +159,8 @@
                 <div class="video-showcase-main">
                     <video id="main-video" class="main-video-player"
                         poster="{{ asset('frontend/assets/home_page_images/singlevideo.png') }}" controls playsinline>
-                        <source src="{{ asset('frontend/assets/videos/main-video.mp4') }}" type="video/mp4">
-                        <source src="{{ asset('frontend/assets/videos/main-video.webm') }}" type="video/webm">
+                        <source src="{{ asset('frontend/assets/home_page_images/vdo-1.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('frontend/assets/home_page_images/vdo-1.webm') }}" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                     <button class="video-play-btn-main" id="play-video-btn"
@@ -182,7 +182,7 @@
                         'rotation' => 'left',
                     ])
                     <h3 class="why-choose-title">YOUR CHILD WON'T COME HOME A MESS</h3>
-                    <a href="#tour" class="btn btn-foundation btn-lg mt-3">Enroll Now</a>
+                    <a href="{{ route('frontend.enroll') }}" class="btn btn-foundation btn-lg mt-3">Enroll Now</a>
                 </div>
                 <div class="col-lg-7">
                     <p class="why-choose-text-right mb-3">
@@ -281,25 +281,33 @@
 
             <div class="locations-grid">
                 @forelse ($locations as $location)
+                    @php
+                        // Static images map based on location slug
+                        $locationImages = [
+                            'seminole' => 'sch-img-1.png',
+                            'clearwater' => 'sch-img-2.png',
+                            'pinellas_park' => 'sch-img-3.png',
+                            'montessori' => 'sch-img-4.png',
+                            'largo' => 'sch-img-5.png',
+                            'st_petersburg' => 'sch-img-1.png',
+                        ];
+                        $imageName = $locationImages[$location->slug] ?? 'sch-img-1.png';
+                    @endphp
                     <div class="location-card">
                         <div class="location-image-wrapper">
-                            @if ($location->home_page_image)
-                                <img src="{{ Storage::url($location->home_page_image) }}"
-                                    alt="The Sprout Academy {{ $location->name }} location exterior" class="location-image" loading="lazy">
-                            @else
-                                <img src="{{ asset('frontend/assets/home_page_images/sch-img-1.png') }}"
-                                    alt="The Sprout Academy {{ $location->name }} location exterior" class="location-image" loading="lazy">
-                            @endif
+                            <img src="{{ asset('frontend/assets/home_page_images/' . $imageName) }}"
+                                alt="The Sprout Academy {{ $location->name }} location exterior" class="location-image"
+                                loading="lazy">
                         </div>
                         <div class="location-bar">
-                            <span class="location-name">{{ $location->name }}</span>
+                            <span class="location-name">{{ strtoupper($location->name) }}</span>
                             <button class="location-toggle" aria-label="Toggle location details">
                                 <i class="fas fa-chevron-down"></i>
                             </button>
                         </div>
                         <div class="location-overlay">
                             <div class="location-overlay-content">
-                                <h3 class="location-overlay-title">{{ $location->name }}</h3>
+                                <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
                                 <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'home']) }}"
                                     class="btn btn-secondary">Schedule a Tour</a>

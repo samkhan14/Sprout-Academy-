@@ -106,8 +106,21 @@
                         <div class="vt-action-buttons">
                             <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'virtual-tour']) }}"
                                 class="btn btn-enroll">Register Here</a>
-                            <a href="{{ route('frontend.locations') }}#{{ $location->slug }}"
-                                class="btn btn-foundation">More Information</a>
+
+                            @php
+                                $routeMap = [
+                                    'seminole' => 'frontend.locationSeminole',
+                                    'clearwater' => 'frontend.locationClearwater',
+                                    'st-petersburg' => 'frontend.locationStPetersburg',
+                                    'pinellas-park' => 'frontend.locationPinellasPark',
+                                    'montessori' => 'frontend.locationMontessori',
+                                    'largo' => 'frontend.locationLargo',
+                                ];
+                                $routeName = $routeMap[$location->slug] ?? null;
+                            @endphp
+                            @if ($routeName && Route::has($routeName))
+                                <a href="{{ route($routeName) }}" class="btn btn-foundation">More Information</a>
+                            @endif
                         </div>
                     </div>
 

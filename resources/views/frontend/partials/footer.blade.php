@@ -13,7 +13,6 @@
         <form id="newsletterForm" class="newsletter-form needs-validation" method="POST"
             action="{{ route('form.subscribeNewsletter') }}" novalidate>
             @csrf
-            <div id="newsletterMessage" class="newsletter-message" style="display: none;"></div>
             <input type="text" class="newsletter-input" name="name" id="newsletterName" placeholder="Your Name"
                 required aria-label="Your name">
             <input type="email" class="newsletter-input" name="email" id="newsletterEmail" placeholder="Your Email"
@@ -28,6 +27,7 @@
                 </span>
             </button>
         </form>
+        <div id="newsletterMessage" class="newsletter-message" style="display: none;"></div>
     </div>
 </section>
 
@@ -52,7 +52,7 @@
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="{{ route('frontend.ourPrograms') }}">Programs</a></li>
-                    <li><a href="#enroll">Enroll Now</a></li>
+                    <li><a href="{{ route('frontend.enroll') }}">Enroll Now</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
                     @auth
                         <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
@@ -78,7 +78,7 @@
             <p class="mb-0">
                 &copy; {{ date('Y') }} The Sprout Academy. All rights reserved.
             </p>
-            <div>
+            <div class="d-none">
                 <a href="#privacy">Privacy Policy</a>
             </div>
         </div>

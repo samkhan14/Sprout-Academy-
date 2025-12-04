@@ -23,7 +23,7 @@
             <div class="video-showcase-main">
                 <video class="main-video-player" poster="{{ asset('frontend/assets/home_page_images/sprt-aca-img-1.png') }}"
                     controls preload="metadata">
-                    <source src="{{ asset('frontend/assets/videos/sprout-academy-video.mp4') }}" type="video/mp4">
+                    <source src="{{ asset('frontend/assets/home_page_images/vdo-2.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <button class="video-play-btn-main" aria-label="Play video">

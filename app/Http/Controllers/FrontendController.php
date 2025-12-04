@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use Illuminate\Http\Request;
+use App\Models\ChildAbsent;
+use App\Models\ChildAbsentForm;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
@@ -117,10 +121,6 @@ class FrontendController extends Controller
 
     public function EmployeeForms()
     {
-        // This route is already protected by auth middleware, but adding extra check
-        if (!auth()->check()) {
-            abort(403, 'Unauthorized access. Please login to view employee forms.');
-        }
         return view('frontend.pages.employee_forms');
     }
 
@@ -132,5 +132,70 @@ class FrontendController extends Controller
     public function Enroll()
     {
         return view('frontend.pages.enrollment');
+    }
+
+    public function ChildAbsentForm(Request $request)
+    {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation
+                $validator = Validator::make($request->all(), [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'child_name' => 'required|string|max:255',
+                    'phone_number' => 'required|string|max:20',
+                    'location' => 'required|string|in:seminole,clearwater,pinellas-park,montessori,largo,st-petersburg',
+                    'date_of_expected_return' => 'required|date',
+                    'reason' => 'nullable|string|max:5000',
+                ], [
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'child_name.required' => 'Child name is required.',
+                    'phone_number.required' => 'Phone number is required.',
+                    'location.required' => 'Location is required.',
+                    'date_of_expected_return.required' => 'Date of expected return is required.',
+                    'date_of_expected_return.date' => 'Please provide a valid date.',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Create child absent form
+                $childAbsent = ChildAbsentForm::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'child_name' => $request->child_name,
+                    'phone_number' => $request->phone_number,
+                    'location' => $request->location,
+                    'date_of_expected_return' => $request->date_of_expected_return,
+                    'reason' => $request->reason,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Child absent form submitted successfully!'
+                ], 200);
+
+            } catch (\Exception $e) {
+                Log::error('Error submitting child absent form: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'request_data' => $request->all(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting the form. Please try again.'
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Display form
+        return view('frontend.pages.forms.child_absent_form');
     }
 }

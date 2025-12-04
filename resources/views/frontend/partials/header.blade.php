@@ -70,6 +70,10 @@
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
                                     href="{{ route('frontend.downloadForms') }}"
                                     @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.childAbsentForm') ? 'active' : '' }}"
+                                    href="{{ route('frontend.childAbsentForm') }}"
+                                    @if (request()->routeIs('frontend.childAbsentForm')) aria-current="page" @endif>Child Absent Form</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -100,8 +104,7 @@
 
                     <!-- Sproutvine with Icon -->
                     <li class="nav-item sproutvine-link">
-                        <a class="nav-link {{ request()->routeIs('frontend.sproutvine') ? 'active' : '' }}"
-                            href="#" @if (request()->routeIs('frontend.sproutvine')) aria-current="page" @endif>
+                        <a class="nav-link" href="https://sproutvine.com/" target="_blank">
                             <i class="fas fa-newspaper me-1"></i>
                             Sproutvine
                         </a>
@@ -116,7 +119,7 @@
 
                     <!-- Sprout Foundation Button (Orange) -->
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-foundation" href="https://sproutvine.com/" target="_blank">Sprout
+                        <a class="btn btn-foundation" href="https://sproutfoundation.org/" target="_blank">Sprout
                             Foundation</a>
                     </li>
                 </ul>
