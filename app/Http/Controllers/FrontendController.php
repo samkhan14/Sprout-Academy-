@@ -131,7 +131,8 @@ class FrontendController extends Controller
 
     public function Enroll()
     {
-        return view('frontend.pages.enrollment');
+        $locations = Location::active()->get();
+        return view('frontend.pages.enrollment', compact('locations'));
     }
 
     public function ChildAbsentForm(Request $request)

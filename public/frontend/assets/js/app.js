@@ -46,6 +46,35 @@
     }
 
     // ========================================
+    // Sticky Header Scroll Effect
+    // ========================================
+    const siteHeader = document.querySelector('.site-header');
+    const topBar = document.querySelector('.top-bar');
+    
+    if (siteHeader) {
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Hide top bar and move header up when scrolled down
+            if (scrollTop > 50) {
+                siteHeader.classList.add('scrolled');
+                if (topBar) {
+                    topBar.style.transform = 'translateY(-100%)';
+                }
+            } else {
+                siteHeader.classList.remove('scrolled');
+                if (topBar) {
+                    topBar.style.transform = 'translateY(0)';
+                }
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    }
+
+    // ========================================
     // Smooth Scroll for Anchor Links
     // ========================================
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
