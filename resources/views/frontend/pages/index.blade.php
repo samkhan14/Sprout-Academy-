@@ -13,9 +13,11 @@
 @section('content')
 
     <!-- Hero Section -->
-    <section class="hero-section"
-        style="background-image: url('{{ asset('frontend/assets/home_page_images/hero-img.png') }}');"
-        aria-label="Hero banner">
+    <section class="hero-section" aria-label="Hero banner">
+        <video class="hero-video" autoplay muted loop playsinline poster="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}">
+            <source src="{{ asset('frontend/assets/home_page_images/vdo-1.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="container">
             <div class="hero-content">
                 @include('frontend.components.green-badge', ['text' => 'WE GUIDE'])
@@ -109,7 +111,7 @@
             </div>
             <h2 id="accreditation-heading" class="accreditation-title section-title">ACCREDITED, AWARDED, & LICENSED</h2>
 
-            <div class="accreditation-slider">
+            <div class="accreditation-grid">
                 <div class="accreditation-card">
                     <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
                         loading="lazy">
@@ -130,7 +132,6 @@
                     <img src="{{ asset('frontend/assets/home_page_images/certif5.png') }}"
                         alt="Early Learning Coalition of Pinellas County" loading="lazy">
                 </div>
-                <!-- Duplicate items for seamless loop -->
                 <div class="accreditation-card">
                     <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
                         loading="lazy">
@@ -138,10 +139,6 @@
                 <div class="accreditation-card">
                     <img src="{{ asset('frontend/assets/home_page_images/certif2.png') }}"
                         alt="Florida Health Certification" loading="lazy">
-                </div>
-                <div class="accreditation-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/certif3.png') }}" alt="APPLE Accreditation"
-                        loading="lazy">
                 </div>
             </div>
         </div>
@@ -271,6 +268,35 @@
     <!-- Testimonials Section -->
     @include('frontend.components.testimonials-slider')
 
+    <!-- Sprout Store Section -->
+    <section class="sprout-store-section" aria-labelledby="sprout-store-heading">
+        <div class="sprout-store-wrapper">
+            <div class="container">
+                <div class="sprout-store-content-wrapper">
+                    <!-- Left Content -->
+                    <div class="sprout-store-content">
+                        @include('frontend.components.section-heading', [
+                            'text' => 'Sprout Store',
+                            'bgColor' => 'var(--color-primary-orange)',
+                            'borderColor' => '#000000',
+                            'rotation' => 'right',
+                        ])
+                        <h2 id="sprout-store-heading" class="sprout-store-headline">
+                            INSPIRE. LEARN.<br>
+                            WEAR WITH PRIDE.
+                        </h2>
+                        <p class="sprout-store-tagline">Where school spirit meets everyday style.</p>
+                        <a href="https://thesproutstore.com/" target="_blank" rel="noopener noreferrer" class="btn btn-sprout-store">Shop Now</a>
+                    </div>
+                    <!-- Right Merchandise (Visual Elements) -->
+                    <div class="sprout-store-merchandise">
+                        <!-- Merchandise items will be positioned via CSS background or images -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Spots Are Limited / Locations Section -->
     <section class="locations-section section" aria-labelledby="locations-heading">
         <div class="container">
@@ -327,51 +353,9 @@
 
 @push('scripts')
     <script>
-        // Initialize Accreditation Slider
+        // Accreditation Slider removed - now using grid layout
         if (typeof jQuery !== 'undefined' && typeof jQuery.fn.slick !== 'undefined') {
             $(document).ready(function() {
-                console.log('Initializing Accreditation Slider');
-
-                if ($('.accreditation-slider').length > 0) {
-                    $('.accreditation-slider').slick({
-                        infinite: true,
-                        slidesToShow: 5,
-                        slidesToScroll: 1,
-                        autoplay: true,
-                        autoplaySpeed: 3000,
-                        arrows: true,
-                        dots: true,
-                        centerMode: false,
-                        variableWidth: false,
-                        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
-                        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
-                        responsive: [{
-                                breakpoint: 1024,
-                                settings: {
-                                    slidesToShow: 3,
-                                    slidesToScroll: 1
-                                }
-                            },
-                            {
-                                breakpoint: 768,
-                                settings: {
-                                    slidesToShow: 2,
-                                    slidesToScroll: 1
-                                }
-                            },
-                            {
-                                breakpoint: 480,
-                                settings: {
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1
-                                }
-                            }
-                        ]
-                    });
-                    console.log('Accreditation Slider Initialized Successfully');
-                } else {
-                    console.error('Accreditation slider element not found');
-                }
 
                 // Video Play Button Functionality
                 const playBtn = document.getElementById('play-video-btn');

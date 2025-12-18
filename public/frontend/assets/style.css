@@ -481,6 +481,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     color: var(--color-white);
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
 /* ========================================
@@ -825,32 +836,23 @@ body {
     margin-bottom: var(--space-xl);
 }
 
-.accreditation-slider {
-    max-width: 1200px;
-    margin: 0 auto 60px;
-    padding: 0 60px;
-}
-
-.accreditation-slider.slick-initialized {
-    display: block;
-}
-
-.accreditation-slider:not(.slick-initialized) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.accreditation-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
     gap: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .accreditation-card {
     background: #fff;
     padding: var(--space-sm);
     border-radius: var(--radius-md);
-    display: flex !important;
-    align-items: center !important;
+    display: flex;
+    align-items: center;
     justify-content: center;
     min-height: 160px;
-    margin: 0 10px;
     box-shadow: var(--shadow-md);
     transition: var(--transition-base);
 }
@@ -2342,7 +2344,7 @@ p.location-overlay-address::before {
 
 .footer-newsletter {
     background: var(--color-dark-blue);
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0;
     color: var(--color-white);
     border-bottom: 1px solid #ffffff24;
 }
@@ -2457,7 +2459,6 @@ form.newsletter-form button {
     font-weight: 700;
     color: var(--color-white);
     margin-bottom: var(--space-md);
-    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
@@ -2469,6 +2470,8 @@ form.newsletter-form button {
 
 .footer-links li {
     margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
 }
 
 .footer-links a {
@@ -2482,6 +2485,21 @@ form.newsletter-form button {
     padding-left: 5px;
 }
 
+.footer-locations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm) var(--space-md);
+}
+
+.footer-location-icon {
+    width: 11px;
+    height: 16px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: var(--space-md);
@@ -2493,7 +2511,7 @@ form.newsletter-form button {
 
 .footer-bottom a {
     color: rgba(255, 255, 255, 0.8);
-    margin-left: var(--space-md);
+    text-decoration: underline;
 }
 
 .footer-bottom a:hover,
@@ -6429,7 +6447,8 @@ select.form-control {
     }
 
     .accreditation-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 }
 
@@ -6476,38 +6495,21 @@ select.form-control {
 
     /* Accreditation */
     .accreditation-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 
     /* Newsletter form - horizontal */
     .newsletter-form {
         flex-direction: row;
     }
-
-    /* Footer */
-    .footer-content {
-        grid-template-columns: 2fr 1fr 1fr;
-    }
-
-    .footer-bottom {
-        flex-direction: row;
-        text-align: left;
-    }
-
-    /* Navbar spacing */
-    .navbar-nav {
-        gap: var(--space-sm);
-    }
-
-    /* Stack buttons on mobile */
-    .btn-enroll,
-    .btn-foundation {
-        width: 100%;
-        margin-top: 0.5rem;
-    }
 }
 
 @media (min-width: 992px) {
+    /* Accreditation - 7 logos */
+    .accreditation-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
     /* Hero */
     .hero-title {
         font-size: 3.5rem;
@@ -6532,6 +6534,28 @@ select.form-control {
 
     .hero-section {
         min-height: 1000px;
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .footer-bottom {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    /* Navbar spacing */
+    .navbar-nav {
+        gap: var(--space-sm);
+    }
+
+    /* Stack buttons on mobile */
+    .btn-enroll,
+    .btn-foundation {
+        width: 100%;
+        margin-top: 0.5rem;
     }
 
     /* Founders section - side by side */
@@ -6566,8 +6590,156 @@ select.form-control {
     }
 
     /* Locations grid - better spacing */
-    .locations-grid {
-        grid-template-columns: repeat(3, 1fr);
+}
+
+/* ========================================
+   Sprout Store Section
+   ======================================== */
+
+.sprout-store-section {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sprout-store-wrapper {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-xl);
+    margin: 0 var(--space-lg);
+}
+
+.sprout-store-content-wrapper {
+    position: relative;
+    background-image: url('./home_page_images/storebg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    width: 100%;
+    padding: var(--space-3xl) 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.sprout-store-content-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(89.23deg, #F3F3F3 4.32%, rgba(243, 243, 243, 0) 38.42%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sprout-store-content {
+    position: relative;
+    z-index: 2;
+    padding-left: var(--space-lg);
+}
+
+.sprout-store-headline {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    color: #000;
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.sprout-store-tagline {
+    font-family: var(--font-primary);
+    font-size: 1.25rem;
+    color: #000;
+    margin-bottom: var(--space-xl);
+    font-weight: 400;
+}
+
+.btn-sprout-store {
+    background: #007b9a;
+    color: var(--color-white);
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    transition: var(--transition-base);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.btn-sprout-store:hover,
+.btn-sprout-store:focus {
+    background: #144a5e;
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.sprout-store-merchandise {
+    position: relative;
+    height: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Responsive Styles for Sprout Store Section */
+@media (max-width: 991px) {
+    .sprout-store-content-wrapper {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .sprout-store-headline {
+        font-size: 2.5rem;
+    }
+
+    .sprout-store-wrapper {
+        min-height: auto;
+        margin: 0 var(--space-md);
+    }
+
+    .sprout-store-content {
+        padding-left: var(--space-md);
+    }
+
+    .sprout-store-merchandise {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sprout-store-headline {
+        font-size: 2rem;
+    }
+
+    .sprout-store-tagline {
+        font-size: 1.125rem;
+    }
+
+    .sprout-store-wrapper {
+        margin: 0 var(--space-sm);
+        border-radius: var(--radius-lg);
+    }
+
+    .sprout-store-content {
+        padding-left: var(--space-sm);
     }
 }
 

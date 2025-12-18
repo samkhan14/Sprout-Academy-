@@ -51,24 +51,40 @@
             <div class="footer-col">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="{{ route('frontend.ourPrograms') }}">Programs</a></li>
-                    <li><a href="{{ route('frontend.enroll') }}">Enroll Now</a></li>
-                    <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
+                    <li><a href="#">Apply To Work With Sprout</a></li>
                     @auth
                         <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
                     @endauth
+                    <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
+                    <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
+                    <li><a href="https://sproutvine.com/" target="_blank">SproutVine</a></li>
                 </ul>
             </div>
 
             <!-- Locations Column -->
             <div class="footer-col">
                 <h3 class="footer-title">Our Locations</h3>
-                <ul class="footer-links">
-                    <li><a href="{{ route('frontend.locationSeminole') }}">Seminole</a></li>
-                    <li><a href="{{ route('frontend.locationClearwater') }}">St. Pete</a></li>
-                    <li><a href="{{ route('frontend.locationPinellasPark') }}">Pinellas Park</a></li>
-                    <li><a href="{{ route('frontend.locationLargo') }}">Largo</a></li>
-                    <li><a href="{{ route('frontend.locationMontessori') }}">Montessori</a></li>
+                <ul class="footer-links footer-locations-grid">
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationSeminole') }}">Seminole</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationStPetersburg') }}">ST. Pete</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationPinellasPark') }}">Pinellas Park</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationLargo') }}">Largo</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationMontessori') }}">Montessori</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -76,11 +92,11 @@
         <!-- Footer Bottom -->
         <div class="footer-bottom">
             <p class="mb-0">
-                &copy; {{ date('Y') }} The Sprout Academy. All rights reserved.
+                Copyrights &copy; {{ date('Y') }}. The Sprout Academy. All rights reserved.
             </p>
-            <div class="d-none">
-                <a href="#privacy">Privacy Policy</a>
-            </div>
+            <p class="mb-0">
+                Site Design by <a href="https://webenixsolutions.com/" target="_blank" rel="noopener noreferrer">Webenix Solutions</a>
+            </p>
         </div>
     </div>
 </footer>

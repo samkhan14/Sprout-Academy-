@@ -26,7 +26,7 @@
             </button>
 
             <!-- Navigation Menu -->
-            <div class="collapse navbar-collapse" id="primaryNav">
+            <div class="collapse navbar-collapse justify-content-end" id="primaryNav">
                 <ul class="navbar-nav align-items-lg-center">
                     <!-- For Parents - Dropdown -->
                     <li class="nav-item dropdown">
@@ -105,8 +105,15 @@
                     <!-- Sproutvine with Icon -->
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link" href="https://sproutvine.com/" target="_blank">
-                            <i class="fas fa-newspaper me-1"></i>
+                            <img src="{{ asset('frontend/assets/home_page_images/spr1.png') }}" alt="Sproutvine" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
                             Sproutvine
+                        </a>
+                    </li>
+
+                    <li class="nav-item sproutvine-link">
+                        <a class="nav-link" href="https://sproutvine.com/" target="_blank">
+                            <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
+                            Store
                         </a>
                     </li>
 
