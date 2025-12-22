@@ -23,7 +23,7 @@
                 @include('frontend.components.green-badge', ['text' => 'WE GUIDE'])
                 <h1 class="hero-title">CHILDREN IN THE <br> RIGHT DIRECTION</h1>
                 {{-- <a href="#tour" class="btn btn-secondary btn-lg">Schedule a Tour</a> --}}
-                <a href="{{ route('frontend.enroll') }}" class="btn btn-foundation btn-lg">Schedule a Tour</a>
+                <a href="{{ route('frontend.virtualTour') }}" class="btn btn-foundation btn-lg">Schedule a Tour</a>
             </div>
         </div>
     </section>
@@ -335,8 +335,11 @@
                             <div class="location-overlay-content">
                                 <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
-                                <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'home']) }}"
-                                    class="btn btn-secondary">Schedule a Tour</a>
+                                <div class="location-overlay-buttons">
+                                    <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'home']) }}"
+                                        class="btn btn-secondary">Schedule a Tour</a>
+                                    <a href="{{ route('frontend.enroll') }}" class="btn btn-enroll-overlay">Enroll</a>
+                                </div>
                             </div>
                         </div>
                     </div>
