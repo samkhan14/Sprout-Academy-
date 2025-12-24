@@ -476,7 +476,8 @@ body {
     position: relative;
     min-height: 1000px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 150px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1092,7 +1093,8 @@ body {
     margin-left: -50vw;
     margin-right: -50vw;
     background: transparent;
-    padding: var(--space-2xl) 0;
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-2xl);
     margin-top: var(--space-2xl);
     overflow: hidden;
 }
@@ -2485,6 +2487,7 @@ form.newsletter-form button {
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: var(--space-md);
+    width: 72%;
 }
 
 .footer-title {

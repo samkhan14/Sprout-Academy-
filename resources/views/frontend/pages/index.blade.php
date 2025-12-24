@@ -93,7 +93,7 @@
 
             <div class="steps-cta">
                 <p class="steps-cta-text">So, what are you waiting for?</p>
-                <a href="{{ route('frontend.enroll') }}" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
+                <a href="{{ route('frontend.virtualTour') }}" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
             </div>
         </div>
     </section>
@@ -169,7 +169,7 @@
 
 
             <!-- Why Choose Us Content -->
-            <div class="row align-items-center mb-5">
+            <div class="row align-items-center">
                 <div class="col-lg-5 mb-4 mb-lg-0">
                     {{-- <span class="section-label">Why the sprout academy?</span> --}}
                     @include('frontend.components.section-heading', [
@@ -336,7 +336,7 @@
                                 <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
                                 <div class="location-overlay-buttons">
-                                    <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'home']) }}"
+                                    <a href="{{ route('frontend.virtualTour') }}"
                                         class="btn btn-secondary">Schedule a Tour</a>
                                     <a href="{{ route('frontend.enroll') }}" class="btn btn-enroll-overlay">Enroll</a>
                                 </div>
