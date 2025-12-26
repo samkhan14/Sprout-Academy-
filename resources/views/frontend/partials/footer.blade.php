@@ -52,9 +52,7 @@
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="#">Apply To Work With Sprout</a></li>
-                    @auth
-                        <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
-                    @endauth
+                    <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
                     <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
                     <li><a href="https://sproutvine.com/" target="_blank">SproutVine</a></li>
