@@ -14,7 +14,7 @@
                     <h2 class="footer-cta-title">
                         {{ $title ?? 'FIND THE SPROUT ACADEMY LOCATION NEAREST YOU' }}
                     </h2>
-                    <a href="{{ $buttonLink ?? route('frontend.locations') }}"
+                    <a href="{{ $buttonLink ?? route('frontend.enroll') }}"
                         class="btn btn-secondary btn-lg footer-cta-btn">
                         {{ $buttonText ?? 'Enroll' }}
                     </a>

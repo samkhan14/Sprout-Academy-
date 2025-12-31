@@ -290,7 +290,10 @@
                     </div>
                     <!-- Right Merchandise (Visual Elements) -->
                     <div class="sprout-store-merchandise">
-                        <!-- Merchandise items will be positioned via CSS background or images -->
+                        <img src="{{ asset('frontend/assets/home_page_images/Products-loop.png') }}" 
+                             alt="Sprout Store merchandise - t-shirt, cap, backpack, slides, and face mask" 
+                             class="sprout-store-products-img"
+                             loading="lazy">
                     </div>
                 </div>
             </div>
