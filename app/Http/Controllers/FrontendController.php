@@ -144,17 +144,22 @@ class FrontendController extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
-                    'child_name' => 'required|string|max:255',
+                    'child_first_name' => 'required|string|max:255',
+                    'child_last_name' => 'required|string|max:255',
                     'phone_number' => 'required|string|max:20',
                     'location' => 'required|string|in:seminole,clearwater,pinellas-park,montessori,largo,st-petersburg',
+                    'date_submission' => 'required|date',
                     'date_of_expected_return' => 'required|date',
                     'reason' => 'nullable|string|max:5000',
                 ], [
                     'first_name.required' => 'First name is required.',
                     'last_name.required' => 'Last name is required.',
-                    'child_name.required' => 'Child name is required.',
+                    'child_first_name.required' => 'Child first name is required.',
+                    'child_last_name.required' => 'Child last name is required.',
                     'phone_number.required' => 'Phone number is required.',
                     'location.required' => 'Location is required.',
+                    'date_submission.required' => 'Date is required.',
+                    'date_submission.date' => 'Please provide a valid date.',
                     'date_of_expected_return.required' => 'Date of expected return is required.',
                     'date_of_expected_return.date' => 'Please provide a valid date.',
                 ]);
@@ -171,9 +176,11 @@ class FrontendController extends Controller
                 $childAbsent = ChildAbsentForm::create([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
-                    'child_name' => $request->child_name,
+                    'child_first_name' => $request->child_first_name,
+                    'child_last_name' => $request->child_last_name,
                     'phone_number' => $request->phone_number,
                     'location' => $request->location,
+                    'date_submission' => $request->date_submission,
                     'date_of_expected_return' => $request->date_of_expected_return,
                     'reason' => $request->reason,
                 ]);

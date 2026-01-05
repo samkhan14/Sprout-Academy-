@@ -282,6 +282,11 @@
 .site_form .date-split-input::placeholder {
     color: var(--placeholder-color);
     font-size: 14px;
+    opacity: 1;
+}
+
+.site_form .date-split-input:placeholder-shown {
+    text-align: center;
 }
 
 .site_form .date-split-icon {

@@ -6,6 +6,7 @@
 
     @include('frontend.components.form_header', [
         'title' => 'Child Absent Form',
+        'text' => 'If you child is going to be absent for the day Sprout Academy needs to be notified at a minimum within an hour of your drop off time.',
     ])
     {{-- Form Section --}}
     <section class="form-section form-section-gradient">
@@ -22,34 +23,59 @@
                             <div class="form-grid">
                                 {{-- First Name / Last Name --}}
                                 <div class="form-field">
-                                    <label for="firstName">First Name*</label>
-                                    <input type="text" id="firstName" name="first_name" class="form-input" required />
+                                    <label for="firstName">Parent/Guardian Name *</label>
+                                    <input type="text" id="firstName" name="first_name" class="form-input" placeholder="First" required />
                                 </div>
 
                                 <div class="form-field">
-                                    <label for="lastName">Last Name*</label>
-                                    <input type="text" id="lastName" name="last_name" class="form-input" required />
+                                    <label for="lastName" class="invisible">Last Name*</label>
+                                    <input type="text" id="lastName" name="last_name" class="form-input" placeholder="Last" required />
                                 </div>
 
                                 {{-- Child Name --}}
                                 <div class="form-field">
-                                    <label for="childName">Child Name*</label>
-                                    <input type="text" id="childName" name="child_name" class="form-input" required />
+                                    <label for="childFirstName">Child's Name *</label>
+                                    <input type="text" id="childFirstName" name="child_first_name" class="form-input" placeholder="First" required />
                                 </div>
 
                                 <div class="form-field">
+                                    <label for="childLastName" class="invisible">Child's Name *</label>
+                                    <input type="text" id="childLastName" name="child_last_name" class="form-input" placeholder="Last" required />
+                                </div>
+
+                              
+                                @include('frontend.components.form_components.date-split-field', [
+                                    'fieldId' => 'datesubmission',
+                                    'label' => 'Date',
+                                    'required' => true,
+                                    'defaultDate' => null,
+                                    'minDate' => null,
+                                ])
+                                <input type="hidden" id="datesubmissionFormatted" name="date_submission" />
+
+                               
+                                @include('frontend.components.form_components.date-split-field', [
+                                    'fieldId' => 'dateOfExpectedReturn',
+                                    'label' => 'Date of Expected Return',
+                                    'required' => true,
+                                    'defaultDate' => null,
+                                    'minDate' => null,
+                                ])
+
+                                
+                                <input type="hidden" id="dateOfExpectedReturnFormatted" name="date_of_expected_return" />
+
+                                <div class="form-field form-field-full">
                                     <label for="phoneNumber">Phone Number*</label>
-                                    <input type="tel" id="phoneNumber" name="phone_number" class="form-input"
-                                        required />
+                                    <input type="tel" id="phoneNumber" name="phone_number" class="form-input" placeholder="XXX-XXX-XXXX"
+                                        pattern="^\d{3}-\d{3}-\d{4}$" required />
                                 </div>
 
                                 {{-- Location --}}
                                 <div class="form-field form-field-full">
-                                    <label for="location">Center Location *</label>
+                                    <label for="location">Select a Location *</label>
                                     <select id="location" name="location" class="form-select" required>
-                                        <option value="">Select Your Center</option>
                                         <option value="seminole">Seminole</option>
-                                        <option value="clearwater">Clearwater</option>
                                         <option value="pinellas-park">Pinellas Park</option>
                                         <option value="montessori">Montessori</option>
                                         <option value="largo">Largo</option>
@@ -57,17 +83,7 @@
                                     </select>
                                 </div>
 
-                                {{-- Date Field using Component --}}
-                                @include('frontend.components.form_components.date-split-field', [
-                                    'fieldId' => 'dateOfExpectedReturn',
-                                    'label' => 'Date of Expected Return',
-                                    'required' => true,
-                                    'defaultDate' => 'today',
-                                    'minDate' => null,
-                                ])
-
-                                {{-- Hidden date input for form submission --}}
-                                <input type="hidden" id="dateOfExpectedReturnFormatted" name="date_of_expected_return" />
+                              
 
                                 {{-- Reason --}}
                                 <div class="form-field form-field-full">
@@ -114,18 +130,54 @@
                         formMessage.style.display = 'none';
                         formMessage.className = 'form-message';
 
-                        // Combine date fields (MM, DD, YY) into formatted date
-                        const dateMonth = document.getElementById('dateOfExpectedReturnMonth').value;
-                        const dateDay = document.getElementById('dateOfExpectedReturnDay').value;
-                        const dateYear = document.getElementById('dateOfExpectedReturnYear').value;
+                        // Combine date_submission fields (MM, DD, YY) into formatted date
+                        const submissionMonth = document.getElementById('datesubmissionMonth').value.trim();
+                        const submissionDay = document.getElementById('datesubmissionDay').value.trim();
+                        const submissionYear = document.getElementById('datesubmissionYear').value.trim();
 
-                        if (dateMonth && dateDay && dateYear) {
-                            // Convert YY to YYYY (assuming 20XX for years)
-                            const dateFullYear = '20' + dateYear;
-                            // Format as YYYY-MM-DD
-                            const dateFormatted =
-                                `${dateFullYear}-${dateMonth.padStart(2, '0')}-${dateDay.padStart(2, '0')}`;
-                            document.getElementById('dateOfExpectedReturnFormatted').value = dateFormatted;
+                        if (submissionMonth && submissionDay && submissionYear && 
+                            !isNaN(parseInt(submissionMonth)) && !isNaN(parseInt(submissionDay)) && !isNaN(parseInt(submissionYear))) {
+                            const monthNum = parseInt(submissionMonth);
+                            const dayNum = parseInt(submissionDay);
+                            const yearNum = parseInt(submissionYear);
+                            
+                            // Validate ranges
+                            if (monthNum >= 1 && monthNum <= 12 && dayNum >= 1 && dayNum <= 31 && yearNum >= 0 && yearNum <= 99) {
+                                // Convert YY to YYYY (assuming 20XX for years)
+                                const dateFullYear = '20' + String(yearNum).padStart(2, '0');
+                                // Format as YYYY-MM-DD
+                                const dateFormatted = `${dateFullYear}-${String(monthNum).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+                                document.getElementById('datesubmissionFormatted').value = dateFormatted;
+                            } else {
+                                document.getElementById('datesubmissionFormatted').value = '';
+                            }
+                        } else {
+                            document.getElementById('datesubmissionFormatted').value = '';
+                        }
+
+                        // Combine date_of_expected_return fields (MM, DD, YY) into formatted date
+                        const returnMonth = document.getElementById('dateOfExpectedReturnMonth').value.trim();
+                        const returnDay = document.getElementById('dateOfExpectedReturnDay').value.trim();
+                        const returnYear = document.getElementById('dateOfExpectedReturnYear').value.trim();
+
+                        if (returnMonth && returnDay && returnYear && 
+                            !isNaN(parseInt(returnMonth)) && !isNaN(parseInt(returnDay)) && !isNaN(parseInt(returnYear))) {
+                            const monthNum = parseInt(returnMonth);
+                            const dayNum = parseInt(returnDay);
+                            const yearNum = parseInt(returnYear);
+                            
+                            // Validate ranges
+                            if (monthNum >= 1 && monthNum <= 12 && dayNum >= 1 && dayNum <= 31 && yearNum >= 0 && yearNum <= 99) {
+                                // Convert YY to YYYY (assuming 20XX for years)
+                                const dateFullYear = '20' + String(yearNum).padStart(2, '0');
+                                // Format as YYYY-MM-DD
+                                const dateFormatted = `${dateFullYear}-${String(monthNum).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+                                document.getElementById('dateOfExpectedReturnFormatted').value = dateFormatted;
+                            } else {
+                                document.getElementById('dateOfExpectedReturnFormatted').value = '';
+                            }
+                        } else {
+                            document.getElementById('dateOfExpectedReturnFormatted').value = '';
                         }
 
                         // Show spinner and disable button

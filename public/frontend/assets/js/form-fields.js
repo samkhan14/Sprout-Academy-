@@ -43,16 +43,8 @@
             const defaultDate = wrapper.dataset.defaultDate || null;
             const minDate = wrapper.dataset.minDate || null;
 
-            // Auto-fill today's date if defaultDate is 'today'
-            if (defaultDate === "today") {
-                const today = new Date();
-                monthInput.value = String(today.getMonth() + 1).padStart(
-                    2,
-                    "0"
-                );
-                dayInput.value = String(today.getDate()).padStart(2, "0");
-                yearInput.value = String(today.getFullYear()).slice(-2);
-            }
+            // Don't auto-fill date fields - let placeholders show instead
+            // Users can select date from calendar or type manually
 
             // Initialize Flatpickr
             const datePicker = flatpickr(`#${fieldId}DatePicker`, {
@@ -61,16 +53,44 @@
                 minDate: minDate === "today" ? "today" : null,
                 appendTo: wrapper,
                 static: false,
+                allowInput: false,
+                clickOpens: true,
+                enableTime: false,
                 onReady: function (selectedDates, dateStr, instance) {
                     positionCalendar(instance, calendarIcon);
+                    // Ensure month/year navigation works
+                    const monthNav = instance.calendarContainer.querySelector('.flatpickr-month');
+                    const yearNav = instance.calendarContainer.querySelector('.flatpickr-year');
+                    if (monthNav) {
+                        monthNav.style.pointerEvents = 'auto';
+                        monthNav.style.cursor = 'pointer';
+                    }
+                    if (yearNav) {
+                        yearNav.style.pointerEvents = 'auto';
+                        yearNav.style.cursor = 'pointer';
+                    }
                 },
-                onChange: function (selectedDates) {
-                    updateSplitDateFields(
-                        selectedDates,
-                        `${fieldId}Month`,
-                        `${fieldId}Day`,
-                        `${fieldId}Year`
-                    );
+                onChange: function (selectedDates, dateStr, instance) {
+                    if (selectedDates && selectedDates.length > 0) {
+                        updateSplitDateFields(
+                            selectedDates,
+                            `${fieldId}Month`,
+                            `${fieldId}Day`,
+                            `${fieldId}Year`
+                        );
+                    }
+                },
+                onMonthChange: function (selectedDates, dateStr, instance) {
+                    // Ensure calendar stays open and positioned correctly when month changes
+                    setTimeout(() => {
+                        positionCalendar(instance, calendarIcon);
+                    }, 10);
+                },
+                onYearChange: function (selectedDates, dateStr, instance) {
+                    // Ensure calendar stays open and positioned correctly when year changes
+                    setTimeout(() => {
+                        positionCalendar(instance, calendarIcon);
+                    }, 10);
                 },
             });
 
@@ -270,7 +290,45 @@
         }
     }
 
-    function setupDateInputs(monthId, dayId, yearId) {
+    // Sync date picker from manual input
+    function syncDatePickerFromInputs(monthId, dayId, yearId, fieldId) {
+        const monthInput = document.getElementById(monthId);
+        const dayInput = document.getElementById(dayId);
+        const yearInput = document.getElementById(yearId);
+        const datePickerInput = document.getElementById(`${fieldId}DatePicker`);
+
+        if (!monthInput || !dayInput || !yearInput || !datePickerInput) return;
+
+        const month = monthInput.value.trim();
+        const day = dayInput.value.trim();
+        const year = yearInput.value.trim();
+
+        // Only sync if all three fields have valid values
+        if (month && day && year && 
+            !isNaN(parseInt(month)) && !isNaN(parseInt(day)) && !isNaN(parseInt(year))) {
+            const monthNum = parseInt(month);
+            const dayNum = parseInt(day);
+            const yearNum = parseInt(year);
+            
+            // Validate ranges
+            if (monthNum >= 1 && monthNum <= 12 && 
+                dayNum >= 1 && dayNum <= 31 && 
+                yearNum >= 0 && yearNum <= 99) {
+                // Convert YY to YYYY
+                const fullYear = '20' + String(yearNum).padStart(2, '0');
+                const dateStr = `${fullYear}-${String(monthNum).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+                
+                // Find the flatpickr instance
+                const datePicker = datePickerInput._flatpickr;
+                if (datePicker) {
+                    // Set the date without triggering onChange to avoid infinite loop
+                    datePicker.setDate(dateStr, false);
+                }
+            }
+        }
+    }
+
+    function setupDateInputs(monthId, dayId, yearId, fieldId) {
         const monthInput = document.getElementById(monthId);
         const dayInput = document.getElementById(dayId);
         const yearInput = document.getElementById(yearId);
@@ -312,22 +370,49 @@
             if (e.target.value.length === 2) yearInput.focus();
         });
 
-        // Validate
+        // Validate and sync with date picker
         monthInput.addEventListener("blur", function (e) {
-            const val = parseInt(e.target.value);
-            if (val < 1 || val > 12) {
+            const val = e.target.value.trim();
+            if (!val || val === "") {
+                e.target.value = "";
+                return;
+            }
+            const numVal = parseInt(val);
+            if (isNaN(numVal) || numVal < 1 || numVal > 12) {
                 e.target.value = "";
             } else {
-                e.target.value = String(val).padStart(2, "0");
+                e.target.value = String(numVal).padStart(2, "0");
+                syncDatePickerFromInputs(monthId, dayId, yearId, fieldId);
             }
         });
 
         dayInput.addEventListener("blur", function (e) {
-            const val = parseInt(e.target.value);
-            if (val < 1 || val > 31) {
+            const val = e.target.value.trim();
+            if (!val || val === "") {
+                e.target.value = "";
+                return;
+            }
+            const numVal = parseInt(val);
+            if (isNaN(numVal) || numVal < 1 || numVal > 31) {
                 e.target.value = "";
             } else {
-                e.target.value = String(val).padStart(2, "0");
+                e.target.value = String(numVal).padStart(2, "0");
+                syncDatePickerFromInputs(monthId, dayId, yearId, fieldId);
+            }
+        });
+
+        yearInput.addEventListener("blur", function (e) {
+            const val = e.target.value.trim();
+            if (!val || val === "") {
+                e.target.value = "";
+                return;
+            }
+            const numVal = parseInt(val);
+            if (isNaN(numVal) || numVal < 0 || numVal > 99) {
+                e.target.value = "";
+            } else {
+                e.target.value = String(numVal).padStart(2, "0");
+                syncDatePickerFromInputs(monthId, dayId, yearId, fieldId);
             }
         });
     }

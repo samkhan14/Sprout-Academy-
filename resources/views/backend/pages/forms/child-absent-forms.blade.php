@@ -23,6 +23,7 @@
                         <th>Child Name</th>
                         <th>Phone Number</th>
                         <th>Location</th>
+                        <th>Date</th>
                         <th>Expected Return</th>
                         <th>Reason</th>
                         <th>Created At</th>
@@ -46,9 +47,10 @@
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'full_name', name: 'full_name' },
-                    { data: 'child_name', name: 'child_name' },
+                    { data: 'child_full_name', name: 'child_full_name' },
                     { data: 'phone_number', name: 'phone_number' },
                     { data: 'location', name: 'location' },
+                    { data: 'date_submission', name: 'date_submission' },
                     { data: 'date_of_expected_return', name: 'date_of_expected_return' },
                     { data: 'reason', name: 'reason' },
                     { data: 'created_at', name: 'created_at' }

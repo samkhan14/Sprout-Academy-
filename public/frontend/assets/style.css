@@ -2458,6 +2458,15 @@ form.newsletter-form button {
     }
 }
 
+footer#footer-copyright {
+    padding: 20px 0;
+}
+
+footer#footer-copyright .footer-bottom {
+    border-top: transparent;
+    padding-top: 0;
+}
+
 .site-footer {
     background: var(--color-dark-blue);
     color: rgba(255, 255, 255, 0.8);
@@ -6199,6 +6208,7 @@ h2.mission-title {
     line-height: 1.8;
     margin: 0;
     opacity: 0.95;
+    width: 60%;
 }
 
 /* ========================================

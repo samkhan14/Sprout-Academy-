@@ -54,7 +54,32 @@
             @yield('content')
         </main>
 
-        @include('frontend.partials.footer')
+        @php
+            // Check if current route is a form page or thank you page
+            $isFormPage = request()->routeIs([
+                'form.timeOffRequestForm',
+                'form.maintenanceWorkOrder',
+                'form.supplyOrder',
+                'form.snackOrder',
+                'form.suggestion',
+                'form.timeClockChangeRequest',
+                'form.standardTShirtOrder',
+                'form.specialtyTShirtOrder',
+                'frontend.childAbsentForm',
+                'enrollment.form',
+                'enrollment.step2',
+                'enrollment.step3',
+                'enrollment.step4',
+                'frontend.thankYou',
+                'enrollment.thankYou'
+            ]);
+        @endphp
+
+        @if($isFormPage)
+            @include('frontend.partials.footer_copyright')
+        @else
+            @include('frontend.partials.footer')
+        @endif
     </div>
 
     <!-- Floating Chat Button -->

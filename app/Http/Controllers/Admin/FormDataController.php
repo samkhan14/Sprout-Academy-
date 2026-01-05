@@ -339,6 +339,12 @@ class FormDataController extends Controller
                 ->addColumn('full_name', function ($form) {
                     return $form->first_name . ' ' . $form->last_name;
                 })
+                ->addColumn('child_full_name', function ($form) {
+                    return ($form->child_first_name ?? '') . ' ' . ($form->child_last_name ?? '');
+                })
+                ->editColumn('date_submission', function ($form) {
+                    return $form->date_submission ? $form->date_submission->format('M d, Y') : '';
+                })
                 ->editColumn('date_of_expected_return', function ($form) {
                     return $form->date_of_expected_return ? $form->date_of_expected_return->format('M d, Y') : '';
                 })
