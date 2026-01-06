@@ -406,7 +406,7 @@ class FormController extends Controller
             try {
                 // Validation rules
                 $validator = Validator::make($request->all(), [
-                    'choose_your_center' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'choose_your_center' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'other' => 'nullable|string|max:5000',
                 ], [
                     'choose_your_center.required' => 'Please choose your center.',
@@ -506,7 +506,6 @@ class FormController extends Controller
                         'type' => 'select',
                         'options' => [
                             'seminole' => 'Seminole',
-                            'clearwater' => 'Clearwater',
                             'pinellas_park' => 'Pinellas Park',
                             'largo' => 'Largo',
                             'st_petersburg' => 'St. Petersburg',
@@ -559,7 +558,7 @@ class FormController extends Controller
             try {
                 // Validation rules
                 $validator = Validator::make($request->all(), [
-                    'choose_your_center' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'choose_your_center' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'other' => 'nullable|string|max:5000',
                 ], [
                     'choose_your_center.required' => 'Please choose your center.',
@@ -645,7 +644,6 @@ class FormController extends Controller
                         'type' => 'select',
                         'options' => [
                             'seminole' => 'Seminole',
-                            'clearwater' => 'Clearwater',
                             'pinellas_park' => 'Pinellas Park',
                             'largo' => 'Largo',
                             'st_petersburg' => 'St. Petersburg',
@@ -687,7 +685,7 @@ class FormController extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
-                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'location' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
                     'colors' => 'required|array|min:1',
                     'colors.*' => 'string',
@@ -760,7 +758,7 @@ class FormController extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
-                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'location' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'size' => 'required|string|in:small,medium,large,xlarge,xxlarge',
                     'themes' => 'required|array|min:1',
                     'themes.*' => 'string',

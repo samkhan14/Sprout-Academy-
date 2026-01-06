@@ -41,12 +41,14 @@
                             {{-- Left Column Number Inputs --}}
                             @if (isset($formFields['number_inputs']['left_column']))
                                 @foreach ($formFields['number_inputs']['left_column'] as $key => $field)
-                                    <div class="form-field">
-                                        <label for="{{ $key }}">{{ $field['label'] }}*</label>
-                                        <input type="number" id="{{ $key }}" name="{{ $key }}"
-                                            class="form-input" placeholder="Type A Number"
-                                            @if ($field['required']) required @endif min="0">
-                                    </div>
+                                    @if ($key !== 'color_printer_ink')
+                                        <div class="form-field">
+                                            <label for="{{ $key }}">{{ $field['label'] }}*</label>
+                                            <input type="number" id="{{ $key }}" name="{{ $key }}"
+                                                class="form-input" placeholder="Type A Number"
+                                                @if ($field['required']) required @endif min="0">
+                                        </div>
+                                    @endif
                                 @endforeach
                             @endif
                         </div>
@@ -69,13 +71,28 @@
                         </div>
                     </div>
 
+                    {{-- Color Printer Ink - Full Width --}}
+                    @if (isset($formFields['number_inputs']['left_column']['color_printer_ink']))
+                        @php
+                            $field = $formFields['number_inputs']['left_column']['color_printer_ink'];
+                        @endphp
+                        <div class="form-field form-field-full-width mt-3">
+                            <label for="color_printer_ink">{{ $field['label'] }}*</label>
+                            <input type="number" id="color_printer_ink" name="color_printer_ink"
+                                class="form-input" placeholder="Type A Number"
+                                @if ($field['required']) required @endif min="0">
+                        </div>
+                    @endif
+
                     {{-- Other Textarea Field - Full Width --}}
                     @if (isset($formFields['textarea']))
                         @foreach ($formFields['textarea'] as $key => $field)
-                            <div class="form-field form-field-full-width">
+                            <div class="form-field form-field-full-width mt-3">
                                 <label for="{{ $key }}">{{ $field['label'] }}</label>
-                                <textarea id="{{ $key }}" name="{{ $key }}" class="form-textarea"
-                                    placeholder="{{ $field['placeholder'] ?? 'Type here' }}" @if ($field['required']) required @endif></textarea>
+                                <div class="textarea-wrapper">
+                                    <textarea id="{{ $key }}" name="{{ $key }}" class="form-textarea"
+                                        placeholder="{{ $field['placeholder'] ?? 'Type here' }}" @if ($field['required']) required @endif></textarea>
+                                </div>
                             </div>
                         @endforeach
                     @endif

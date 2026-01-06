@@ -50,7 +50,6 @@
                                     <label for="location">Location*</label>
                                     <select id="location" name="location" class="form-select" required>
                                         <option value="seminole" selected>Seminole</option>
-                                        <option value="clearwater">Clearwater</option>
                                         <option value="pinellas_park">Pinellas Park</option>
                                         <option value="largo">Largo</option>
                                         <option value="st_petersburg">St. Petersburg</option>

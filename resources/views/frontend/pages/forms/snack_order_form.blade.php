@@ -74,8 +74,10 @@
                         @foreach ($formFields['textarea'] as $key => $field)
                             <div class="form-field form-field-full-width">
                                 <label for="{{ $key }}">{{ $field['label'] }}</label>
-                                <textarea id="{{ $key }}" name="{{ $key }}" class="form-textarea"
-                                    placeholder="{{ $field['placeholder'] ?? 'Type here' }}" @if ($field['required']) required @endif></textarea>
+                                <div class="textarea-wrapper">
+                                    <textarea id="{{ $key }}" name="{{ $key }}" class="form-textarea"
+                                        placeholder="{{ $field['placeholder'] ?? 'Type here' }}" @if ($field['required']) required @endif></textarea>
+                                </div>
                             </div>
                         @endforeach
                     @endif

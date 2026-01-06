@@ -73,8 +73,10 @@
                                     <select id="location" name="location" class="form-select" required>
                                         <option value="">Select Your Center</option>
                                         <option value="seminole">Seminole</option>
-                                        <option value="orlando">Orlando</option>
-                                        <option value="tampa">Tampa</option>
+                                        <option value="pinellas_park">Pinellas Park</option>
+                                        <option value="largo">Largo</option>
+                                        <option value="st_petersburg">St. Petersburg</option>
+                                        <option value="montessori">Montessori</option>
                                     </select>
                                 </div>
 
@@ -96,10 +98,7 @@
                                                 Upload</span>
                                         </label>
                                         <div class="file-upload-icon" id="fileUploadIcon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M12 19V5M5 12l7-7 7 7" />
-                                            </svg>
+                                            <img src="{{ asset('frontend/assets/home_page_images/fil-icon.png') }}" alt="Upload file" />
                                         </div>
                                     </div>
                                 </div>
