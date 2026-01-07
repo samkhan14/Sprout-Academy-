@@ -72,7 +72,7 @@
                     {{-- Other Textarea Field - Full Width --}}
                     @if (isset($formFields['textarea']))
                         @foreach ($formFields['textarea'] as $key => $field)
-                            <div class="form-field form-field-full-width">
+                            <div class="form-field form-field-full-width mt-3">
                                 <label for="{{ $key }}">{{ $field['label'] }}</label>
                                 <div class="textarea-wrapper">
                                     <textarea id="{{ $key }}" name="{{ $key }}" class="form-textarea"

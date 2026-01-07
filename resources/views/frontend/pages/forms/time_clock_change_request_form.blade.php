@@ -21,25 +21,26 @@
                             <div id="formMessage" class="form-message" style="display: none;"></div>
 
                             <div class="form-grid">
-                                {{-- First Name / Last Name --}}
+                              
                                 <div class="form-field">
-                                    <label for="firstName">First Name*</label>
-                                    <input type="text" id="firstName" name="first_name" class="form-input" required />
+                                    <label for="firstName">Employee print name *</label>
+                                    <input type="text" id="firstName" name="first_name" class="form-input" placeholder="Fist Name" required />
                                 </div>
 
                                 <div class="form-field">
-                                    <label for="lastName">Last Name*</label>
-                                    <input type="text" id="lastName" name="last_name" class="form-input" required />
+                                    <label for="lastName" class="invisible">Last Name*</label>
+                                    <input type="text" id="lastName" name="last_name" class="form-input" placeholder="Last Name" required />
                                 </div>
 
                                 {{-- Location --}}
                                 <div class="form-field form-field-full">
                                     <label for="location">Center Location *</label>
                                     <select id="location" name="location" class="form-select" required>
-                                        <option value="">Select Your Center</option>
-                                        <option value="seminole">Seminole</option>
-                                        <option value="orlando">Orlando</option>
-                                        <option value="tampa">Tampa</option>
+                                        <option value="seminole" selected>Seminole</option>
+                                        <option value="pinellas_park">Pinellas Park</option>
+                                        <option value="largo">Largo</option>
+                                        <option value="st_petersburg">St. Petersburg</option>
+                                        <option value="montessori">Montessori</option>
                                     </select>
                                 </div>
 
@@ -103,17 +104,17 @@
                                     </select>
                                 </div>
 
-                                {{-- Supervisor First Name / Last Name --}}
+                              
                                 <div class="form-field">
-                                    <label for="supervisorFirstName">Supervisor First Name</label>
+                                    <label for="supervisorFirstName">E-Signature *</label>
                                     <input type="text" id="supervisorFirstName" name="supervisor_first_name"
-                                        class="form-input" />
+                                        class="form-input" placeholder="First Name" required/>
                                 </div>
 
                                 <div class="form-field">
-                                    <label for="supervisorLastName">Supervisor Last Name</label>
+                                    <label for="supervisorLastName" class="invisible">Supervisor Last Name</label>
                                     <input type="text" id="supervisorLastName" name="supervisor_last_name"
-                                        class="form-input" />
+                                        class="form-input" placeholder="Last Name" required/>
                                 </div>
                             </div>
 
@@ -220,7 +221,18 @@
                                     'Accept': 'application/json'
                                 }
                             })
-                            .then(response => response.json())
+                            .then(response => {
+                                // Check if response is ok
+                                if (!response.ok) {
+                                    // Try to parse JSON error response
+                                    return response.json().then(data => {
+                                        throw { data, status: response.status };
+                                    }).catch(() => {
+                                        throw { message: 'Server error occurred', status: response.status };
+                                    });
+                                }
+                                return response.json();
+                            })
                             .then(data => {
                                 // Hide spinner and enable button
                                 btnText.style.display = 'inline-block';
@@ -269,10 +281,27 @@
                                 submitBtn.disabled = false;
 
                                 // Show error message
-                                formMessage.textContent =
-                                    'An error occurred while submitting the form. Please try again later.';
+                                let errorMessage = 'An error occurred while submitting the form. Please try again later.';
+                                
+                                if (error.data) {
+                                    if (error.data.message) {
+                                        errorMessage = error.data.message;
+                                    }
+                                    if (error.data.errors) {
+                                        const errorList = Object.values(error.data.errors).flat().join('<br>');
+                                        errorMessage += '<br>' + errorList;
+                                    }
+                                }
+
+                                formMessage.innerHTML = errorMessage;
                                 formMessage.className = 'form-message error';
                                 formMessage.style.display = 'block';
+
+                                // Scroll to message
+                                formMessage.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'nearest'
+                                });
 
                                 console.error('Error:', error);
                             });

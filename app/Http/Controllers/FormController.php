@@ -323,15 +323,15 @@ class FormController extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
-                    'location' => 'required|string|in:seminole,orlando,tampa',
+                    'location' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'date_to_be_changed' => 'required|date',
                     'clock_in_time' => 'required|date_format:H:i',
                     'clock_out_for_lunch' => 'nullable|date_format:H:i',
                     'clock_in_from_lunch' => 'nullable|date_format:H:i',
                     'clock_out_time' => 'nullable|date_format:H:i',
                     'reason_for_change' => 'required|string|max:255',
-                    'supervisor_first_name' => 'nullable|string|max:255',
-                    'supervisor_last_name' => 'nullable|string|max:255',
+                    'supervisor_first_name' => 'required|string|max:255',
+                    'supervisor_last_name' => 'required|string|max:255',
                 ], [
                     'first_name.required' => 'First name is required.',
                     'last_name.required' => 'Last name is required.',
@@ -345,13 +345,17 @@ class FormController extends Controller
                     'clock_in_from_lunch.date_format' => 'Clock in from lunch must be in valid time format.',
                     'clock_out_time.date_format' => 'Clock out time must be in valid time format.',
                     'reason_for_change.required' => 'Reason for change is required.',
+                    'supervisor_first_name.required' => 'E-Signature first name is required.',
+                    'supervisor_last_name.required' => 'E-Signature last name is required.',
                 ]);
 
-                // If validation fails, return back with errors
+                // If validation fails, return JSON response for AJAX
                 if ($validator->fails()) {
-                    return back()
-                        ->withErrors($validator)
-                        ->withInput();
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please correct the errors below.',
+                        'errors' => $validator->errors()
+                    ], 422);
                 }
 
                 // Create time clock change request
@@ -628,9 +632,17 @@ class FormController extends Controller
         $formFields = [
             'number_inputs' => [
                 'left_column' => [
+                    // Image 1 fields
+                    'cereal' => ['label' => 'Cereal', 'required' => true],
+                    'pancakes' => ['label' => 'Pancakes', 'required' => true],
+                    'animal_crackers' => ['label' => 'Animal Crackers', 'required' => true],
+                    'pretzels' => ['label' => 'Pretzels', 'required' => true],
+                    'plain_bread' => ['label' => 'Plain Bread', 'required' => true],
+                    'graham_crackers' => ['label' => 'Graham Crackers', 'required' => true],
+                    'nutri_grain_bars' => ['label' => 'Nutri Grain Bars', 'required' => true],
+                    // Image 2 & 3 fields
                     'goldfish' => ['label' => 'Goldfish', 'required' => true],
                     'french_toast' => ['label' => 'French Toast', 'required' => true],
-                    'pretzels' => ['label' => 'Pretzels', 'required' => true],
                     'ritz_crackers' => ['label' => 'Ritz Crackers', 'required' => true],
                     'apple_juice' => ['label' => 'Apple Juice', 'required' => true],
                     'apple' => ['label' => 'Apple', 'required' => true],
@@ -651,9 +663,17 @@ class FormController extends Controller
                         ],
                         'default' => 'seminole'
                     ],
+                    // Image 1 fields
+                    'vanilla_wafers_nilas' => ['label' => 'Vanilla Wafers/Nilas', 'required' => true],
+                    'waffles' => ['label' => 'Waffles', 'required' => true],
+                    'veggie_straws' => ['label' => 'Veggie Straws', 'required' => true],
+                    'raisin_toast' => ['label' => 'Raisin Toast', 'required' => true],
+                    'cheese_sticks' => ['label' => 'Cheese Sticks', 'required' => true],
+                    'chex_mix' => ['label' => 'Chex Mix', 'required' => true],
+                    'cheez_its' => ['label' => 'Cheez Its', 'required' => true],
+                    // Image 2 & 3 fields
                     'raisins_or_craisins' => ['label' => 'Raisins Or Craisins', 'required' => true],
                     'yogurt_tubs_or_go_gurts' => ['label' => 'Yogurt Tubs Or Go-Gurts', 'required' => true],
-                    'raisin_toast' => ['label' => 'Raisin Toast', 'required' => true],
                     'applesauce' => ['label' => 'Applesauce', 'required' => true],
                     'strawberries' => ['label' => 'Strawberries', 'required' => true],
                     'orange_juice' => ['label' => 'Orange Juice', 'required' => true],

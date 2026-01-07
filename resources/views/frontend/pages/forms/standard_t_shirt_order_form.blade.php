@@ -40,10 +40,11 @@
                                 <div class="form-field">
                                     <label for="location">Location*</label>
                                     <select id="location" name="location" class="form-select" required>
-                                        <option value="">Select Your Center</option>
-                                        <option value="seminole">Seminole</option>
-                                        <option value="orlando">Orlando</option>
-                                        <option value="tampa">Tampa</option>
+                                        <option value="seminole" selected>Seminole</option>
+                                        <option value="pinellas_park">Pinellas Park</option>
+                                        <option value="largo">Largo</option>
+                                        <option value="st_petersburg">St. Petersburg</option>
+                                        <option value="montessori">Montessori</option>
                                     </select>
                                 </div>
 
