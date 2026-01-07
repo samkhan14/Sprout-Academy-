@@ -732,8 +732,8 @@ body {
 }
 
 #programs .mission-text {
-    font-size: 38px;
-    line-height: 60px;
+    font-size: 29px;
+    line-height: 52px;
 }
 
 /* ========================================
@@ -2960,6 +2960,13 @@ footer#footer-copyright .footer-bottom {
     border-left: 6px solid #daedfa;
     border-top-left-radius: 15px !important;
     border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+
+.accordion-item:last-child {
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
 }
 
 /* Active state - Dark blue left border */
@@ -2973,8 +2980,9 @@ footer#footer-copyright .footer-bottom {
 .accordion-button {
     width: 100%;
     background: #fff;
-    border: 1px solid #0000001c;
-    padding: var(--space-md) var(--space-lg);
+    border: none;
+    border-bottom: 1px solid #0000001c;
+    padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-lg);
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -2982,7 +2990,18 @@ footer#footer-copyright .footer-bottom {
     transition: var(--transition-base);
     text-align: left;
     position: relative;
-    border-radius: 10px;
+    border-radius: 0;
+}
+
+.accordion-item:first-child .accordion-button {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.accordion-item:last-child .accordion-button {
+    border-bottom: none;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .accordion-button:hover {
@@ -3019,28 +3038,38 @@ footer#footer-copyright .footer-bottom {
     color: #000;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    padding-right: 60px;
 }
 
 /* Toggle Icon (+/-) */
 .accordion-toggle-icon {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     background: var(--color-white);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: absolute;
+    right: var(--space-sm);
+    top: 50%;
+    transform: translateY(-50%);
     transition: var(--transition-base);
+    flex-shrink: 0;
     border: 1px solid #0000000f;
+    z-index: 1;
 }
 
 .accordion-toggle-icon i {
     position: absolute;
-    font-size: 0.875rem;
+    font-size: 1.125rem;
     color: var(--color-dark-blue);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
 }
 
 .accordion-toggle-icon .fa-plus {
@@ -3054,34 +3083,34 @@ footer#footer-copyright .footer-bottom {
 /* When accordion is active (expanded) */
 .accordion-button.active .accordion-toggle-icon .fa-plus {
     opacity: 0;
-    transform: rotate(90deg);
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .accordion-button.active .accordion-toggle-icon .fa-minus {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
 /* Bootstrap's collapsed state */
 .accordion-button.collapsed .accordion-toggle-icon .fa-plus {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
 .accordion-button.collapsed .accordion-toggle-icon .fa-minus {
     opacity: 0;
-    transform: rotate(-90deg);
+    transform: translate(-50%, -50%) rotate(-90deg);
 }
 
 /* When not collapsed (Bootstrap default) */
 .accordion-button:not(.collapsed) .accordion-toggle-icon .fa-plus {
     opacity: 0;
-    transform: rotate(90deg);
+    transform: translate(-50%, -50%) rotate(90deg);
 }
 
 .accordion-button:not(.collapsed) .accordion-toggle-icon .fa-minus {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
 }
 
 /* Accordion Body/Content */
@@ -3092,6 +3121,12 @@ footer#footer-copyright .footer-bottom {
 .accordion-body {
     background: var(--color-white);
     padding: var(--space-lg) var(--space-xl);
+    border-bottom: none;
+}
+
+.accordion-item:last-child .accordion-body {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .accordion-list {
@@ -3111,7 +3146,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .accordion-list li::before {
-    content: "â€¢";
+    content: "•";
     position: absolute;
     left: 0;
     color: #000;
@@ -3266,7 +3301,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .sprout-cares-faq li::before {
-    content: "â€¢";
+    content: "•";
     position: absolute;
     left: 0;
     color: var(--color-dark);
@@ -5189,9 +5224,12 @@ h2.mission-title {
         font-size: 0.9rem;
     }
     .accordion-toggle-icon {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+    .accordion-toggle-icon i {
+        font-size: 1rem;
     }
     .accordion-question-icon {
         width: 28px;
