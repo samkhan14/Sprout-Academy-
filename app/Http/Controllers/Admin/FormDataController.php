@@ -13,6 +13,7 @@ use App\Models\TimeOffRequestForm;
 use App\Models\SupplyOrder;
 use App\Models\NewsletterSubscription;
 use App\Models\ChildAbsentForm;
+use App\Models\EmploymentApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -358,5 +359,46 @@ class FormDataController extends Controller
         }
 
         return view('backend.pages.forms.child-absent-forms');
+    }
+
+    // Employment Applications
+    public function employmentApplications(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $applications = EmploymentApplication::select('*');
+
+            return DataTables::of($applications)
+                ->addColumn('full_name', function ($application) {
+                    return $application->first_name . ' ' . $application->last_name;
+                })
+                ->editColumn('position', function ($application) {
+                    return ucfirst(str_replace('_', ' ', $application->position));
+                })
+                ->editColumn('location', function ($application) {
+                    return ucfirst(str_replace('_', ' ', $application->location));
+                })
+                ->editColumn('start_date', function ($application) {
+                    return $application->start_date ? $application->start_date->format('M d, Y') : '-';
+                })
+                ->addColumn('salary', function ($application) {
+                    $dollars = $application->salary_dollars ?? '0';
+                    $cents = $application->salary_cents ?? '00';
+                    return '$' . $dollars . '.' . $cents;
+                })
+                ->addColumn('resume_link', function ($application) {
+                    if ($application->resume_path) {
+                        $url = asset('storage/' . $application->resume_path);
+                        return '<a href="' . $url . '" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Download</a>';
+                    }
+                    return '-';
+                })
+                ->editColumn('created_at', function ($application) {
+                    return $application->created_at->format('M d, Y h:i A');
+                })
+                ->rawColumns(['resume_link'])
+                ->make(true);
+        }
+
+        return view('backend.pages.forms.employment-applications');
     }
 }

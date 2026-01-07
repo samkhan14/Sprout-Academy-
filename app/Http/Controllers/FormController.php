@@ -12,6 +12,7 @@ use App\Models\SpecialtyTShirtOrder;
 use App\Models\NewsletterSubscription;
 use App\Models\SnackOrder;
 use App\Models\SupplyOrder;
+use App\Models\EmploymentApplication;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -892,6 +893,113 @@ class FormController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
+    }
+
+    /**
+     * Employment Application Form - Display and Submit
+     */
+    public function employmentApplication(Request $request)
+    {
+        // Handle POST request - Form submission
+        if ($request->isMethod('post')) {
+            try {
+                // Validation rules
+                $validator = Validator::make($request->all(), [
+                    'position' => 'required|string|in:teacher,assistant_teacher,director,substitute,other',
+                    'location' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
+                    'start_date' => 'nullable|date',
+                    'resume' => 'required|file|mimes:pdf,doc,docx|max:10240', // 10MB max
+                    'salary_dollars' => 'required|string|max:10|regex:/^\d+$/',
+                    'salary_cents' => 'required|string|max:10|regex:/^\d{2}$/',
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'email' => 'required|email|max:255',
+                    'phone' => 'required|string|max:20',
+                ], [
+                    'position.required' => 'Please select a position.',
+                    'position.in' => 'Please select a valid position.',
+                    'location.required' => 'Please select a location.',
+                    'location.in' => 'Please select a valid location.',
+                    'start_date.date' => 'Start date must be a valid date.',
+                    'resume.required' => 'Please attach your resume.',
+                    'resume.file' => 'The resume must be a valid file.',
+                    'resume.mimes' => 'The resume must be a PDF, DOC, or DOCX file.',
+                    'resume.max' => 'The resume file size must not exceed 10MB.',
+                    'salary_dollars.required' => 'Please select salary dollars.',
+                    'salary_dollars.regex' => 'Salary dollars must be a valid number.',
+                    'salary_cents.required' => 'Please select salary cents.',
+                    'salary_cents.regex' => 'Salary cents must be a valid two-digit number.',
+                    'first_name.required' => 'First name is required.',
+                    'last_name.required' => 'Last name is required.',
+                    'email.required' => 'Email address is required.',
+                    'email.email' => 'Please enter a valid email address.',
+                    'phone.required' => 'Phone number is required.',
+                ]);
+
+                // If validation fails, return JSON response for AJAX
+                if ($validator->fails()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please correct the errors below.',
+                        'errors' => $validator->errors()
+                    ], 422);
+                }
+
+                // Handle file upload
+                $resumePath = null;
+                if ($request->hasFile('resume')) {
+                    $file = $request->file('resume');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $resumePath = $file->storeAs('employment_applications', $fileName, 'public');
+                }
+
+                // Create employment application
+                $application = EmploymentApplication::create([
+                    'position' => $request->position,
+                    'location' => $request->location,
+                    'start_date' => $request->start_date,
+                    'resume_path' => $resumePath,
+                    'salary_dollars' => $request->salary_dollars,
+                    'salary_cents' => $request->salary_cents,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                ]);
+
+                // Log success
+                Log::info('Employment application submitted', [
+                    'id' => $application->id,
+                    'email' => $application->email,
+                    'position' => $application->position,
+                    'location' => $application->location,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your employment application has been submitted successfully!',
+                    'data' => [
+                        'id' => $application->id,
+                    ]
+                ], 200);
+
+            } catch (\Exception $e) {
+                // Log error
+                Log::error('Employment application submission failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while submitting your form. Please try again later.',
+                    'error' => config('app.debug') ? $e->getMessage() : null
+                ], 500);
+            }
+        }
+
+        // Handle GET request - Show form
+        return view('frontend.pages.forms.employment_application_form');
     }
 
 }

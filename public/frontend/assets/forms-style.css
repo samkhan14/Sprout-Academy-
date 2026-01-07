@@ -199,6 +199,18 @@
     cursor: pointer;
 }
 
+/* Hide native date picker icon */
+.site_form .date-input-wrapper .form-input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.site_form .date-input-wrapper .form-input[type="date"]::-webkit-inner-spin-button,
+.site_form .date-input-wrapper .form-input[type="date"]::-webkit-clear-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
 .site_form .date-input-wrapper::after {
     content: "";
     position: absolute;
@@ -211,6 +223,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     pointer-events: none;
+    z-index: 1;
 }
 
 /* Disabled Input */
@@ -2861,5 +2874,37 @@
     }
     .relationship-fields {
         display: block;
+    }
+}
+
+/* ========================================
+   SALARY FIELDS WRAPPER (8/4 RATIO IN 6 COL GRID)
+   ======================================== */
+.site_form .salary-fields-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    align-items: end;
+}
+
+.site_form .salary-dollars-field {
+    grid-column: span 4;
+    width: 100%;
+}
+
+.site_form .salary-cents-field {
+    grid-column: span 2;
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    .site_form .salary-fields-wrapper {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .site_form .salary-dollars-field,
+    .site_form .salary-cents-field {
+        grid-column: span 1;
     }
 }

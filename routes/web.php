@@ -51,6 +51,7 @@ Route::controller(FormController::class)->name('form.')->group(function () {
     Route::any('/time-clock-change-request-form', 'timeClockChangeRequest')->name('timeClockChangeRequest');
     Route::any('/standard-t-shirt-order-form', 'standardTShirtOrder')->name('standardTShirtOrder');
     Route::any('/specialty-t-shirt-order-form', 'specialtyTShirtOrder')->name('specialtyTShirtOrder');
+    Route::any('/employment-application-form', 'employmentApplication')->name('employmentApplication');
     Route::post('/newsletter-subscribe', 'subscribeNewsletter')->name('subscribeNewsletter');
     Route::get('/api/time-off-requests/calendar', 'getTimeOffRequestsForCalendar')->name('timeOffRequests.calendar');
 });

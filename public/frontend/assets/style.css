@@ -6200,6 +6200,7 @@ h2.mission-title {
     text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 1.3;
+    width: 80%;
 }
 
 .form-header-text {

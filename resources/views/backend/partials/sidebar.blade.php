@@ -82,6 +82,10 @@
                             href="{{ route('admin.forms.child-absent-forms') }}">
                             <i class="fas fa-child me-2"></i>Child Absent Forms
                         </a>
+                        <a class="nav-link {{ request()->routeIs('admin.forms.employment-applications') ? 'active' : '' }}"
+                            href="{{ route('admin.forms.employment-applications') }}">
+                            <i class="fas fa-briefcase me-2"></i>Employment Applications
+                        </a>
                     </nav>
                 </div>
             </div>
