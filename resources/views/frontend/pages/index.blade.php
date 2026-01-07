@@ -313,8 +313,7 @@
                     @php
                         // Static images map based on location slug
                         $locationImages = [
-                            'seminole' => 'sch-img-1.png',
-                            'clearwater' => 'sch-img-2.png',
+                            'seminole' => 'sch-img-1.png',                           
                             'pinellas_park' => 'sch-img-3.png',
                             'montessori' => 'sch-img-4.png',
                             'largo' => 'sch-img-5.png',

@@ -1,13 +1,12 @@
 {{-- Masonry Gallery Component --}}
 @php
-    // Get location name (e.g., 'seminole', 'clearwater', etc.)
+    // Get location name (e.g., 'seminole', 'pinellas-park', etc.)
     $locationName = $locationName ?? 'seminole';
 
     // Normalize location name for folder path
     $locationFolder = strtolower($locationName);
     $locationFolderMap = [
         'seminole' => 'seminole',
-        'clearwater' => 'clearwater',
         'pinellas-park' => 'pinellasPark',
         'pinellaspark' => 'pinellasPark',
         'montessori' => 'montessori',

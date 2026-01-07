@@ -73,7 +73,6 @@
                             @php
                                 $routeMap = [
                                     'seminole' => 'frontend.locationSeminole',
-                                    'clearwater' => 'frontend.locationClearwater',
                                     'st-petersburg' => 'frontend.locationStPetersburg',
                                     'pinellas-park' => 'frontend.locationPinellasPark',
                                     'montessori' => 'frontend.locationMontessori',

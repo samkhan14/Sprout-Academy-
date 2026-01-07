@@ -147,7 +147,7 @@ class FrontendController extends Controller
                     'child_first_name' => 'required|string|max:255',
                     'child_last_name' => 'required|string|max:255',
                     'phone_number' => 'required|string|max:20',
-                    'location' => 'required|string|in:seminole,clearwater,pinellas-park,montessori,largo,st-petersburg',
+                    'location' => 'required|string|in:seminole,pinellas-park,montessori,largo,st-petersburg',
                     'date_submission' => 'required|date',
                     'date_of_expected_return' => 'required|date',
                     'reason' => 'nullable|string|max:5000',

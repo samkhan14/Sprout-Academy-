@@ -2,7 +2,7 @@
 <div class="top-bar">
     <div class="container">
         <p class="top-bar-text">Become a more confident parent through our valuable childcare resources.</p>
-        <i class="fas fa-arrow-right"></i>
+       <a href="{{ route('frontend.ourPrograms') }}" target="_blank"> <i class="fas fa-arrow-right"></i></a>
     </div>
 </div>
 

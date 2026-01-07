@@ -40,7 +40,7 @@
                             @error('slug')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">URL-friendly identifier (e.g., "seminole", "clearwater")</div>
+                            <div class="form-text">URL-friendly identifier (e.g., "seminole", "pinellas-park")</div>
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,6 @@
                     // Static image mapping based on location slug
                     $staticImages = [
                         'seminole' => ['image' => 'vr1.png', 'label' => 'FRONT OFFICE'],
-                        'clearwater' => ['image' => 'vr2.png', 'label' => 'OFFICE ROOM'],
                         'pinellas-park' => ['image' => 'vr3.png', 'label' => 'FRONT DOOR'],
                         'montessori' => ['image' => 'vr4.png', 'label' => 'ENTRY DOOR'],
                         'largo' => ['image' => 'vr5.png', 'label' => 'FRONT DOOR'],
@@ -33,7 +32,7 @@
 
                 <div class="vt-location-block" id="{{ $location->slug }}">
                     @if ($index % 2 == 1)
-                        {{-- Viewer first for odd indices (Clearwater, Montessori pattern) --}}
+                        {{-- Viewer first for odd indices (Montessori pattern) --}}
                         @if ($staticImage['image'])
                             <div class="vt-location-viewer">
                                 <div class="vt-viewer-container">
@@ -110,7 +109,6 @@
                             @php
                                 $routeMap = [
                                     'seminole' => 'frontend.locationSeminole',
-                                    'clearwater' => 'frontend.locationClearwater',
                                     'st-petersburg' => 'frontend.locationStPetersburg',
                                     'pinellas-park' => 'frontend.locationPinellasPark',
                                     'montessori' => 'frontend.locationMontessori',

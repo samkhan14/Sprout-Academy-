@@ -1,28 +1,28 @@
 @php
     $testimonials = [
         [
-            'headline' => 'I DRIVE A HALF HOUR OUT OF MY WAY',
+            'headline' => 'They Make Learning So Much Fun',
             'text' =>
-                '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
-            'author' => 'THERESA C',
+                '"The Sprout Academy has got the best staff and the kids learn so much, so quickly. They make        learning so much fun that the kids don’t even realize they’re learning. I recommend The Sprout Academy to everyone"',
+            'author' => 'Theresa C',
         ],
         [
-            'headline' => 'I DRIVE A HALF HOUR OUT OF MY WAY',
+            'headline' => 'The Sprout Academy is the best',
             'text' =>
                 '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
-            'author' => 'THERESA C',
+            'author' => 'Brandi B',
         ],
         [
-            'headline' => 'I DRIVE A HALF HOUR OUT OF MY WAY',
+            'headline' => 'A School Built on Care and Quality',
             'text' =>
-                '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
-            'author' => 'THERESA C',
+                '"Justin and Rachel, owners of Sprout Academy, have created a school where education, care, and child development truly come first."',
+            'author' => 'Carlos. C',
         ],
         [
-            'headline' => 'I DRIVE A HALF HOUR OUT OF MY WAY',
+            'headline' => 'Strong Leadership. Strong Education',
             'text' =>
-                '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
-            'author' => 'THERESA C',
+                '"Under the guidance of owners Justin and Rachel, Sprout Academy delivers an exceptional learning experience for young children."',
+            'author' => 'Jason .J',
         ],
         [
             'headline' => 'I DRIVE A HALF HOUR OUT OF MY WAY',

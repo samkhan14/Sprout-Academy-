@@ -27,7 +27,7 @@ class FormController extends Controller
                 // If user is logged in, name and email are optional (will use user's data)
                 $user = auth()->user();
                 $validationRules = [
-                    'location' => 'required|string|in:seminole,clearwater,pinellas_park,largo,st_petersburg,montessori',
+                    'location' => 'required|string|in:seminole,pinellas_park,largo,st_petersburg,montessori',
                     'todays_date' => 'required|date',
                     'start_date' => 'required|date|after_or_equal:todays_date',
                     'end_date' => 'required|date|after_or_equal:start_date',

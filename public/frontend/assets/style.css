@@ -192,6 +192,7 @@ img {
     font-size: 0.875rem;
     animation: arrowBounce 2s ease-in-out infinite;
     background: #007b9a;
+    color: #fff;
     padding: 5px;
     border-radius: 100%;
     font-size: 12px;
@@ -2482,9 +2483,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: inline-block;
     margin-bottom: var(--space-md);
 }
 
@@ -3663,7 +3662,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .benefit-card-text {
-    font-size: 21px;
+    font-size: 19px;
     line-height: 1.5;
     color: #2d4578;
     font-weight: 600;
@@ -6696,7 +6695,7 @@ select.form-control {
 .sprout-store-content {
     position: relative;
     z-index: 2;
-    padding-left: var(--space-lg);
+    padding-left: var(--space-2xl);
 }
 
 .sprout-store-headline {
