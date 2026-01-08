@@ -70,7 +70,7 @@
         'fancytitle' => 'Inquire About Openings',
         'title' => 'FIND THE SPROUT ACADEMY LOCATION NEAREST YOU',
         'buttonText' => 'Enroll',
-        'buttonLink' => route('frontend.locations'),
+        'buttonLink' => route('frontend.enroll'),
     ])
 
 @endsection

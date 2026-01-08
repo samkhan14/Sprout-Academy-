@@ -37,8 +37,9 @@
                         We are extremely passionate about what we do and creating a wonderful, safe, learning atmosphere for
                         children in our community. "
                     </p>
-                    <p class="founders-signature">- Justin & Rachel</p>
+                    <!-- <p class="founders-signature">- Justin & Rachel</p> -->
                     <div class="founders-icon-wrapper">
+                    <a href="{{ route('frontend.meetTheOwner') }}" class="btn btn-sprout-store owner-btn">More Information</a>
                         <img src="{{ asset('frontend/assets/home_page_images/tree-layer.png') }}"
                             alt="Justin and Rachel, founders of The Sprout Academy" loading="lazy" class="founders-icon">
                     </div>
@@ -117,25 +118,25 @@
             [
                 'title' => 'CARING AND PASSIONATE',
                 'content' =>
-                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem.',
+                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem. This is more than a job for our teachers. It\'s an opportunity for them to share their passion for life while they inspire, engage, and awaken the wonder inside each and every child.',
                 'expanded' => false,
             ],
             [
                 'title' => 'HIGHLY TRAINED EARLY CHILDHOOD TEACHERS',
                 'content' =>
-                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem.',
+                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem. Our teachers meet education and experience requirements that exceed state standards, and are trained in CPR and First Aid.',
                 'expanded' => false,
             ],
             [
                 'title' => 'SMALL CLASS SIZE',
                 'content' =>
-                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem.',
+                    'The Sprout Academy\'s low teacher-to-student ratios allow teachers to focus on the individual learning styles and needs of each child in our day care centers.',
                 'expanded' => false,
             ],
             [
                 'title' => 'PARTNERING WITH FAMILIES',
                 'content' =>
-                    'The Sprout Academy child care centers\' early childhood teachers are passionate about your child\'s happiness, growth and safety, and providing a nurturing environment that cultivates self-esteem.',
+                    'The Sprout Academy\'s early childhood teachers and staff want to form a strong partnership with you to ensure the best possible experience for your child. Teachers provide daily communication with families and seek to understand your unique needs.',
                 'expanded' => false,
             ],
         ],
@@ -146,7 +147,7 @@
         'fancytitle' => 'Inquire About Openings',
         'title' => 'FIND THE SPROUT ACADEMY LOCATION NEAREST YOU',
         'buttonText' => 'Enroll',
-        'buttonLink' => route('frontend.locations'),
+        'buttonLink' => route('frontend.enroll'),
     ])
 
 

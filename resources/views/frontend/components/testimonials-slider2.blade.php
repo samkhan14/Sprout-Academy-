@@ -2,28 +2,28 @@
     $testimonials = [
         [
             'text' =>
-                'Would recommend this school to anyone. My daughter loves it there. It\'s extremely clean organized and they are all very attentive and loving towards the children!',
-            'author' => 'Stephanie L',
+                '"The Sprout Academy has got the best staff and the kids learn so much, so quickly. They make        learning so much fun that the kids don’t even realize they’re learning. I recommend The Sprout Academy to everyone"',
+            'author' => 'Theresa C',
         ],
         [
             'text' =>
-                'Would recommend this school to anyone. My daughter loves it there. It\'s extremely clean organized and they are all very attentive and loving towards the children!',
-            'author' => 'Stephanie L',
+                '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
+            'author' => 'Brandi B',
         ],
         [
             'text' =>
-                'Would recommend this school to anyone. My daughter loves it there. It\'s extremely clean organized and they are all very attentive and loving towards the children!',
-            'author' => 'Stephanie L',
+                '"Justin and Rachel, owners of Sprout Academy, have created a school where education, care, and child development truly come first."',
+            'author' => 'Carlos. C',
         ],
         [
             'text' =>
-                'Would recommend this school to anyone. My daughter loves it there. It\'s extremely clean organized and they are all very attentive and loving towards the children!',
-            'author' => 'Stephanie L',
+                '"Under the guidance of owners Justin and Rachel, Sprout Academy delivers an exceptional learning experience for young children."',
+            'author' => 'Jason .J',
         ],
         [
             'text' =>
-                'Would recommend this school to anyone. My daughter loves it there. It\'s extremely clean organized and they are all very attentive and loving towards the children!',
-            'author' => 'Stephanie L',
+                '"The Sprout Academy is the best. My son still talks about his time there. He just graduated Kindergarten but he will never forget his time at Sprout!"',
+            'author' => 'Theresa C',
         ],
     ];
 @endphp
@@ -67,11 +67,11 @@
                 centerMode: true,
                 centerPadding: '0px',
                 variableWidth: false,
-                autoplay: true,
+                autoplay: false,
                 autoplaySpeed: 3000,
                 speed: 600,
                 arrows: false,
-                dots: false,
+                dots: true,
                 pauseOnHover: false,
                 responsive: [{
                         breakpoint: 1024,
