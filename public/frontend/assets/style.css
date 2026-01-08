@@ -1004,7 +1004,7 @@ body {
     height: auto;
     display: block;
     border-radius: var(--radius-xl);
-    z-index: 0;
+    z-index: 2;
     position: relative;
 }
 
@@ -3222,7 +3222,7 @@ footer#footer-copyright .footer-bottom {
 
 .infant-education-header {
     text-align: center;
-    margin-bottom: var(--space-3xl);
+    margin-bottom: var(--space-xl);
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
@@ -4485,7 +4485,7 @@ h2.mission-title {
    Preschool Intro (Inner Page)
    ============================ */
 .preschool-intro-section {
-    padding: var(--space-3xl) 0 0;
+    padding: var(--space-xl) 0 0;
     /* background: linear-gradient(180deg, #fafcff 0%, #ffffff 100%); */
 }
 .preschool-intro-section .container {

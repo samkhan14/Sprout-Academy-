@@ -89,8 +89,8 @@
                 <div class="curriculum-video-showcase">
                     <video id="curriculum-video" class="curriculum-video-player"
                         poster="{{ asset('frontend/assets/home_page_images/program--img-1.png') }}" controls playsinline>
-                        <source src="{{ asset('frontend/assets/videos/main-video.mp4') }}" type="video/mp4">
-                        <source src="{{ asset('frontend/assets/videos/main-video.webm') }}" type="video/webm">
+                        <source src="{{ asset('frontend/assets/home_page_images/Curriculum_1.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('frontend/assets/home_page_images/Curriculum_1.webm') }}" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                     <button class="curriculum-video-play-btn" id="play-curriculum-video-btn"
@@ -173,7 +173,7 @@
         'fancytitle' => 'Inquire About Openings',
         'title' => 'FIND THE SPROUT ACADEMY LOCATION NEAREST YOU',
         'buttonText' => 'Enroll',
-        'buttonLink' => route('frontend.locations'),
+        'buttonLink' => route('frontend.enroll'),
     ])
 
 @endsection
