@@ -23,7 +23,7 @@
 
                     {{-- Headline --}}
                     <h2 class="sprout-cares-title">
-                        THINGS TO KNOW ABOUT THE SPROUT ACADEMY TUITION & RATES
+                    The Sprout Academy Cares for Your Child Like You Would
                     </h2>
 
                     {{-- Description --}}
@@ -62,27 +62,21 @@
                 <h2 class="info-overlay-title">CHOOSING A CHILD CARE PROVIDER</h2>
 
                 <p class="info-overlay-text">
-                    Choosing a child care provider is an emotional and personal decision. You want to find a place that
-                    feels like home, where your child will be safe, nurtured, and encouraged to learn and grow. Where is the
-                    center? Is it safe? Are the teachers qualified? These are all important questions to ask.
+                We understand that choosing a child care provider is an emotional decision—and a personal one. There are many factors that you will consider: Where is the center? Is it safe? Are the teachers qualified?
                 </p>
 
                 <p class="info-overlay-text">
-                    Tuition costs vary from center to center and depend on several factors. Things that impact the cost of
-                    child care include: location, age of your child, days per week needed, hours of operation, and the
-                    quality of the program.
+                There is no one-size-fits-all answer to what the tuition will be for your family. Child care costs will vary based on your situation.
+                Here are some of the things that impact the cost of child care:
                 </p>
 
                 <p class="info-overlay-text">
-                    We encourage you to speak directly with a Center Director to understand your individual needs and
-                    explore the options available. Every family's situation is unique, and we're here to help you find the
-                    best fit.
+                This is a big decision for your family, and we know the best way to get you the information you need is to have you speak directly with the center director in your neighborhood, to hear what your individual needs and cares are, and to line out the options to cover what you’ll need
                 </p>
 
                 <p class="info-overlay-text">
-                    Talk with a local Center Director about tuition and schedule a visit by finding a Sprout Academy center
-                    near you. At The Sprout Academy, children learn to read, make social and emotional advances, and reach
-                    important developmental milestones—all while having fun in a safe, nurturing environment.
+                Talk with a local Center Director about tuition and schedule a visit by finding a Sprout Academy center near you.
+                Every day at The Sprout Academy children learn how to read, children make social and emotional advances, and children reach important developmental milestones.
                 </p>
             </div>
         </div>
@@ -93,6 +87,6 @@
         'fancytitle' => 'Inquire About Openings',
         'title' => 'FIND THE SPROUT ACADEMY LOCATION NEAREST YOU',
         'buttonText' => 'Enroll',
-        'buttonLink' => route('frontend.locations'),
+        'buttonLink' => route('frontend.enroll'),
     ])
 @endsection

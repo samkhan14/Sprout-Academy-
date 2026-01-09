@@ -58,11 +58,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="vt-action-buttons">
+                    <!-- <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
                         <a href="{{ route('frontend.locationPinellasPark') }}" class="btn btn-foundation">More
                             Information</a>
-                    </div>
+                    </div> -->
                 </div>
                 @include('frontend.components.google-map', [
                     'address' => '5995 Park Blvd, Pinellas Park, FL 33781',
@@ -81,7 +81,7 @@
                             constantly improving upon the entire complex and as it stands it currently offers the highest
                             quality educational facility in the area. We rigorously follow and uphold all the top standards
                             of education.</p>
-                        <a href="#" class="location-text-link">Follow Our Socials:
+                        <a href="https://www.facebook.com/SproutPinellasPark/" target="_blank" class="location-text-link">Follow Our Socials:
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -92,6 +92,15 @@
             @include('frontend.components.masonry-gallery', [
                 'locationName' => 'seminole',
             ])
+            
+            <!-- View All Images on Facebook Button -->
+            <div class="container mt-4 mb-5">
+                <div class="text-center">
+                    <a href="https://www.facebook.com/SproutPinellasPark/photos" target="_blank" rel="noopener noreferrer" class="btn btn-foundation btn-lg">
+                        View All Images on Facebook
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 @endsection

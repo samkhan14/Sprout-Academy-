@@ -87,21 +87,21 @@
     </div>
 
     {{-- Lightbox Modal --}}
-    <div class="masonry-lightbox" id="lightbox-{{ $galleryId }}" role="dialog" aria-modal="true"
+    <div class="masonry-lightbox" id="lightbox-{{ $galleryId }}" role="dialog" aria-modal="false"
         aria-label="Image gallery lightbox">
         <div class="masonry-lightbox-backdrop"></div>
         <div class="masonry-lightbox-container">
-            <button class="masonry-lightbox-close" aria-label="Close lightbox">
+            <button type="button" class="masonry-lightbox-close" aria-label="Close lightbox">
                 <i class="fas fa-times"></i>
             </button>
-            <button class="masonry-lightbox-prev" aria-label="Previous image">
+            <button type="button" class="masonry-lightbox-prev" aria-label="Previous image">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="masonry-lightbox-next" aria-label="Next image">
+            <button type="button" class="masonry-lightbox-next" aria-label="Next image">
                 <i class="fas fa-chevron-right"></i>
             </button>
             <div class="masonry-lightbox-content">
-                <img class="masonry-lightbox-image" src="" alt="">
+                <img class="masonry-lightbox-image" src="" alt="" style="opacity: 0;">
                 <div class="masonry-lightbox-caption"></div>
             </div>
         </div>

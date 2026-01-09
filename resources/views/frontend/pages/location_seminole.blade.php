@@ -58,10 +58,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="vt-action-buttons">
+                    <!-- <div class="vt-action-buttons">
                         <a href="#register" class="btn btn-enroll">Register Here</a>
 
-                    </div>
+                    </div> -->
                 </div>
                 @include('frontend.components.google-map', [
                     'address' => '7985 113th St N, Seminole, FL 33772',
@@ -77,7 +77,7 @@
                             complex and as it stands it currently offers the highest quality educational facility in the
                             area. We rigorously follow and uphold all the top standards of the Apple accreditation, Gold
                             Seal Florida Quality Care, and the The Sprout Academy policies.</p>
-                        <a href="#" class="location-text-link">Follow Our Socials:
+                        <a href="https://www.facebook.com/SproutSeminole/" target="_blank" class="location-text-link">Follow Our Socials:
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -88,6 +88,15 @@
             @include('frontend.components.masonry-gallery', [
                 'locationName' => 'seminole',
             ])
+            
+            <!-- View All Images on Facebook Button -->
+            <div class="container mt-4 mb-5">
+                <div class="text-center">
+                    <a href="https://www.facebook.com/SproutSeminole/photos" target="_blank" rel="noopener noreferrer" class="btn btn-foundation btn-lg">
+                        View All Images on Facebook
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 @endsection
