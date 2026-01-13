@@ -103,7 +103,7 @@
                             @endif
                         </div>
                         <div class="vt-action-buttons">
-                            <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'virtual-tour']) }}"
+                            <a href="{{ route('enrollment.start', ['location' => $location->slug, 'ref' => 'virtual-tour']) }}"
                                 class="btn btn-enroll">Register Here</a>
 
                             @php

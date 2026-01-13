@@ -1822,7 +1822,7 @@
 .enrollment-progress-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-top: -40px;
     margin-bottom: 30px;
     position: relative;
@@ -1831,28 +1831,39 @@
     padding: 34px 40px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     z-index: 10;
+    gap: 0;
 }
 
 .progress-step {
     display: flex;
+    flex-direction: row;
     align-items: center;
     flex: 1;
     position: relative;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .step-circle {
     width: 60px;
     height: 60px;
+    min-width: 60px;
     border-radius: 50%;
     background: #f6f8fa;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
     position: relative;
     z-index: 2;
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .progress-step.active .step-circle {
@@ -1883,7 +1894,7 @@
     text-align: center;
     text-decoration: none;
     transition: all 0.3s ease;
-    margin-left: 10px;
+    white-space: nowrap;
 }
 
 .progress-step.active .step-label,
@@ -1892,22 +1903,38 @@
     font-weight: 700;
 }
 
-.step-connector {
-    position: absolute;
-    top: 30px;
-    left: -20px;
-    height: 2px;
+/* Step Indicator - Small bar aligned center with title */
+.step-indicator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicator-bar {
+    width: 60px;
+    height: 4px;
     background: #e0e0e0;
-    z-index: 1;
-    width: 20%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
-.step-connector.active {
-    background: #1a5f7a;
+/* Indicator for completed steps - fully blue */
+.indicator-bar.completed {
+    background: #007b9a;
+    width: 80px;
 }
 
-.progress-step:last-child .step-connector {
-    display: none;
+/* Indicator for current step - half gray, half blue */
+.indicator-bar.current {
+    background: linear-gradient(to right, #007b9a 50%, #e0e0e0 50%);
+    width: 70px;
+}
+
+/* Indicator for pending steps - fully gray */
+.indicator-bar.pending {
+    background: #e0e0e0;
+    width: 60px;
 }
 
 /* Welcome Message */
@@ -1927,6 +1954,14 @@
     line-height: 1.6;
     margin-top: 60px;
     display: block;
+}
+
+/* Divider Line between Welcome and PRIMARY ACCOUNT PERSON */
+.enrollment-section-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 30px 0;
+    width: 100%;
 }
 
 /* Instructions */
@@ -1972,6 +2007,18 @@
 .section-icon {
     font-size: 1.2rem;
     color: #333333;
+}
+
+/* Enrollment Icons - Stroke Style (for icons that don't have far version) */
+.enrollment-section .section-icon.fas,
+.enrollment-form .section-icon.fas {
+    font-weight: 300;
+}
+
+/* FontAwesome Regular icons (far) already have stroke style */
+.enrollment-section .section-icon.far,
+.enrollment-form .section-icon.far {
+    font-weight: 400;
 }
 
 .section-title-inner {
@@ -2855,18 +2902,33 @@
         display: block;
     }
 
-    .step-connector {
-        left: 0;
-        width: 8%;
-    }
-
     .enrollment-progress-bar {
         padding: 40px 30px;
         display: block;
     }
 
     .progress-step {
-        justify-content: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .step-content {
+        margin-bottom: 10px;
+    }
+
+    .step-indicator {
+        margin-top: 5px;
+    }
+
+    .indicator-bar {
+        width: 50px !important;
+    }
+
+    .indicator-bar.completed {
+        width: 70px !important;
+    }
+
+    .indicator-bar.current {
+        width: 60px !important;
     }
 
     .btn-remove-phone {

@@ -11,13 +11,29 @@
 <div class="enrollment-progress-bar">
     @foreach ($steps as $stepNum => $stepLabel)
         <div class="progress-step {{ $stepNum <= $currentStep ? 'active' : '' }} {{ $stepNum == $currentStep ? 'current' : '' }}">
-            <div class="step-circle">
-                <span class="step-number">{{ str_pad($stepNum, 2, '0', STR_PAD_LEFT) }}</span>
+            <div class="step-content">
+                <div class="step-circle">
+                    <span class="step-number">{{ str_pad($stepNum, 2, '0', STR_PAD_LEFT) }}</span>
+                </div>
+                <div class="step-label">{{ $stepLabel }}</div>
             </div>
-            <div class="step-label">{{ $stepLabel }}</div>
-            @if (!$loop->last)
-                <div class="step-connector {{ $stepNum < $currentStep ? 'active' : '' }}"></div>
-            @endif
+            <div class="step-indicator">
+                @php
+                    // Indicator state based on step status
+                    $indicatorState = '';
+                    if ($stepNum < $currentStep) {
+                        // Step is completed - indicator is fully blue
+                        $indicatorState = 'completed';
+                    } elseif ($stepNum == $currentStep) {
+                        // Current step - indicator is half gray, half blue
+                        $indicatorState = 'current';
+                    } else {
+                        // Step not reached - indicator is fully gray
+                        $indicatorState = 'pending';
+                    }
+                @endphp
+                <div class="indicator-bar {{ $indicatorState }}"></div>
+            </div>
         </div>
     @endforeach
 </div>

@@ -68,7 +68,7 @@
                             @endif
                         </div>
                         <div class="vt-action-buttons">
-                            <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'locations']) }}"
+                            <a href="{{ route('enrollment.start', ['location' => $location->slug, 'ref' => 'locations']) }}"
                                 class="btn btn-enroll">Register Here</a>
                             @php
                                 $routeMap = [

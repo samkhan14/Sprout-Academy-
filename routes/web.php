@@ -41,7 +41,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Form Routes (Public)
+// Form Routes (Public - No Authentication Required)
+// All forms can be submitted without login. Authentication is optional.
 Route::controller(FormController::class)->name('form.')->group(function () {
     Route::any('/time-off-request-form', 'TimeOffRequestForm')->name('timeOffRequestForm');
     Route::any('/maintenance-work-order-form', 'maintenanceWorkOrder')->name('maintenanceWorkOrder');
@@ -73,9 +74,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Enrollment Routes
+// Enrollment Routes (Public - No Authentication Required)
+// Enrollment forms can be submitted without login. Authentication is optional.
 Route::controller(EnrollmentController::class)->prefix('enrollment')->name('enrollment.')->group(function () {
-    Route::get('/{location}', 'showEnrollmentForm')->name('form');
+    Route::get('/{location}', 'showLocationEnrollmentForm')->name('start'); // Initial email form
+    Route::post('/{location}', 'startEnrollment')->name('start'); // Submit email (POST to same URL)
+    Route::get('/{location}/form', 'showEnrollmentForm')->name('form'); // Step 1 enrollment form
     Route::post('/{location}/step1', 'saveStep1')->name('saveStep1');
     Route::get('/{location}/step2', 'showStep2')->name('step2');
     Route::post('/{location}/step2', 'saveStep2')->name('saveStep2');

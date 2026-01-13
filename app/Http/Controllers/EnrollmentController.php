@@ -18,6 +18,9 @@ class EnrollmentController extends Controller
     // Location data configuration
     private function getLocationData($location)
     {
+        // Normalize location slug to handle both underscore and hyphen formats
+        $location = str_replace('_', '-', strtolower($location));
+        
         $locations = [
             'seminole' => [
                 'name' => 'SEMINOLE',
@@ -58,6 +61,83 @@ class EnrollmentController extends Controller
         ];
 
         return $locations[$location] ?? $locations['seminole'];
+    }
+
+    /**
+     * Show initial location enrollment form (Email collection)
+     */
+    public function showLocationEnrollmentForm(Request $request, $location)
+    {
+        $locationData = $this->getLocationData($location);
+        
+        // Capture referrer from query parameter (ref=locations or ref=virtual-tour)
+        $referrer = $request->query('ref', null);
+        if ($referrer) {
+            $request->session()->put('enrollment_referrer', $referrer);
+        } else {
+            // If no ref parameter, check session
+            $referrer = $request->session()->get('enrollment_referrer');
+        }
+
+        return view('frontend.pages.enrollment.location_enrollment_form', [
+            'location' => $location,
+            'locationData' => $locationData,
+            'referrer' => $referrer,
+        ]);
+    }
+
+    /**
+     * Handle initial enrollment form submission (Email + Privacy Policy)
+     */
+    public function startEnrollment(Request $request, $location)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|max:255',
+                'privacy_policy' => 'required|accepted',
+                'referrer' => 'nullable|string|max:255',
+            ], [
+                'email.required' => 'Please enter your email address.',
+                'email.email' => 'Please enter a valid email address.',
+                'privacy_policy.required' => 'You must agree to the Privacy Policy to continue.',
+                'privacy_policy.accepted' => 'You must agree to the Privacy Policy to continue.',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please correct the errors below.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            // Save referrer to session
+            if ($request->referrer) {
+                $request->session()->put('enrollment_referrer', $request->referrer);
+            }
+
+            // Save email to session (will be used in step1)
+            $request->session()->put('enrollment_email', $request->email);
+
+            // Redirect to step1 enrollment form
+            return response()->json([
+                'success' => true,
+                'message' => 'Email saved successfully.',
+                'redirect_url' => route('enrollment.form', ['location' => $location])
+            ], 200);
+
+        } catch (\Exception $e) {
+            Log::error('Location enrollment start failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred. Please try again.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
 
     /**
@@ -251,6 +331,7 @@ class EnrollmentController extends Controller
                 'data' => [
                     'enrollment_id' => $enrollment->id,
                     'next_step' => 2,
+                    'redirect_url' => route('enrollment.step2', ['location' => $location])
                 ]
             ], 200);
 
@@ -367,6 +448,7 @@ class EnrollmentController extends Controller
                 'data' => [
                     'enrollment_id' => $enrollment->id,
                     'next_step' => 3,
+                    'redirect_url' => route('enrollment.step3', ['location' => $location])
                 ]
             ], 200);
 
@@ -522,6 +604,7 @@ class EnrollmentController extends Controller
                 'data' => [
                     'enrollment_id' => $enrollment->id,
                     'next_step' => 4,
+                    'redirect_url' => route('enrollment.step4', ['location' => $location])
                 ]
             ], 200);
 

@@ -23,7 +23,7 @@
                     <!-- Child Info -->
                     <div class="enrollment-section" id="enrollment-form-primary-account-person">
                         <div class="section-header">
-                            <i class="fas fa-child section-icon"></i>
+                            <i class="far fa-user-friends section-icon"></i>
                             <h2 class="section-title-inner">Child Info</h2>
                         </div>
                         <div class="section-required-note">

@@ -20,6 +20,9 @@
                     <p>Welcome! Begin by creating a new account. Enter yourself as the Primary Account Person.</p>
                 </div>
 
+                <!-- Divider Line -->
+                <div class="enrollment-section-divider"></div>
+
                 <!-- Form -->
                 <div class="enrollment-form site_form">
                     <form id="enrollmentStep1Form" method="POST"
@@ -31,7 +34,7 @@
                         <!-- PRIMARY ACCOUNT PERSON -->
                         <div class="enrollment-section" id="enrollment-form-primary-account-person">
                             <div class="section-header">
-                                <i class="fas fa-user section-icon"></i>
+                                <i class="far fa-user section-icon"></i>
                                 <h2 class="section-title-inner">PRIMARY ACCOUNT PERSON</h2>
                             </div>
                             <div class="section-required-note">
@@ -104,7 +107,7 @@
                         <!-- ADDRESS -->
                         <div class="enrollment-section" id="enrollment-form-address">
                             <div class="section-header">
-                                <i class="fas fa-map-marker-alt section-icon"></i>
+                                <i class="far fa-map-marker-alt section-icon"></i>
                                 <h2 class="section-title-inner">ADDRESS</h2>
                             </div>
 
@@ -163,7 +166,7 @@
                         <!-- PHONE -->
                         <div class="enrollment-section" id="enrollment-form-phone">
                             <div class="section-header">
-                                <i class="fas fa-phone section-icon"></i>
+                                <i class="far fa-phone section-icon"></i>
                                 <h2 class="section-title-inner">PHONE</h2>
                             </div>
 

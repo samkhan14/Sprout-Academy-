@@ -47,7 +47,7 @@
                             <div class="location-overlay-content">
                                 <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
-                                <a href="{{ route('enrollment.form', ['location' => $location->slug, 'ref' => 'enroll']) }}"
+                                <a href="{{ route('enrollment.start', ['location' => $location->slug, 'ref' => 'enroll']) }}"
                                     class="btn btn-secondary">Schedule a Tour</a>
                             </div>
                         </div>

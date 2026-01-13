@@ -2817,6 +2817,10 @@ footer#footer-copyright .footer-bottom {
     transform: translateX(-50%) scale(1.1);
 }
 
+.info-cards-section {
+    margin-bottom: 70px;
+}
+
 /* Responsive Design */
 
 /* ========================================
@@ -7023,4 +7027,421 @@ select.form-control {
 
 .testimonial-slider-v2 .slick-dots li button:hover {
     background: rgba(255, 255, 255, 0.8);
+}
+
+/* ========================================
+   LOCATION ENROLLMENT FORM
+   ======================================== */
+
+.location-enrollment-form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #e8f4f8 0%, #fff4e6 100%);
+    min-height: 100vh;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.location-enrollment-form-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+            circle at 20% 30%,
+            rgba(232, 244, 248, 0.8) 0%,
+            transparent 60%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 244, 230, 0.8) 0%,
+            transparent 60%
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.location-enrollment-form-section::after {
+    content: "";
+    position: absolute;
+    top: 9%;
+    right: 3%;
+    width: 500px;
+    height: 640px;
+    background: url(/frontend/assets/home_page_images/tree-layer.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.location-enrollment-bg-icon {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.location-enrollment-bg-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.location-enrollment-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.location-enrollment-card {
+    background: var(--color-white);
+    border-radius: 20px;
+    padding: var(--space-2xl) var(--space-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.location-enrollment-logo {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.location-enrollment-logo img {
+    max-width: 250px;
+    height: auto;
+}
+
+.location-enrollment-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.location-enrollment-title {
+    font-family: var(--font-primary);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0a2239;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-xs);
+    line-height: 1.2;
+}
+
+.location-name-orange {
+    color: #ed9b04;
+}
+
+.location-enrollment-info-card {
+    background: #faf9f7;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: var(--space-lg) var(--space-xl);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    position: relative;
+}
+
+.location-enrollment-info-location {
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c4a73;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-md);
+    position: relative;
+    display: inline-block;
+    padding: 0 var(--space-md);
+}
+
+.location-enrollment-info-location::before,
+.location-enrollment-info-location::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.location-enrollment-info-location::before {
+    left: -50px;
+}
+
+.location-enrollment-info-location::after {
+    right: -50px;
+}
+
+.location-enrollment-info-phone {
+    font-family: var(--font-primary);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2c4a73;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.location-enrollment-form-content {
+    margin-top: var(--space-lg);
+}
+
+.location-enrollment-instruction {
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+}
+
+.location-enrollment-email-field {
+    margin-bottom: var(--space-md);
+}
+
+.location-enrollment-email-field label {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.location-enrollment-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    color: #333;
+    background: var(--color-white);
+    transition: var(--transition-base);
+}
+
+.location-enrollment-input:focus {
+    outline: none;
+    border-color: #ed9b04;
+    box-shadow: 0 0 0 3px rgba(237, 155, 4, 0.1);
+}
+
+.location-enrollment-input::placeholder {
+    color: #999;
+}
+
+.location-enrollment-privacy {
+    margin-bottom: var(--space-lg);
+}
+
+.location-enrollment-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.location-enrollment-checkbox {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    appearance: none;
+    background: var(--color-white);
+    transition: var(--transition-base);
+    position: relative;
+}
+
+.location-enrollment-checkbox:hover {
+    background-color: #ed9b04;
+    border-color: #ed9b04;
+}
+
+.location-enrollment-checkbox:checked {
+    background-color: #ed9b04;
+    border-color: #ed9b04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23ffffff' d='M11.5 3.5L5 10L2.5 7.5L3.5 6.5L5 8L10.5 2.5L11.5 3.5Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+}
+
+.location-enrollment-checkbox-text {
+    flex: 1;
+    user-select: none;
+}
+
+.location-enrollment-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: #0a2239;
+    color: var(--color-white);
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    margin-bottom: var(--space-lg);
+}
+
+.location-enrollment-submit-btn:hover:not(:disabled) {
+    background: #0d2d50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(10, 34, 57, 0.3);
+}
+
+.location-enrollment-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.location-enrollment-footer-link {
+    text-align: center;
+    margin-top: var(--space-md);
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.location-enrollment-footer-link a {
+    color: #0a2239;
+    text-decoration: underline;
+    transition: var(--transition-base);
+}
+
+.location-enrollment-footer-link a:hover {
+    color: #ed9b04;
+}
+
+/* Form Message Styles */
+.location-enrollment-card .form-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: var(--space-md);
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.location-enrollment-card .form-message.error {
+    background: #fee;
+    color: #c33;
+    border: 1px solid #fcc;
+}
+
+.location-enrollment-card .form-message.success {
+    background: #efe;
+    color: #3c3;
+    border: 1px solid #cfc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .location-enrollment-form-section {
+        padding: var(--space-lg) var(--space-sm);
+    }
+
+    .location-enrollment-card {
+        padding: var(--space-lg) var(--space-md);
+    }
+
+    .location-enrollment-title {
+        font-size: 1.5rem;
+    }
+
+    .location-enrollment-info-card {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .location-enrollment-info-phone {
+        font-size: 1.5rem;
+    }
+
+    .location-enrollment-form-section::after {
+        width: 200px;
+        height: 300px;
+        right: 2%;
+        opacity: 0.2;
+    }
+
+    .location-enrollment-bg-icon {
+        width: 400px;
+        height: 400px;
+        right: -80px;
+        opacity: 0.1;
+    }
+}
+
+@media (max-width: 480px) {
+    .location-enrollment-card {
+        padding: var(--space-md) var(--space-sm);
+    }
+
+    .location-enrollment-title {
+        font-size: 1.25rem;
+    }
+
+    .location-enrollment-logo img {
+        max-width: 150px;
+    }
+
+    .location-enrollment-info-card {
+        padding: var(--space-md);
+    }
+
+    .location-enrollment-info-location {
+        font-size: 0.85rem;
+        padding: 0 var(--space-sm);
+    }
+
+    .location-enrollment-info-location::before,
+    .location-enrollment-info-location::after {
+        width: 20px;
+    }
+
+    .location-enrollment-info-location::before {
+        left: -30px;
+    }
+
+    .location-enrollment-info-location::after {
+        right: -30px;
+    }
+
+    .location-enrollment-info-phone {
+        font-size: 1.35rem;
+    }
+
+    .location-enrollment-form-section::after {
+        width: 150px;
+        height: 200px;
+        opacity: 0.15;
+    }
+
+    .location-enrollment-bg-icon {
+        display: none;
+    }
 }

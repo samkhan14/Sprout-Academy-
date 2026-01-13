@@ -53,7 +53,7 @@
                                         <!-- Contact Info -->
                                         <div class="contact-info-section">
                                             <div class="section-header">
-                                                <i class="fas fa-user section-icon"></i>
+                                                <i class="far fa-user section-icon"></i>
                                                 <h3 class="section-subtitle">Contact Info</h3>
                                             </div>
                                             <div class="form-grid">
@@ -103,7 +103,7 @@
                                         <!-- Relationship To Children -->
                                         <div class="relationship-section">
                                             <div class="section-header">
-                                                <i class="fas fa-users section-icon"></i>
+                                                <i class="far fa-users section-icon"></i>
                                                 <h3 class="section-subtitle">Relationship To Children</h3>
                                             </div>
 
@@ -193,7 +193,7 @@
                                     <!-- Contact Info -->
                                     <div class="contact-info-section">
                                         <div class="section-header">
-                                            <i class="fas fa-user section-icon"></i>
+                                            <i class="far fa-user section-icon"></i>
                                             <h3 class="section-subtitle">Contact Info</h3>
                                         </div>
                                         <div class="form-grid">
@@ -232,7 +232,7 @@
                                     <!-- Relationship To Children -->
                                     <div class="relationship-section">
                                         <div class="section-header">
-                                            <i class="fas fa-users section-icon"></i>
+                                            <i class="far fa-users section-icon"></i>
                                             <h3 class="section-subtitle">Relationship To Children</h3>
                                         </div>
 
@@ -333,7 +333,7 @@
             newGroup.innerHTML = `
             <div class="contact-info-section">
                 <div class="section-header">
-                    <i class="fas fa-user section-icon"></i>
+                    <i class="far fa-user section-icon"></i>
                     <h3 class="section-subtitle">Contact Info</h3>
                 </div>
                 <div class="form-grid">
@@ -369,7 +369,7 @@
             </div>
             <div class="relationship-section">
                 <div class="section-header">
-                    <i class="fas fa-users section-icon"></i>
+                    <i class="far fa-users section-icon"></i>
                     <h3 class="section-subtitle">Relationship To Children</h3>
                 </div>
                 <div class="relationship-content">

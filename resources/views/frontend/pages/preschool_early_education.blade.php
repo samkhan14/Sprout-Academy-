@@ -169,7 +169,7 @@
                 <!-- Right: Image with blurred background layer (7 cols) -->
                 <div class="preschool-intro-figure">
                     <div class="blur-layer" aria-hidden="true"></div>
-                    <img src="{{ asset('frontend/assets/home_page_images/pr-img-3.png') }}"
+                    <img src="{{ asset('frontend/assets/home_page_images/Preschool-3-5-yrs.png') }}"
                         alt="Preschooler playing with colorful blocks" class="preschool-intro-image" loading="lazy">
                 </div>
                 <!-- Left: Text Content (5 cols) -->

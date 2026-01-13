@@ -21,14 +21,14 @@
                     <div class="review-left">
                         <div class="location-info-card">
                             <div class="location-info-item">
-                                <i class="fas fa-map-marker-alt location-icon"></i>
+                                <i class="far fa-map-marker-alt location-icon"></i>
                                 <div class="location-info-details">
                                     <span class="location-label">LOCATION ADDRESS:</span>
                                     <span class="location-value">{{ $locationData['address'] }}</span>
                                 </div>
                             </div>
                             <div class="location-info-item">
-                                <i class="fas fa-phone location-icon"></i>
+                                <i class="far fa-phone location-icon"></i>
                                 <div class="location-info-details">
                                     <span class="location-label">PHONE:</span>
                                     <span class="location-value">{{ $locationData['phone'] }}</span>

@@ -3,7 +3,7 @@
 @section('content')
     <!-- Inner Page Header -->
     @include('frontend.partials.header_inner', [
-        'bgImage' => asset('frontend/assets/home_page_images/hdr-toddler.png'),
+        'bgImage' => asset('frontend/assets/home_page_images/Infant-Toddler-Education-banner.png'),
         'title' => 'Infant & Toddler Education',
         'subtitle' => 'everything we do is designed for learning',
         'showButton' => false,
