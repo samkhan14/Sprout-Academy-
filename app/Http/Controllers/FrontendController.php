@@ -8,6 +8,9 @@ use App\Models\ChildAbsent;
 use App\Models\ChildAbsentForm;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FormSubmissionMail;
+use App\Helpers\FormEmailHelper;
 
 class FrontendController extends Controller
 {
@@ -184,6 +187,31 @@ class FrontendController extends Controller
                     'date_of_expected_return' => $request->date_of_expected_return,
                     'reason' => $request->reason,
                 ]);
+
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'child_first_name' => $request->child_first_name,
+                        'child_last_name' => $request->child_last_name,
+                        'phone_number' => $request->phone_number,
+                        'location' => ucwords(str_replace('-', ' ', $request->location)),
+                        'date_submission' => $request->date_submission,
+                        'date_of_expected_return' => $request->date_of_expected_return,
+                        'reason' => $request->reason,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'child_absent_form',
+                            'Child Absent Form Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send child absent form email: ' . $e->getMessage());
+                }
 
                 return response()->json([
                     'success' => true,

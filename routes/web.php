@@ -35,10 +35,8 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::any('/child-absent-form', 'ChildAbsentForm')->name('childAbsentForm');
 });
 
-// Employee Forms - Only for authenticated users
-Route::middleware('auth')->group(function () {
-    Route::get('/employee-forms', [FrontendController::class, 'EmployeeForms'])->name('frontend.employeeForms');
-});
+// Employee Forms (Public - No Authentication Required)
+Route::get('/employee-forms', [FrontendController::class, 'EmployeeForms'])->name('frontend.employeeForms');
 
 
 // Form Routes (Public - No Authentication Required)

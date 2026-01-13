@@ -16,6 +16,9 @@ use App\Models\EmploymentApplication;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FormSubmissionMail;
+use App\Helpers\FormEmailHelper;
 use Carbon\Carbon;
 
 class FormController extends Controller
@@ -85,6 +88,31 @@ class FormController extends Controller
                     'director_signature' => $request->director_signature,
                     'status' => 'pending', // Default status
                 ]);
+
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'name' => $name,
+                        'email' => $email,
+                        'location' => ucwords(str_replace('_', ' ', $request->location)),
+                        'todays_date' => $request->todays_date,
+                        'start_date' => $request->start_date,
+                        'end_date' => $request->end_date,
+                        'paid_unpaid' => ucfirst($request->paid_unpaid),
+                        'reason' => $request->reason,
+                        'director_signature' => $request->director_signature,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'time_off_request',
+                            'Time Off Request Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send time off request email: ' . $e->getMessage());
+                }
 
                 return response()->json(['message' => 'Time off request submitted successfully!'], 200);
 
@@ -216,6 +244,32 @@ class FormController extends Controller
                     'area_repair' => $request->area_repair,
                 ]);
 
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'phone_number' => $request->phone_number,
+                        'email' => $request->email,
+                        'location' => ucwords($request->location),
+                        'todays_date' => $request->todays_date,
+                        'completion_date' => $request->completion_date,
+                        'area_repair' => ucwords($request->area_repair),
+                        'description' => $request->description,
+                        'attach_file' => $filePath ? 'File attached' : null,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'maintenance_work_order',
+                            'Maintenance Work Order Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send maintenance work order email: ' . $e->getMessage());
+                }
+
                 // Log success
                 Log::info('Maintenance work order submitted', [
                     'id' => $workOrder->id,
@@ -284,6 +338,26 @@ class FormController extends Controller
                     'subject' => $request->subject,
                     'description' => $request->description,
                 ]);
+
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'subject' => $request->subject,
+                        'description' => $request->description,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'suggestion',
+                            'New Suggestion Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send suggestion email: ' . $e->getMessage());
+                }
 
                 return response()->json([
                     'success' => true,
@@ -374,6 +448,33 @@ class FormController extends Controller
                     'supervisor_last_name' => $request->supervisor_last_name,
                 ]);
 
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'location' => ucwords(str_replace('_', ' ', $request->location)),
+                        'date_to_be_changed' => $request->date_to_be_changed,
+                        'clock_in_time' => $request->clock_in_time,
+                        'clock_out_for_lunch' => $request->clock_out_for_lunch,
+                        'clock_in_from_lunch' => $request->clock_in_from_lunch,
+                        'clock_out_time' => $request->clock_out_time,
+                        'reason_for_change' => $request->reason_for_change,
+                        'supervisor_first_name' => $request->supervisor_first_name,
+                        'supervisor_last_name' => $request->supervisor_last_name,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'time_clock_change_request',
+                            'Time Clock Change Request Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send time clock change request email: ' . $e->getMessage());
+                }
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Your time clock change request has been submitted successfully!',
@@ -454,6 +555,25 @@ class FormController extends Controller
                     'order_items' => $orderItems,
                     'other' => $request->other,
                 ]);
+
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'choose_your_center' => ucwords(str_replace('_', ' ', $request->choose_your_center)),
+                        'order_items' => $orderItems,
+                        'other' => $request->other,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'supply_order',
+                            'Supply Order Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send supply order email: ' . $e->getMessage());
+                }
 
                 // Log success
                 Log::info('Supply order submitted', [
@@ -607,6 +727,25 @@ class FormController extends Controller
                     'other' => $request->other,
                 ]);
 
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'choose_your_center' => ucwords(str_replace('_', ' ', $request->choose_your_center)),
+                        'order_items' => $orderItems,
+                        'other' => $request->other,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'snack_order',
+                            'Snack Order Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send snack order email: ' . $e->getMessage());
+                }
+
                 // Log success
                 Log::info('Snack order submitted', [
                     'id' => $order->id,
@@ -740,6 +879,28 @@ class FormController extends Controller
                     'special_instructions' => $request->special_instructions,
                 ]);
 
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'location' => ucwords(str_replace('_', ' ', $request->location)),
+                        'size' => ucwords($request->size),
+                        'colors' => is_array($request->colors) ? implode(', ', $request->colors) : $request->colors,
+                        'special_instructions' => $request->special_instructions,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'standard_t_shirt_order',
+                            'Standard T-Shirt Order Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send standard t-shirt order email: ' . $e->getMessage());
+                }
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Your standard t-shirt order has been submitted successfully!',
@@ -813,6 +974,28 @@ class FormController extends Controller
                     'special_instructions' => $request->special_instructions,
                 ]);
 
+                // Send email notification
+                try {
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'location' => ucwords(str_replace('_', ' ', $request->location)),
+                        'size' => ucwords($request->size),
+                        'themes' => is_array($request->themes) ? implode(', ', $request->themes) : $request->themes,
+                        'special_instructions' => $request->special_instructions,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'specialty_t_shirt_order',
+                            'Specialty T-Shirt Order Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send specialty t-shirt order email: ' . $e->getMessage());
+                }
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Your specialty t-shirt order has been submitted successfully!',
@@ -871,6 +1054,24 @@ class FormController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
+
+            // Send email notification
+            try {
+                $formData = FormEmailHelper::formatFormData([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
+
+                Mail::to(FormEmailHelper::getAdminEmail())->send(
+                    new FormSubmissionMail(
+                        'newsletter_subscription',
+                        'New Newsletter Subscription',
+                        $formData
+                    )
+                );
+            } catch (\Exception $e) {
+                Log::error('Failed to send newsletter subscription email: ' . $e->getMessage());
+            }
 
             return response()->json([
                 'success' => true,
@@ -966,6 +1167,32 @@ class FormController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                 ]);
+
+                // Send email notification
+                try {
+                    $salary = '$' . $request->salary_dollars . '.' . $request->salary_cents;
+                    $formData = FormEmailHelper::formatFormData([
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'email' => $request->email,
+                        'phone' => $request->phone,
+                        'position' => ucwords(str_replace('_', ' ', $request->position)),
+                        'location' => ucwords(str_replace('_', ' ', $request->location)),
+                        'start_date' => $request->start_date,
+                        'salary' => $salary,
+                        'resume' => $resumePath ? 'Resume attached' : null,
+                    ]);
+
+                    Mail::to(FormEmailHelper::getAdminEmail())->send(
+                        new FormSubmissionMail(
+                            'employment_application',
+                            'Employment Application Submitted',
+                            $formData
+                        )
+                    );
+                } catch (\Exception $e) {
+                    Log::error('Failed to send employment application email: ' . $e->getMessage());
+                }
 
                 // Log success
                 Log::info('Employment application submitted', [

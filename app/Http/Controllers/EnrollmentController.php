@@ -11,6 +11,9 @@ use App\Models\EnrollmentPhone;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FormSubmissionMail;
+use App\Helpers\FormEmailHelper;
 use Illuminate\Support\Str;
 
 class EnrollmentController extends Controller
@@ -692,6 +695,102 @@ class EnrollmentController extends Controller
             }
 
             $enrollment->update($updateData);
+
+            // Reload enrollment with all relationships for email
+            $enrollment->load(['contacts', 'children', 'addresses', 'phones']);
+
+            // Send email notification
+            try {
+                $primaryContact = $enrollment->contacts->where('is_primary', true)->first();
+                $address = $enrollment->addresses->where('is_physical', true)->first();
+                $phones = $enrollment->phones->where('enrollment_contact_id', $primaryContact?->id);
+
+                $formData = [];
+                
+                // Primary Contact Info
+                if ($primaryContact) {
+                    $formData['Primary Contact Name'] = trim(($primaryContact->first_name ?? '') . ' ' . ($primaryContact->middle_initial ?? '') . ' ' . ($primaryContact->last_name ?? ''));
+                    $formData['Primary Contact Gender'] = $primaryContact->gender ? ucfirst($primaryContact->gender) : null;
+                    $formData['Primary Contact Date of Birth'] = $primaryContact->date_of_birth ? $primaryContact->date_of_birth->format('F j, Y') : null;
+                }
+
+                // Address
+                if ($address) {
+                    $formData['Address Line 1'] = $address->address_line_1;
+                    $formData['Address Line 2'] = $address->address_line_2;
+                    $formData['City'] = $address->city;
+                    $formData['State'] = $address->state;
+                    $formData['Zip Code'] = $address->zip_code;
+                }
+
+                // Phones
+                if ($phones && $phones->count() > 0) {
+                    $phoneList = [];
+                    foreach ($phones as $phone) {
+                        $phoneList[] = ucfirst($phone->type) . ': (' . $phone->area_code . ') ' . $phone->phone_number;
+                    }
+                    $formData['Phone Numbers'] = implode(', ', $phoneList);
+                }
+
+                // Children
+                if ($enrollment->children && $enrollment->children->count() > 0) {
+                    $childrenList = [];
+                    foreach ($enrollment->children as $index => $child) {
+                        $childName = trim(($child->first_name ?? '') . ' ' . ($child->middle_initial ?? '') . ' ' . ($child->last_name ?? ''));
+                        $childInfo = $childName;
+                        if ($child->date_of_birth) {
+                            $childInfo .= ' (DOB: ' . $child->date_of_birth->format('F j, Y') . ')';
+                        }
+                        if ($child->gender) {
+                            $childInfo .= ' - ' . ucfirst($child->gender);
+                        }
+                        $childrenList[] = $childInfo;
+                    }
+                    $formData['Children'] = implode("\n", $childrenList);
+                }
+
+                // Emergency Contacts
+                $emergencyContacts = $enrollment->contacts->where('is_primary', false);
+                if ($emergencyContacts && $emergencyContacts->count() > 0) {
+                    $contactsList = [];
+                    foreach ($emergencyContacts as $contact) {
+                        $contactName = trim(($contact->first_name ?? '') . ' ' . ($contact->middle_initial ?? '') . ' ' . ($contact->last_name ?? ''));
+                        $contactInfo = $contactName;
+                        if ($contact->relationship_type) {
+                            $contactInfo .= ' - ' . $contact->relationship_type;
+                        }
+                        $flags = [];
+                        if ($contact->is_emergency_contact) $flags[] = 'Emergency Contact';
+                        if ($contact->is_authorized_pickup) $flags[] = 'Authorized Pickup';
+                        if ($contact->lives_with) $flags[] = 'Lives With';
+                        if (!empty($flags)) {
+                            $contactInfo .= ' (' . implode(', ', $flags) . ')';
+                        }
+                        $contactsList[] = $contactInfo;
+                    }
+                    $formData['Emergency Contacts'] = implode("\n", $contactsList);
+                }
+
+                // Other Info
+                $formData['Location'] = ucwords(str_replace(['-', '_'], ' ', $location));
+                $formData['Referrer'] = $enrollment->referrer ?? 'Direct';
+                $formData['Enrollment ID'] = $enrollment->id;
+
+                // Remove null values
+                $formData = array_filter($formData, function($value) {
+                    return $value !== null && $value !== '';
+                });
+
+                Mail::to(FormEmailHelper::getAdminEmail())->send(
+                    new FormSubmissionMail(
+                        'enrollment',
+                        'New Enrollment Form Submitted',
+                        $formData
+                    )
+                );
+            } catch (\Exception $e) {
+                Log::error('Failed to send enrollment email: ' . $e->getMessage());
+            }
 
             // Clear session
             $request->session()->forget('enrollment_id');
