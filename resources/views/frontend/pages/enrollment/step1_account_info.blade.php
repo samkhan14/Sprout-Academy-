@@ -46,7 +46,7 @@
                                     <label for="firstName">First Name*</label>
                                     <input type="text" id="firstName" name="first_name" class="form-input"
                                         value="{{ $primaryContact && $primaryContact->first_name ? $primaryContact->first_name : '' }}"
-                                        required />
+                                        placeholder="Johnathan" required />
                                 </div>
                                 <div class="form-field">
                                     <label for="middleInitial">M.I.</label>
@@ -57,7 +57,8 @@
                                 <div class="form-field">
                                     <label for="lastName">Last Name*</label>
                                     <input type="text" id="lastName" name="last_name" class="form-input"
-                                        value="{{ $primaryContact && $primaryContact->last_name ? $primaryContact->last_name : '' }}"
+                                        value="{{ $primaryContact && $primaryContact->last_name ? $primaryContact->last_name : '' }}" 
+                                        placeholder="smith"
                                         required />
                                 </div>
                                 <div class="form-field">
@@ -89,7 +90,7 @@
                                         $primaryContact && $primaryContact->profile_image
                                             ? \Illuminate\Support\Facades\Storage::url(
                                                 $primaryContact->profile_image)
-                                            : asset('frontend/assets/home_page_images/default-profile.png'),
+                                            : asset('frontend/assets/home_page_images/enroll-avatar.png'),
                                     'name' =>
                                         ($primaryContact && $primaryContact->first_name
                                             ? $primaryContact->first_name
@@ -103,6 +104,9 @@
                                 ])
                             </div>
                         </div>
+
+                        <!-- Divider Line before ADDRESS -->
+                        <div class="enrollment-section-divider"></div>
 
                         <!-- ADDRESS -->
                         <div class="enrollment-section" id="enrollment-form-address">
@@ -162,6 +166,9 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Divider Line before PHONE -->
+                        <div class="enrollment-section-divider"></div>
 
                         <!-- PHONE -->
                         <div class="enrollment-section" id="enrollment-form-phone">

@@ -167,7 +167,7 @@ class EnrollmentController extends Controller
         if ($enrollmentId) {
             $enrollment = Enrollment::with([
                 'contacts' => function ($query) {
-                    $query->where('is_primary', true);
+                $query->where('is_primary', true);
                 },
                 'addresses',
                 'phones'
@@ -310,7 +310,7 @@ class EnrollmentController extends Controller
             if ($request->phone_type) {
                 // Delete existing phones for this contact
                 $enrollment->phones()->where('enrollment_contact_id', $primaryContact->id)->delete();
-
+                
                 foreach ($request->phone_type as $index => $type) {
                     if ($type && $request->phone_area_code[$index] && $request->phone_number[$index]) {
                         EnrollmentPhone::create([
@@ -359,7 +359,7 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-
+        
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
@@ -476,14 +476,14 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-
+        
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
 
         $enrollment = Enrollment::with([
             'contacts' => function ($query) {
-                $query->where('is_primary', false);
+            $query->where('is_primary', false);
             }
         ])->find($enrollmentId);
 
@@ -632,7 +632,7 @@ class EnrollmentController extends Controller
     {
         $locationData = $this->getLocationData($location);
         $enrollmentId = $request->session()->get('enrollment_id');
-
+        
         if (!$enrollmentId) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
@@ -825,7 +825,7 @@ class EnrollmentController extends Controller
     public function thankYou(Request $request, $location)
     {
         $locationData = $this->getLocationData($location);
-
+        
         return view('frontend.pages.enrollment.thank_you', [
             'location' => $location,
             'locationData' => $locationData,

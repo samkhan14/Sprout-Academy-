@@ -168,11 +168,11 @@
                             
                             // Validate ranges
                             if (monthNum >= 1 && monthNum <= 12 && dayNum >= 1 && dayNum <= 31 && yearNum >= 0 && yearNum <= 99) {
-                                // Convert YY to YYYY (assuming 20XX for years)
+                            // Convert YY to YYYY (assuming 20XX for years)
                                 const dateFullYear = '20' + String(yearNum).padStart(2, '0');
-                                // Format as YYYY-MM-DD
+                            // Format as YYYY-MM-DD
                                 const dateFormatted = `${dateFullYear}-${String(monthNum).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
-                                document.getElementById('dateOfExpectedReturnFormatted').value = dateFormatted;
+                            document.getElementById('dateOfExpectedReturnFormatted').value = dateFormatted;
                             } else {
                                 document.getElementById('dateOfExpectedReturnFormatted').value = '';
                             }

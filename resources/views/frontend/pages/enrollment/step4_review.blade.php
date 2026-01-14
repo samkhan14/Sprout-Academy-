@@ -151,10 +151,10 @@
                                         <h3 class="review-card-title">RELATIONSHIP</h3>
                                     </div>
                                     <div class="review-card-content">
-                                        @if ($contact->relationship_type)
-                                            <div class="review-relationship-badge">
-                                                {{ ucfirst($contact->relationship_type) }} to</div>
-                                        @endif
+                                            @if ($contact->relationship_type)
+                                                <div class="review-relationship-badge">
+                                                    {{ ucfirst($contact->relationship_type) }} to</div>
+                                            @endif
                                         <div class="review-profile">
                                             <img src="{{ $contact->profile_image ? \Illuminate\Support\Facades\Storage::url($contact->profile_image) : asset('frontend/assets/home_page_images/default-profile.png') }}"
                                                 alt="{{ $contact->first_name ?? 'Contact' }}"
