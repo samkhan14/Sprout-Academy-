@@ -104,7 +104,7 @@
                                     </select>
                                 </div>
 
-                              
+
                                 <div class="form-field">
                                     <label for="supervisorFirstName">E-Signature *</label>
                                     <input type="text" id="supervisorFirstName" name="supervisor_first_name"
@@ -252,7 +252,7 @@
                                     setTimeout(() => {
                                         window.location.href = '{{ route('frontend.thankYou') }}';
                                     }, 2000);
-                                } else {
+                        } else {
                                     // Show error message
                                     let errorMessage = data.message ||
                                         'An error occurred. Please try again.';

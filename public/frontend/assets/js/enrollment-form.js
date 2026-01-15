@@ -77,6 +77,13 @@
 
             // Create FormData
             const formData = new FormData(form);
+            
+            // Add action to form data for backend
+            if (action === "review") {
+                formData.append("next_step", 4);
+            } else {
+                formData.append("next_step", 2);
+            }
 
             // AJAX submission
             fetch(form.action, {
@@ -427,11 +434,14 @@
                 formMessage.className = "enrollment-message";
             }
 
-            // Disable submit button
+            // Disable submit button and show spinner
             if (submitButton) {
                 submitButton.disabled = true;
-                submitButton.style.opacity = "0.6";
-                submitButton.textContent = "SUBMITTING...";
+                const btnText = submitButton.querySelector('.btn-text');
+                const btnSpinner = submitButton.querySelector('.btn-spinner');
+                
+                if (btnText) btnText.style.display = 'none';
+                if (btnSpinner) btnSpinner.style.display = 'inline-block';
             }
 
             // Create FormData
@@ -461,11 +471,14 @@
                             window.location.href = data.data?.redirect_url || form.action.replace("/submit", "/thank-you");
                         }, 1000);
                     } else {
-                        // Re-enable button
+                        // Re-enable button and hide spinner
                         if (submitButton) {
                             submitButton.disabled = false;
-                            submitButton.style.opacity = "1";
-                            submitButton.textContent = "SUBMIT ENROLLMENT";
+                            const btnText = submitButton.querySelector('.btn-text');
+                            const btnSpinner = submitButton.querySelector('.btn-spinner');
+                            
+                            if (btnText) btnText.style.display = 'inline-block';
+                            if (btnSpinner) btnSpinner.style.display = 'none';
                         }
 
                         // Show error message
@@ -491,11 +504,14 @@
                     }
                 })
                 .catch((error) => {
-                    // Re-enable button
+                    // Re-enable button and hide spinner
                     if (submitButton) {
                         submitButton.disabled = false;
-                        submitButton.style.opacity = "1";
-                        submitButton.textContent = "SUBMIT ENROLLMENT";
+                        const btnText = submitButton.querySelector('.btn-text');
+                        const btnSpinner = submitButton.querySelector('.btn-spinner');
+                        
+                        if (btnText) btnText.style.display = 'inline-block';
+                        if (btnSpinner) btnSpinner.style.display = 'none';
                     }
 
                     // Show error message

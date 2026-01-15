@@ -60,7 +60,7 @@
                                                 <div class="form-field">
                                                     <label>First Name*</label>
                                                     <input type="text" name="contact_first_name[]" class="form-input"
-                                                        value="{{ $contact->first_name }}" required />
+                                                        value="{{ $contact->first_name }}" placeholder="Johnathan" required />
                                                 </div>
                                                 <div class="form-field">
                                                     <label>M.I.</label>
@@ -70,7 +70,7 @@
                                                 <div class="form-field">
                                                     <label>Last Name*</label>
                                                     <input type="text" name="contact_last_name[]" class="form-input"
-                                                        value="{{ $contact->last_name }}" required />
+                                                        value="{{ $contact->last_name }}" placeholder="smith" required />
                                                 </div>
                                                 <div class="form-field">
                                                     <label>Gender</label>
@@ -117,7 +117,7 @@
                                                                 ? \Illuminate\Support\Facades\Storage::url(
                                                                     $contact->profile_image)
                                                                 : asset(
-                                                                    'frontend/assets/home_page_images/default-profile.png'),
+                                                                    'frontend/assets/home_page_images/enroll-avatar.png'),
                                                             'name' =>
                                                                 $contact->first_name . ' ' . $contact->last_name,
                                                             'fieldName' => 'contact_profile_image[]',
@@ -229,6 +229,8 @@
                                         </div>
                                     </div>
 
+                                    <div class="enrollment-section-divider"></div>
+
                                     <!-- Relationship To Children -->
                                     <div class="relationship-section">
                                         <div class="section-header">
@@ -240,7 +242,7 @@
                                             <div class="contact-profile-display">
                                                 @include('frontend.components.enrollment.profile-picture', [
                                                     'imageUrl' => asset(
-                                                        'frontend/assets/home_page_images/default-profile.png'),
+                                                        'frontend/assets/home_page_images/enroll-avatar.png'),
                                                     'name' => '',
                                                     'fieldName' => 'contact_profile_image[]',
                                                     'showChangeButton' => true,
@@ -339,7 +341,7 @@
                 <div class="form-grid">
                     <div class="form-field">
                         <label>First Name*</label>
-                        <input type="text" name="contact_first_name[]" class="form-input" required />
+                        <input type="text" name="contact_first_name[]" class="form-input" placeholder="Johnathan" required />
                     </div>
                     <div class="form-field">
                         <label>M.I.</label>
@@ -347,7 +349,7 @@
                     </div>
                     <div class="form-field">
                         <label>Last Name*</label>
-                        <input type="text" name="contact_last_name[]" class="form-input" required />
+                        <input type="text" name="contact_last_name[]" class="form-input" placeholder="smith" required />
                     </div>
                     <div class="form-field">
                         <label>Gender</label>
@@ -376,7 +378,7 @@
                     <div class="contact-profile-display">
                         <div class="profile-picture-wrapper">
                             <div class="profile-picture-container">
-                                <img src="{{ asset('frontend/assets/home_page_images/default-profile.png') }}" alt="" class="profile-picture" />
+                                <img src="{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}" alt="" class="profile-picture" />
                                 <input type="file" name="contact_profile_image[]" accept="image/*" class="profile-picture-input" style="display: none;" />
                             </div>
                             <button type="button" class="btn-change-image" onclick="this.previousElementSibling.querySelector('input').click()">Change Image</button>

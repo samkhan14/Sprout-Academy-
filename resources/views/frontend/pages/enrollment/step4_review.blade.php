@@ -170,14 +170,36 @@
                     </div>
                 </div>
 
+                <!-- Incomplete Steps Warning -->
+                @if (!$isComplete && !empty($incompleteSteps))
+                    <div class="enrollment-warning-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="warning-content">
+                            <strong>Please Complete All Steps</strong>
+                            <p>You have skipped some steps. Please complete the following steps before submitting:</p>
+                            <ul class="incomplete-steps-list">
+                                @if (in_array(2, $incompleteSteps))
+                                    <li><a href="{{ route('enrollment.step2', ['location' => $location]) }}">Step 2: Children Info</a></li>
+                                @endif
+                                @if (in_array(3, $incompleteSteps))
+                                    <li><a href="{{ route('enrollment.step3', ['location' => $location]) }}">Step 3: Emergency Contacts</a></li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Submit Form -->
                 <form id="enrollmentSubmitForm" method="POST"
                     action="{{ route('enrollment.submit', ['location' => $location]) }}">
                     @csrf
                     <div id="formMessage" class="enrollment-message" style="display: none;"></div>
                     <div class="enrollment-actions">
-                        <button type="submit" class="btn-enrollment btn-submit">
-                            SUBMIT ENROLLMENT
+                        <button type="submit" class="btn-enrollment btn-submit" {{ !$isComplete ? 'disabled' : '' }}>
+                            <span class="btn-text">SUBMIT ENROLLMENT</span>
+                            <span class="btn-spinner" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
                         </button>
                     </div>
                 </form>

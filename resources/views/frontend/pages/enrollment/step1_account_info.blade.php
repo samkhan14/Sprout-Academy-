@@ -111,7 +111,7 @@
                         <!-- ADDRESS -->
                         <div class="enrollment-section" id="enrollment-form-address">
                             <div class="section-header">
-                                <i class="far fa-map-marker-alt section-icon"></i>
+                                <img src="{{ asset('frontend/assets/home_page_images/enroll-addr-icon.png') }}" alt="Address" class="section-icon-img">
                                 <h2 class="section-title-inner">ADDRESS</h2>
                             </div>
 
@@ -173,7 +173,7 @@
                         <!-- PHONE -->
                         <div class="enrollment-section" id="enrollment-form-phone">
                             <div class="section-header">
-                                <i class="far fa-phone section-icon"></i>
+                                <img src="{{ asset('frontend/assets/home_page_images/enroll-tele-icon.png') }}" alt="Phone" class="section-icon-img">
                                 <h2 class="section-title-inner">PHONE</h2>
                             </div>
 
@@ -195,14 +195,14 @@
                                             </div>
                                             <div class="form-field">
                                                 <label>Area Code</label>
-                                                <input type="text" name="phone_area_code[]" class="form-input"
+                                                <input type="text" name="phone_area_code[]" class="form-input phone-area-code"
                                                     value="{{ $phone->area_code ?? '' }}" maxlength="3"
-                                                    placeholder="XXX" />
+                                                    placeholder="XXX" pattern="[0-9]{3}" />
                                             </div>
                                             <div class="form-field">
                                                 <label>Phone Number</label>
-                                                <input type="tel" name="phone_number[]" class="form-input"
-                                                    value="{{ $phone->phone_number ?? '' }}" placeholder="XXX-XXXX" />
+                                                <input type="tel" name="phone_number[]" class="form-input phone-number"
+                                                    value="{{ $phone->phone_number ?? '' }}" maxlength="8" placeholder="XXX-XXXX" pattern="[0-9-]{0,8}" />
                                             </div>
                                             @if ($index > 0)
                                                 <div class="form-field">
@@ -225,32 +225,42 @@
                                         </div>
                                         <div class="form-field">
                                             <label>Area Code</label>
-                                            <input type="text" name="phone_area_code[]" class="form-input"
-                                                maxlength="3" placeholder="XXX" />
+                                            <input type="text" name="phone_area_code[]" class="form-input phone-area-code"
+                                                maxlength="3" placeholder="XXX" pattern="[0-9]{3}" />
                                         </div>
                                         <div class="form-field">
                                             <label>Phone Number</label>
-                                            <input type="tel" name="phone_number[]" class="form-input"
-                                                placeholder="XXX-XXXX" />
+                                            <input type="tel" name="phone_number[]" class="form-input phone-number"
+                                                maxlength="8" placeholder="XXX-XXXX" pattern="[0-9-]{0,8}" />
                                         </div>
                                     </div>
                                 @endif
                             </div>
 
-                            <div
-                                style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 15px;">
-                                <i class="fas fa-plus btn-add-phone-icon" onclick="addPhoneField()"></i>
-                                <button type="button" class="btn-add-phone-text" onclick="addPhoneField()">
-                                    Add New Phone
-                                </button>
-                            </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="enrollment-actions" id="enrollment-form-action-btns">
-                            <button type="submit" class="btn-enrollment btn-step2" data-action="step2">
-                                SAVE & GO TO STEP 2
-                            </button>
+                        <!-- Divider Line after PHONE -->
+                        <div class="enrollment-section-divider"></div>
+
+                        <!-- Action Buttons Row -->
+                        <div class="enrollment-actions-row-wrapper">
+                            <div class="enrollment-actions" id="enrollment-form-action-btns">
+                                <button type="submit" class="btn-enrollment btn-step2" data-action="step2">
+                                    SAVE & GO TO STEP 2
+                                </button>
+                                <button type="submit" class="btn-enrollment btn-review" data-action="review">
+                                    SAVE & GO TO REVIEW
+                                </button>
+                            </div>
+                            <div class="phone-actions-wrapper">
+                                <div
+                                    style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+                                    <i class="fas fa-plus btn-add-phone-icon" onclick="addPhoneField()"></i>
+                                    <button type="button" class="btn-add-phone-text" onclick="addPhoneField()">
+                                        Add New Phone
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -299,18 +309,97 @@
             </div>
             <div class="form-field">
                 <label>Area Code</label>
-                <input type="text" name="phone_area_code[]" class="form-input" maxlength="3" placeholder="XXX" />
+                <input type="text" name="phone_area_code[]" class="form-input phone-area-code" maxlength="3" placeholder="XXX" pattern="[0-9]{3}" />
             </div>
             <div class="form-field">
                 <label>Phone Number</label>
-                <input type="tel" name="phone_number[]" class="form-input" placeholder="XXX-XXXX" />
+                <input type="tel" name="phone_number[]" class="form-input phone-number" maxlength="8" placeholder="XXX-XXXX" pattern="[0-9-]{0,8}" />
             </div>
             <div class="form-field">
                 <button type="button" class="btn-remove-phone" onclick="removePhoneField(this)">×</button>
             </div>
         `;
             container.appendChild(newRow);
+            // Attach validation handlers to new fields
+            initPhoneFieldValidation(newRow);
         }
+
+        // Initialize phone field validation
+        function initPhoneFieldValidation(container) {
+            // Area code validation - only numbers, exactly 3 digits
+            const areaCodeInputs = container.querySelectorAll('.phone-area-code');
+            areaCodeInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    // Remove non-numeric characters
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    // Limit to 3 digits
+                    if (this.value.length > 3) {
+                        this.value = this.value.substring(0, 3);
+                    }
+                });
+                
+                input.addEventListener('blur', function(e) {
+                    // Validate on blur - must be exactly 3 digits if filled
+                    if (this.value.length > 0 && this.value.length !== 3) {
+                        this.setCustomValidity('Area code must be exactly 3 digits');
+                        this.classList.add('error');
+                    } else {
+                        this.setCustomValidity('');
+                        this.classList.remove('error');
+                    }
+                });
+            });
+
+            // Phone number validation - only numbers and dashes, max 8 characters (7 digits + 1 dash)
+            // IMPORTANT: Phone number should NOT include area code
+            const phoneInputs = container.querySelectorAll('.phone-number');
+            phoneInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    // Allow numbers and dashes only
+                    this.value = this.value.replace(/[^0-9-]/g, '');
+                    // Auto-format: XXX-XXXX (7 digits total, no area code)
+                    let value = this.value.replace(/-/g, '');
+                    // Limit to 7 digits maximum (no area code allowed)
+                    if (value.length > 7) {
+                        value = value.substring(0, 7);
+                    }
+                    // Format as XXX-XXXX
+                    if (value.length > 3) {
+                        value = value.substring(0, 3) + '-' + value.substring(3, 7);
+                    }
+                    this.value = value;
+                    // Limit to 8 characters (XXX-XXXX)
+                    if (this.value.length > 8) {
+                        this.value = this.value.substring(0, 8);
+                    }
+                });
+                
+                input.addEventListener('blur', function(e) {
+                    // Validate on blur - should be exactly 7 digits (without area code)
+                    const digits = this.value.replace(/[^0-9]/g, '');
+                    if (this.value.length > 0) {
+                        if (digits.length !== 7) {
+                            this.setCustomValidity('Phone number must be exactly 7 digits (without area code)');
+                            this.classList.add('error');
+                        } else {
+                            this.setCustomValidity('');
+                            this.classList.remove('error');
+                        }
+                    } else {
+                        this.setCustomValidity('');
+                        this.classList.remove('error');
+                    }
+                });
+            });
+        }
+
+        // Initialize validation for existing phone fields on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneRows = document.querySelectorAll('.phone-field-row');
+            phoneRows.forEach(row => {
+                initPhoneFieldValidation(row);
+            });
+        });
 
         // Remove phone field
         function removePhoneField(button) {

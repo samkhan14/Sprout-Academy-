@@ -212,8 +212,28 @@ class EnrollmentController extends Controller
                 'is_physical' => 'nullable|boolean',
                 'is_mailing' => 'nullable|boolean',
                 'phone_type.*' => 'nullable|string|max:50',
-                'phone_area_code.*' => 'nullable|string|max:3',
-                'phone_number.*' => 'nullable|string|max:20',
+                'phone_area_code.*' => [
+                    'nullable',
+                    'string',
+                    function ($attribute, $value, $fail) {
+                        if (!empty($value) && (!preg_match('/^[0-9]{3}$/', $value))) {
+                            $fail('The area code must be exactly 3 digits.');
+                        }
+                    },
+                ],
+                'phone_number.*' => [
+                    'nullable',
+                    'string',
+                    function ($attribute, $value, $fail) {
+                        if (!empty($value)) {
+                            // Remove dashes and check if exactly 7 digits
+                            $digits = preg_replace('/[^0-9]/', '', $value);
+                            if (strlen($digits) !== 7) {
+                                $fail('The phone number must be 7 digits (without area code).');
+                            }
+                        }
+                    },
+                ],
                 'referrer' => 'nullable|string|max:255',
             ]);
 
@@ -312,13 +332,33 @@ class EnrollmentController extends Controller
                 $enrollment->phones()->where('enrollment_contact_id', $primaryContact->id)->delete();
                 
                 foreach ($request->phone_type as $index => $type) {
-                    if ($type && $request->phone_area_code[$index] && $request->phone_number[$index]) {
+                    if ($type && isset($request->phone_area_code[$index]) && isset($request->phone_number[$index])) {
+                        $areaCode = $request->phone_area_code[$index];
+                        $phoneNumber = $request->phone_number[$index];
+                        
+                        // Ensure area code is exactly 3 digits
+                        $areaCode = preg_replace('/[^0-9]/', '', $areaCode);
+                        if (strlen($areaCode) !== 3) {
+                            continue; // Skip invalid area code
+                        }
+                        
+                        // Clean phone number - remove dashes and ensure it's 7 digits (no area code)
+                        $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+                        // If phone number has more than 7 digits, it might include area code - remove first 3 digits
+                        if (strlen($phoneNumber) > 7) {
+                            $phoneNumber = substr($phoneNumber, -7); // Take last 7 digits
+                        }
+                        // Ensure exactly 7 digits
+                        if (strlen($phoneNumber) !== 7) {
+                            continue; // Skip invalid phone number
+                        }
+                        
                         EnrollmentPhone::create([
                             'enrollment_id' => $enrollment->id,
                             'enrollment_contact_id' => $primaryContact->id,
                             'type' => $type,
-                            'area_code' => $request->phone_area_code[$index],
-                            'phone_number' => $request->phone_number[$index],
+                            'area_code' => $areaCode,
+                            'phone_number' => $phoneNumber,
                             'phone_order' => $index,
                         ]);
                     }
@@ -328,13 +368,19 @@ class EnrollmentController extends Controller
             // Update enrollment step
             $enrollment->update(['current_step' => 1]);
 
+            // Determine next step based on action (review or step2)
+            $nextStep = $request->input('next_step', 2); // Default to step 2
+            $redirectUrl = $nextStep == 4 
+                ? route('enrollment.step4', ['location' => $location])
+                : route('enrollment.step2', ['location' => $location]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Account information saved successfully.',
                 'data' => [
                     'enrollment_id' => $enrollment->id,
-                    'next_step' => 2,
-                    'redirect_url' => route('enrollment.step2', ['location' => $location])
+                    'next_step' => $nextStep,
+                    'redirect_url' => $redirectUrl
                 ]
             ], 200);
 
@@ -650,11 +696,27 @@ class EnrollmentController extends Controller
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
 
+        // Check which steps are incomplete
+        $hasChildren = $enrollment->children && $enrollment->children->count() > 0;
+        $hasEmergencyContacts = $enrollment->contacts && $enrollment->contacts->where('is_primary', false)->count() > 0;
+        
+        $incompleteSteps = [];
+        if (!$hasChildren) {
+            $incompleteSteps[] = 2;
+        }
+        if (!$hasEmergencyContacts) {
+            $incompleteSteps[] = 3;
+        }
+        
+        $isComplete = empty($incompleteSteps);
+
         return view('frontend.pages.enrollment.step4_review', [
             'location' => $location,
             'locationData' => $locationData,
             'enrollment' => $enrollment,
             'currentStep' => 4,
+            'incompleteSteps' => $incompleteSteps,
+            'isComplete' => $isComplete,
         ]);
     }
 

@@ -23,7 +23,7 @@
                     <!-- Child Info -->
                     <div class="enrollment-section" id="enrollment-form-primary-account-person">
                         <div class="section-header">
-                            <i class="far fa-user-friends section-icon"></i>
+                        <i class="far fa-user section-icon"></i>
                             <h2 class="section-title-inner">Child Info</h2>
                         </div>
                         <div class="section-required-note">
@@ -38,7 +38,7 @@
                                             <div class="form-field">
                                                 <label>First Name*</label>
                                                 <input type="text" name="child_first_name[]" class="form-input"
-                                                    value="{{ $child->first_name }}" required />
+                                                    value="{{ $child->first_name }}" placeholder="Johnathan" required />
                                             </div>
                                             <div class="form-field">
                                                 <label>M.I.</label>
@@ -48,7 +48,7 @@
                                             <div class="form-field">
                                                 <label>Last Name*</label>
                                                 <input type="text" name="child_last_name[]" class="form-input"
-                                                    value="{{ $child->last_name }}" required />
+                                                    value="{{ $child->last_name }}" placeholder="smith" required />
                                             </div>
                                             <div class="form-field">
                                                 <label>Gender</label>
@@ -76,7 +76,7 @@
                                                     ? \Illuminate\Support\Facades\Storage::url(
                                                         $child->profile_image)
                                                     : asset(
-                                                        'frontend/assets/home_page_images/default-profile.png'),
+                                                        'frontend/assets/home_page_images/enroll-avatar.png'),
                                                 'name' => $child->first_name . ' ' . $child->last_name,
                                                 'fieldName' => 'child_profile_image[]',
                                                 'showChangeButton' => true,
@@ -124,7 +124,7 @@
                                     <div class="profile-section">
                                         @include('frontend.components.enrollment.profile-picture', [
                                             'imageUrl' => asset(
-                                                'frontend/assets/home_page_images/default-profile.png'),
+                                                'frontend/assets/home_page_images/enroll-avatar.png'),
                                             'name' => '',
                                             'fieldName' => 'child_profile_image[]',
                                             'showChangeButton' => true,
@@ -170,7 +170,7 @@
             <div class="form-grid">
                 <div class="form-field">
                     <label>First Name*</label>
-                    <input type="text" name="child_first_name[]" class="form-input" required />
+                    <input type="text" name="child_first_name[]" class="form-input" placeholder="Johnathan" required />
                 </div>
                 <div class="form-field">
                     <label>M.I.</label>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="form-field">
                     <label>Last Name*</label>
-                    <input type="text" name="child_last_name[]" class="form-input" required />
+                    <input type="text" name="child_last_name[]" class="form-input" placeholder="smith" required />
                 </div>
                 <div class="form-field">
                     <label>Gender</label>
@@ -197,7 +197,7 @@
             <div class="profile-section">
                 <div class="profile-picture-wrapper">
                     <div class="profile-picture-container">
-                        <img src="{{ asset('frontend/assets/home_page_images/default-profile.png') }}" alt=""
+                        <img src="{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}" alt=""
                             class="profile-picture" />
                         <input type="file" name="child_profile_image[]" accept="image/*" class="profile-picture-input" style="display: none;" />
                     </div>

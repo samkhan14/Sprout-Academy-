@@ -119,14 +119,14 @@
                                     <div id="calendarWidget"></div>
 
                                     <!-- Bottom Date and Time Inputs -->
-                                    <div class="calendar-footer">
-                                        <div class="calendar-footer-item">
-                                            <label>Date</label>
+                                <div class="calendar-footer">
+                                    <div class="calendar-footer-item">
+                                        <label>Date</label>
                                             <input type="text" id="calendarDateDisplay"
                                                 class="form-input calendar-footer-input" readonly />
-                                        </div>
-                                        <div class="calendar-footer-item">
-                                            <label>Time</label>
+                                    </div>
+                                    <div class="calendar-footer-item">
+                                        <label>Time</label>
                                             <input type="text" id="calendarTimeDisplay"
                                                 class="form-input calendar-footer-input" readonly />
                                         </div>
@@ -141,9 +141,9 @@
     </section>
 @endsection
 
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
             // ========================================
             // CALENDAR WIDGET INITIALIZATION (Right Side)
             // ========================================
@@ -510,7 +510,7 @@
                 clickOpens: false, // Disable date selection on click
                 onChange: function(selectedDates, dateStr) {
                     // Prevent date selection - clear any selected dates
-                    if (selectedDates.length > 0) {
+                        if (selectedDates.length > 0) {
                         // Clear selection immediately
                         calendarWidgetInstance.clear();
                         // Remove selected class from all days
@@ -623,7 +623,7 @@
             // ========================================
             // FORM SUBMISSION HANDLER
             // ========================================
-            const form = document.getElementById('timeOffRequestForm');
+                const form = document.getElementById('timeOffRequestForm');
             const submitBtn = document.getElementById('submitBtn');
             const spinner = document.createElement('span');
             spinner.className = 'spinner-border spinner-border-sm me-2';
@@ -839,6 +839,6 @@
                     }
                 });
             }
-        });
-    </script>
-@endpush
+            });
+        </script>
+    @endpush
