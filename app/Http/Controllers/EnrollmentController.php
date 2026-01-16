@@ -288,14 +288,18 @@ class EnrollmentController extends Controller
                     'contact_order' => 0,
                 ]);
             } else {
-                $primaryContact->update([
+                $updateData = [
                     'first_name' => $request->first_name,
                     'middle_initial' => $request->middle_initial,
                     'last_name' => $request->last_name,
                     'gender' => $request->gender,
                     'date_of_birth' => $request->date_of_birth,
-                    'profile_image' => $profileImagePath ?? $primaryContact->profile_image,
-                ]);
+                ];
+                // Update profile image only if a new file is uploaded
+                if ($profileImagePath) {
+                    $updateData['profile_image'] = $profileImagePath;
+                }
+                $primaryContact->update($updateData);
             }
 
             // Handle address

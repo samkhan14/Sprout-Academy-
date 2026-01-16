@@ -33,12 +33,14 @@
 
                         <!-- PRIMARY ACCOUNT PERSON -->
                         <div class="enrollment-section" id="enrollment-form-primary-account-person">
-                            <div class="section-header">
-                                <i class="far fa-user section-icon"></i>
-                                <h2 class="section-title-inner">PRIMARY ACCOUNT PERSON</h2>
-                            </div>
-                            <div class="section-required-note">
-                                <span class="required-asterisk">*</span> Indicates Required Field
+                            <div class="section-header-wrapper">
+                                <div class="section-header">
+                                    <i class="far fa-user section-icon"></i>
+                                    <h2 class="section-title-inner">PRIMARY ACCOUNT PERSON</h2>
+                                </div>
+                                <div class="section-required-note">
+                                    <span class="required-asterisk">*</span> Indicates Required Field
+                                </div>
                             </div>
 
                             <div class="form-grid">

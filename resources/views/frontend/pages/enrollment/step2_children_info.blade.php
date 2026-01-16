@@ -22,12 +22,14 @@
 
                     <!-- Child Info -->
                     <div class="enrollment-section" id="enrollment-form-primary-account-person">
-                        <div class="section-header">
-                        <i class="far fa-user section-icon"></i>
-                            <h2 class="section-title-inner">Child Info</h2>
-                        </div>
-                        <div class="section-required-note">
-                            <span class="required-asterisk">*</span> Indicates Required Field
+                        <div class="section-header-wrapper">
+                            <div class="section-header">
+                                <i class="far fa-user section-icon"></i>
+                                <h2 class="section-title-inner">Child Info</h2>
+                            </div>
+                            <div class="section-required-note">
+                                <span class="required-asterisk">*</span> Indicates Required Field
+                            </div>
                         </div>
 
                         <div id="childrenFieldsContainer">
@@ -132,15 +134,7 @@
                                     </div>
                                 </div>
                             @endif
-                        </div>
-
-                        <div
-                            style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 15px;">
-                            <i class="fas fa-plus btn-add-phone-icon" onclick="addChildField()"></i>
-                            <button type="button" class="btn-add-phone-text" onclick="addChildField()">
-                                Save & Add Next Child
-                            </button>
-                        </div>
+                        </div>                       
                     </div>
 
                     <!-- Action Buttons -->
@@ -148,6 +142,13 @@
                         <button type="submit" class="btn-enrollment btn-step3" data-action="step3">
                             SAVE & GO TO STEP 3
                         </button>
+                        <div
+                            style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 15px;">
+                            <i class="fas fa-plus btn-add-phone-icon" onclick="addChildField()"></i>
+                            <button type="button" class="btn-add-phone-text" onclick="addChildField()">
+                                Save & Add Next Child
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

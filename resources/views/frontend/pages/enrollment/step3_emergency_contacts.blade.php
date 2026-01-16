@@ -41,9 +41,13 @@
 
                     <!-- First Contact Person (Yourself) -->
                     <div class="enrollment-section">
-
-                        <div class="section-required-note">
-                            <span class="required-asterisk">*</span> Indicates Required Field
+                        <div class="section-header-wrapper">
+                            <div class="section-header">
+                                <h2 class="section-title-inner">First Contact Person (Yourself)</h2>
+                            </div>
+                            <div class="section-required-note">
+                                <span class="required-asterisk">*</span> Indicates Required Field
+                            </div>
                         </div>
 
                         <div id="contactsFieldsContainer">
@@ -300,17 +304,18 @@
                             @endif
                         </div>
 
-                        <div
-                            style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 15px;">
-                            <i class="fas fa-plus btn-add-phone-icon" onclick="addContactField()"></i>
-                            <button type="button" class="btn-add-phone-text" onclick="addContactField()">
-                                Add Next Contact
-                            </button>
+                       
                         </div>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="enrollment-actions">
+                    <div
+                            style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 15px;">
+                            <i class="fas fa-plus btn-add-phone-icon" onclick="addContactField()"></i>
+                            <button type="button" class="btn-add-phone-text" onclick="addContactField()">
+                                Add Next Contact
+                            </button>
                         <button type="submit" class="btn-enrollment btn-step4" data-action="step4">
                             SAVE & GO TO STEP 4
                         </button>
