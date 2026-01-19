@@ -44,7 +44,64 @@ class FrontendController extends Controller
     public function VirtualTour()
     {
         $locations = Location::active()->get();
-        return view('frontend.pages.virtual_tour', compact('locations'));
+        
+        // Map location slugs to folder names
+        $locationFolderMap = [
+            'seminole' => 'Seminole',
+            'pinellas-park' => 'Pinellas Park',
+            'montessori' => 'Montessori',
+            'largo' => 'Largo',
+            'st-petersburg' => 'St. Pete',
+            'clearwater' => 'Clearwater',
+        ];
+        
+        // Get all panorama images for each location
+        $panoramaImages = [];
+        $panoramaImageLists = [];
+        foreach ($locations as $location) {
+            $folderName = $locationFolderMap[$location->slug] ?? null;
+            if ($folderName) {
+                $folderPath = public_path('frontend/assets/virtual-tours-images/' . $folderName);
+                if (is_dir($folderPath)) {
+                    $files = glob($folderPath . '/*.jpg');
+                    if (!empty($files)) {
+                        // Sort files
+                        sort($files);
+                        // Get all images with labels
+                        $imageList = [];
+                        foreach ($files as $file) {
+                            $imageName = basename($file);
+                            $imageUrl = asset('frontend/assets/virtual-tours-images/' . $folderName . '/' . $imageName);
+                            // Extract label from filename
+                            $filenameWithoutExt = pathinfo($imageName, PATHINFO_FILENAME);
+                            // Remove location name prefix (e.g., "Seminole-1" -> "1" or "Front Office")
+                            $label = str_replace([$folderName . '-', $folderName . '_', ucfirst(strtolower($folderName)) . '-'], '', $filenameWithoutExt);
+                            // Replace numbers with more readable format or keep as is
+                            $label = str_replace(['-', '_'], ' ', $label);
+                            // If it's just a number, make it more descriptive
+                            if (is_numeric(trim($label))) {
+                                $label = 'View ' . trim($label);
+                            }
+                            $label = ucwords(trim($label));
+                            // If label is empty or too short, use a default
+                            if (empty($label) || strlen($label) < 2) {
+                                $label = '360° View';
+                            }
+                            $imageList[] = [
+                                'url' => $imageUrl,
+                                'label' => $label,
+                                'filename' => $imageName
+                            ];
+                        }
+                        $panoramaImageLists[$location->slug] = $imageList;
+                        // Set first image as default
+                        $panoramaImages[$location->slug] = $imageList[0]['url'];
+                    }
+                }
+            }
+        }
+        
+        return view('frontend.pages.virtual_tour', compact('locations', 'panoramaImages', 'panoramaImageLists'));
     }
 
     public function TheSproutAcademyDifference()

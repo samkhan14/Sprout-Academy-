@@ -33,7 +33,47 @@
                 <div class="vt-location-block" id="{{ $location->slug }}">
                     @if ($index % 2 == 1)
                         {{-- Viewer first for odd indices (Montessori pattern) --}}
-                        @if ($staticImage['image'])
+                        @if (isset($panoramaImageLists[$location->slug]) && count($panoramaImageLists[$location->slug]) > 0)
+                            <div class="vt-location-viewer">
+                                <div class="vt-viewer-container">
+                                    <div id="panorama-{{ $location->slug }}" class="vt-panorama-viewer"
+                                        data-location="{{ $location->slug }}"></div>
+
+                                    {{-- Bottom overlay strip (like reference) --}}
+                                    <div class="vt-panorama-overlay"
+                                        aria-label="{{ $location->name }} tour thumbnails">
+                                        <button type="button" class="vt-panorama-arrow vt-panorama-arrow-left"
+                                            aria-label="Previous view" data-location="{{ $location->slug }}">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+
+                                        <div class="vt-panorama-thumbs" data-location="{{ $location->slug }}">
+                                            @foreach ($panoramaImageLists[$location->slug] as $imgIndex => $image)
+                                                <button type="button"
+                                                    class="vt-panorama-thumb {{ $imgIndex === 0 ? 'is-active' : '' }}"
+                                                    data-location="{{ $location->slug }}"
+                                                    data-scene-index="{{ $imgIndex }}"
+                                                    aria-label="{{ $image['label'] }}">
+                                                    <img src="{{ $image['url'] }}" alt="{{ $image['label'] }}"
+                                                        loading="lazy">
+                                                    <span class="vt-panorama-thumb-title">{{ $image['label'] }}</span>
+                                                </button>
+                                            @endforeach
+                                        </div>
+
+                                        <button type="button" class="vt-panorama-arrow vt-panorama-arrow-right"
+                                            aria-label="Next view" data-location="{{ $location->slug }}">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+
+                                    {{-- Bottom-left title (like reference) --}}
+                                    <div class="vt-panorama-scene-title" id="vt-scene-title-{{ $location->slug }}">
+                                        {{ $panoramaImageLists[$location->slug][0]['label'] ?? '360° View' }}
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif ($staticImage['image'])
                             <div class="vt-location-viewer">
                                 <div class="vt-viewer-container">
                                     <div class="vt-viewer-label">{{ $staticImage['label'] }}</div>
@@ -124,7 +164,47 @@
 
                     @if ($index % 2 == 0)
                         {{-- Viewer second for even indices (Seminole, Pinellas Park, Largo pattern) --}}
-                        @if ($staticImage['image'])
+                        @if (isset($panoramaImageLists[$location->slug]) && count($panoramaImageLists[$location->slug]) > 0)
+                            <div class="vt-location-viewer">
+                                <div class="vt-viewer-container">
+                                    <div id="panorama-{{ $location->slug }}" class="vt-panorama-viewer"
+                                        data-location="{{ $location->slug }}"></div>
+
+                                    {{-- Bottom overlay strip (like reference) --}}
+                                    <div class="vt-panorama-overlay"
+                                        aria-label="{{ $location->name }} tour thumbnails">
+                                        <button type="button" class="vt-panorama-arrow vt-panorama-arrow-left"
+                                            aria-label="Previous view" data-location="{{ $location->slug }}">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+
+                                        <div class="vt-panorama-thumbs" data-location="{{ $location->slug }}">
+                                            @foreach ($panoramaImageLists[$location->slug] as $imgIndex => $image)
+                                                <button type="button"
+                                                    class="vt-panorama-thumb {{ $imgIndex === 0 ? 'is-active' : '' }}"
+                                                    data-location="{{ $location->slug }}"
+                                                    data-scene-index="{{ $imgIndex }}"
+                                                    aria-label="{{ $image['label'] }}">
+                                                    <img src="{{ $image['url'] }}" alt="{{ $image['label'] }}"
+                                                        loading="lazy">
+                                                    <span class="vt-panorama-thumb-title">{{ $image['label'] }}</span>
+                                                </button>
+                                            @endforeach
+                                        </div>
+
+                                        <button type="button" class="vt-panorama-arrow vt-panorama-arrow-right"
+                                            aria-label="Next view" data-location="{{ $location->slug }}">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+
+                                    {{-- Bottom-left title (like reference) --}}
+                                    <div class="vt-panorama-scene-title" id="vt-scene-title-{{ $location->slug }}">
+                                        {{ $panoramaImageLists[$location->slug][0]['label'] ?? '360° View' }}
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif ($staticImage['image'])
                             <div class="vt-location-viewer">
                                 <div class="vt-viewer-container">
                                     <div class="vt-viewer-label">{{ $staticImage['label'] }}</div>
@@ -153,4 +233,102 @@
             @endforelse
         </div>
     </section>
+
+    @push('styles')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    @endpush
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const panoramaImageLists = @json($panoramaImageLists ?? []);
+                if (typeof pannellum === 'undefined' || !pannellum.viewer) return;
+
+                const viewers = {};
+
+                function buildScenesForLocation(locationSlug) {
+                    const list = panoramaImageLists?.[locationSlug] || [];
+                    const scenes = {};
+                    list.forEach((img, idx) => {
+                        const sceneId = `s${idx}`;
+                        scenes[sceneId] = {
+                            title: img.label || `View ${idx + 1}`,
+                            type: 'equirectangular',
+                            panorama: img.url,
+                        };
+                    });
+                    return scenes;
+                }
+
+                function initLocationViewer(locationSlug) {
+                    const panoId = `panorama-${locationSlug}`;
+                    const panoEl = document.getElementById(panoId);
+                    if (!panoEl) return;
+
+                    const scenes = buildScenesForLocation(locationSlug);
+                    const sceneIds = Object.keys(scenes);
+                    if (!sceneIds.length) return;
+
+                    viewers[locationSlug] = pannellum.viewer(panoId, {
+                        default: {
+                            firstScene: sceneIds[0],
+                            sceneFadeDuration: 250,
+                            autoLoad: true,
+                        },
+                        showControls: true, // top-left controls like reference
+                        mouseZoom: false, // disable trackpad/mouse-wheel zoom
+                        keyboardZoom: false, // disable keyboard +/- zoom
+                        scenes,
+                    });
+
+                    const titleEl = document.getElementById(`vt-scene-title-${locationSlug}`);
+                    const thumbs = Array.from(document.querySelectorAll(`.vt-panorama-thumb[data-location="${locationSlug}"]`));
+                    const leftBtn = document.querySelector(`.vt-panorama-arrow-left[data-location="${locationSlug}"]`);
+                    const rightBtn = document.querySelector(`.vt-panorama-arrow-right[data-location="${locationSlug}"]`);
+
+                    function setActiveIndex(idx) {
+                        const safeIdx = (idx + thumbs.length) % thumbs.length;
+                        thumbs.forEach((btn, i) => btn.classList.toggle('is-active', i === safeIdx));
+
+                        const sceneId = `s${safeIdx}`;
+                        const sceneTitle = scenes?.[sceneId]?.title || '360° View';
+                        if (titleEl) titleEl.textContent = sceneTitle;
+
+                        try {
+                            viewers[locationSlug].loadScene(sceneId);
+                        } catch (e) {}
+                    }
+
+                    thumbs.forEach((btn) => {
+                        btn.addEventListener('click', () => {
+                            const idx = Number(btn.dataset.sceneIndex || 0);
+                            setActiveIndex(idx);
+                        });
+                    });
+
+                    function currentIndex() {
+                        const idx = thumbs.findIndex(b => b.classList.contains('is-active'));
+                        return idx >= 0 ? idx : 0;
+                    }
+
+                    if (leftBtn) {
+                        leftBtn.addEventListener('click', () => setActiveIndex(currentIndex() - 1));
+                    }
+                    if (rightBtn) {
+                        rightBtn.addEventListener('click', () => setActiveIndex(currentIndex() + 1));
+                    }
+
+                    // Ensure title matches first scene
+                    setActiveIndex(0);
+                }
+
+                // Init all locations that have pano containers
+                document.querySelectorAll('.vt-panorama-viewer[data-location]').forEach((el) => {
+                    const locationSlug = el.getAttribute('data-location');
+                    if (locationSlug) initLocationViewer(locationSlug);
+                });
+            });
+        </script>
+    @endpush
 @endsection

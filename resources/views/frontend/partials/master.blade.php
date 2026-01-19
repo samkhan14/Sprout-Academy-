@@ -110,10 +110,12 @@
         // Set today's date
         const today = new Date();
         const todayFormatted = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-        document.getElementById('today').value = todayFormatted;
+        const todayEl = document.getElementById('today');
+        if (todayEl) todayEl.value = todayFormatted;
 
         // Initialize main calendar
-        const calendarInstance = flatpickr('#calendar', {
+        const calendarEl = document.querySelector('#calendar');
+        const calendarInstance = calendarEl ? flatpickr(calendarEl, {
             inline: true,
             defaultDate: '2024-02-02',
             dateFormat: 'm/d/Y',
@@ -127,46 +129,57 @@
                     // Update displays
                     const shortDate = month + '/' + day;
                     const fullDate = month + '/' + day + '/' + year;
-                    const time = document.getElementById('timeDisplay').value;
+                    const timeDisplayEl = document.getElementById('timeDisplay');
+                    const time = timeDisplayEl ? timeDisplayEl.value : '';
 
-                    document.getElementById('dateDisplay').value = fullDate;
-                    document.getElementById('dateTimeDisplay').value = shortDate + ' ' + time;
-                    document.getElementById('startDate').value = fullDate;
-                    document.getElementById('endDate').value = fullDate;
+                    const dateDisplayEl = document.getElementById('dateDisplay');
+                    const dateTimeDisplayEl = document.getElementById('dateTimeDisplay');
+                    const startDateEl = document.getElementById('startDate');
+                    const endDateEl = document.getElementById('endDate');
+
+                    if (dateDisplayEl) dateDisplayEl.value = fullDate;
+                    if (dateTimeDisplayEl) dateTimeDisplayEl.value = shortDate + ' ' + time;
+                    if (startDateEl) startDateEl.value = fullDate;
+                    if (endDateEl) endDateEl.value = fullDate;
                 }
             }
-        });
+        }) : null;
 
         // Time picker for time display field
-        const timePickerInstance = flatpickr('#timeDisplay', {
+        const timeDisplayEl = document.querySelector('#timeDisplay');
+        const timePickerInstance = timeDisplayEl ? flatpickr(timeDisplayEl, {
             enableTime: true,
             noCalendar: true,
             dateFormat: 'h:i K',
             defaultDate: '10:39 PM',
             onChange: function(selectedDates, timeStr) {
-                const dateVal = document.getElementById('dateDisplay').value;
-                const shortDate = dateVal.substring(0, 5); // Get MM/DD part
-                document.getElementById('dateTimeDisplay').value = shortDate + ' ' + timeStr;
+                const dateDisplayEl = document.getElementById('dateDisplay');
+                const dateTimeDisplayEl = document.getElementById('dateTimeDisplay');
+                const dateVal = dateDisplayEl ? dateDisplayEl.value : '';
+                const shortDate = dateVal ? dateVal.substring(0, 5) : '';
+                if (dateTimeDisplayEl) dateTimeDisplayEl.value = shortDate + ' ' + timeStr;
             }
-        });
+        }) : null;
 
         // Start date picker
-        const startDatePicker = flatpickr('#startDate', {
+        const startDateEl = document.querySelector('#startDate');
+        const startDatePicker = startDateEl ? flatpickr(startDateEl, {
             dateFormat: 'm/d/Y',
             defaultDate: '2024-02-02',
             onChange: function(selectedDates, dateStr) {
                 // Optionally sync with main calendar
             }
-        });
+        }) : null;
 
         // End date picker
-        const endDatePicker = flatpickr('#endDate', {
+        const endDateEl = document.querySelector('#endDate');
+        const endDatePicker = endDateEl ? flatpickr(endDateEl, {
             dateFormat: 'm/d/Y',
             defaultDate: '2024-02-02',
             onChange: function(selectedDates, dateStr) {
                 // Optionally sync with main calendar
             }
-        });
+        }) : null;
 
         // Submit button handler
         // document.getElementById('submitBtn').addEventListener('click', function(e) {
