@@ -3299,7 +3299,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .accordion-list li::before {
-    content: "•";
+    content: "â€¢";
     position: absolute;
     left: 0;
     color: #000;
@@ -3454,7 +3454,7 @@ footer#footer-copyright .footer-bottom {
 }
 
 .sprout-cares-faq li::before {
-    content: "•";
+    content: "â€¢";
     position: absolute;
     left: 0;
     color: var(--color-dark);
@@ -7245,14 +7245,14 @@ select.form-control {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 550px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
 .location-enrollment-card {
-    background: var(--color-white);
+    background: #ffffff73;
     border-radius: 20px;
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-xl) var(--space-lg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     position: relative;
 }
@@ -7290,35 +7290,29 @@ select.form-control {
 .location-enrollment-info-card {
     background: #faf9f7;
     border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: var(--space-lg) var(--space-xl);
+    border-radius: 18px;
+    padding: 0 var(--space-sm) var(--space-sm) var(--space-sm);
     text-align: center;
     margin-bottom: var(--space-lg);
     position: relative;
+    width: 75%;
+    margin: 0 auto;
 }
 
 .location-enrollment-info-location {
     font-family: var(--font-secondary);
-    font-size: 0.95rem;
+    font-size: 18px;
     font-weight: 600;
     color: #2c4a73;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: var(--space-md);
     position: relative;
-    display: inline-block;
+    margin-top: -16px;
+    display: block;
     padding: 0 var(--space-md);
 }
 
-.location-enrollment-info-location::before,
-.location-enrollment-info-location::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 40px;
-    height: 1px;
-    background: #e0e0e0;
-}
+
 
 .location-enrollment-info-location::before {
     left: -50px;
@@ -7343,11 +7337,12 @@ select.form-control {
 
 .location-enrollment-instruction {
     font-family: var(--font-secondary);
-    font-size: 0.95rem;
-    color: #666;
-    text-align: center;
-    margin-bottom: var(--space-lg);
+    font-size: 16px;
+    color: #2D4578;
+    text-align: left;
+    margin-bottom: var(--space-sm);
     line-height: 1.6;
+    font-weight: 600;
 }
 
 .location-enrollment-email-field {
@@ -7358,21 +7353,21 @@ select.form-control {
     font-family: var(--font-secondary);
     font-size: 0.9rem;
     font-weight: 600;
-    color: #333;
+    color: #00000057 !important;
     display: block;
     margin-bottom: 8px;
 }
 
 .location-enrollment-input {
     width: 100%;
-    padding: 14px 18px;
+    padding: 14px 18px !important;
     border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 30px !important;
     font-family: var(--font-secondary);
-    font-size: 1rem;
-    color: #333;
-    background: var(--color-white);
-    transition: var(--transition-base);
+    font-size: 1rem !important;
+    color: #464646 !important;
+    background: var(--color-white) !important;
+    transition: var(--transition-base) !important;
 }
 
 .location-enrollment-input:focus {
@@ -7435,23 +7430,24 @@ select.form-control {
 
 .location-enrollment-submit-btn {
     width: 100%;
-    padding: 16px;
-    background: #0a2239;
+    padding: 12px;
+    background: #2D4578;
     color: var(--color-white);
     border: none;
-    border-radius: 10px;
+    border-radius: 40px;
     font-family: var(--font-primary);
-    font-size: 1.1rem;
+    font-size: 24px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     transition: var(--transition-base);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-sm);
 }
 
 .location-enrollment-submit-btn:hover:not(:disabled) {
-    background: #0d2d50;
+    background: #fff;
+    color: #0d2d50;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(10, 34, 57, 0.3);
 }

@@ -1994,6 +1994,10 @@
     /* padding-bottom: 30px; */
 }
 
+#enrollment-form-address .section-header, #enrollment-form-phone .section-header{
+    margin-bottom: 30px;
+}
+
 .enrollment-section:last-child {
     border-bottom: none;
 }
@@ -2605,7 +2609,7 @@
 }
 
 .enrollment-warning-message .incomplete-steps-list a::before {
-    content: "→";
+    content: "â†’";
     font-weight: bold;
 }
 
