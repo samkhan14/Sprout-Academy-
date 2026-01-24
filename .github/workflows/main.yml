@@ -1,0 +1,33 @@
+name: 🚀 Deploy website on Click
+on:
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v5
+
+      # Deploy files
+      - name: 📂 Deploy to Main Server
+        if: github.ref == 'refs/heads/main'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 66.29.128.208
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: /
+
+      # Deploy to Test Server
+      - name: 📂 Deploy to Test Server
+        if: github.ref == 'refs/heads/test'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 66.29.128.208
+          username: ${{ secrets.TEST_FTP_USERNAME }}
+          password: ${{ secrets.TEST_FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: /
