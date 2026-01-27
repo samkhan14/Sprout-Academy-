@@ -18,7 +18,7 @@ jobs:
           server: 66.29.128.208
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
+          protocol: ftps
           server-dir: /
 
       # Deploy to Test Server
@@ -29,5 +29,5 @@ jobs:
           server: 66.29.128.208
           username: ${{ secrets.TEST_FTP_USERNAME }}
           password: ${{ secrets.TEST_FTP_PASSWORD }}
-          protocol: ftp
+          protocol: ftps
           server-dir: /

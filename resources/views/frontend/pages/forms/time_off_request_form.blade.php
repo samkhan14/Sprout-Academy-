@@ -93,12 +93,12 @@
                                     </div>
                                 </div>
 
-                                {{-- Director Signature (Disabled) --}}
-                                <div class="form-field form-field-full">
+                                {{-- Director Signature (Disabled) - TEMPORARILY REMOVED --}}
+                                {{-- <div class="form-field form-field-full">
                                     <label for="directorSignature">Director Signature (After It Is Submitted)</label>
                                     <input type="text" id="directorSignature" name="director_signature"
                                         class="form-input" disabled />
-                                </div>
+                                </div> --}}
                             </div>
 
                             <button type="submit" class="submit-btn" id="submitBtn">Submit Now</button>

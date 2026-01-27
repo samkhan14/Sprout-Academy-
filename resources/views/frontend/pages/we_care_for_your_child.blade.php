@@ -139,7 +139,7 @@
             ],
             [
                 'title' => 'SECURITY',
-                'expanded' => true,
+                'expanded' => false,
                 'content' => [
                     'Some of our centers are secured so that only authorized staff & families may enter.',
                     'Safe, secure perimeters ensure that children can enjoy outdoor play safely.',

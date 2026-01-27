@@ -2974,6 +2974,10 @@
     height: 500px;
 }
 
+select#salaryCents {
+    padding: 14px 34px 13px 15px;
+}
+
 /* Responsive Styles */
 @media (max-width: 1024px) {
     .review-content {

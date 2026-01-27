@@ -20,6 +20,45 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
+    <!-- Fix for stuck backdrop/overlay CSS -->
+    <style>
+        /* FIX: Remove sidebar overlay on desktop - this is the main issue! */
+        @media (min-width: 992px) {
+            .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before,
+            #layoutSidenav #layoutSidenav_content:before {
+                display: none !important;
+                content: none !important;
+            }
+        }
+        
+        /* Ensure no stuck backdrops */
+        body:not(.modal-open):not(.offcanvas-open) .modal-backdrop,
+        body:not(.modal-open):not(.offcanvas-open) .offcanvas-backdrop {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        
+        /* Ensure body is always clickable when no modal is open */
+        body:not(.modal-open):not(.offcanvas-open) {
+            overflow: auto !important;
+            padding-right: 0 !important;
+        }
+        
+        /* Ensure main content is always visible and clickable */
+        #layoutSidenav_content {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+        
+        /* Remove any stuck overlays with high z-index */
+        body > div[style*="z-index: 1037"],
+        body > div[style*="z-index: 1040"],
+        body > div[style*="z-index: 1050"] {
+            display: none !important;
+        }
+    </style>
+
     @stack('styles')
 </head>
 
@@ -76,6 +115,96 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+
+    <!-- Fix for stuck modal backdrop and overlay issues -->
+    <script>
+        $(document).ready(function() {
+            // Function to clean up all overlays and backdrops
+            function cleanupOverlays() {
+                // CRITICAL FIX: Remove sb-sidenav-toggled class from body (this is the main issue!)
+                $('body').removeClass('sb-sidenav-toggled');
+                
+                // Remove modal backdrops
+                $('.modal-backdrop').remove();
+                $('.offcanvas-backdrop').remove();
+                
+                // Remove any custom overlays
+                $('[style*="z-index: 1037"]').remove();
+                $('[style*="background: #000"]').filter(function() {
+                    return $(this).css('opacity') == '0.5';
+                }).remove();
+                
+                // Reset body styles
+                $('body').removeClass('modal-open offcanvas-open');
+                $('body').css({
+                    'overflow': '',
+                    'padding-right': '',
+                    'opacity': '',
+                    'pointer-events': ''
+                });
+                
+                // Reset main content opacity and remove pseudo-element overlay
+                $('#layoutSidenav_content').css({
+                    'opacity': '1',
+                    'pointer-events': 'auto'
+                });
+                $('main').css('opacity', '');
+                $('.container-fluid').css('opacity', '');
+                
+                // Clear localStorage to prevent sidebar toggle from persisting
+                localStorage.removeItem('sb|sidebar-toggle');
+            }
+            
+            // IMMEDIATE cleanup on page load - run multiple times to ensure it works
+            cleanupOverlays();
+            setTimeout(cleanupOverlays, 100);
+            setTimeout(cleanupOverlays, 500);
+            
+            // Clean up on modal hide
+            $(document).on('hidden.bs.modal', '.modal', function () {
+                setTimeout(cleanupOverlays, 100);
+            });
+            
+            // Clean up on offcanvas hide
+            $(document).on('hidden.bs.offcanvas', '.offcanvas', function () {
+                setTimeout(cleanupOverlays, 100);
+            });
+            
+            // Emergency cleanup - press ESC key anywhere to remove backdrop
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
+                    cleanupOverlays();
+                }
+            });
+            
+            // Click on overlay to remove it
+            $(document).on('click', '#layoutSidenav_content', function(e) {
+                // If clicking on the overlay (not on actual content)
+                if (e.target === this || $(e.target).closest('#layoutSidenav_content').length) {
+                    cleanupOverlays();
+                }
+            });
+            
+            // Monitor for sb-sidenav-toggled class being added and remove it immediately on desktop
+            if (window.innerWidth >= 992) {
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.attributeName === 'class') {
+                            if ($('body').hasClass('sb-sidenav-toggled')) {
+                                console.log('Removing stuck sb-sidenav-toggled class');
+                                $('body').removeClass('sb-sidenav-toggled');
+                            }
+                        }
+                    });
+                });
+                
+                observer.observe(document.body, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>

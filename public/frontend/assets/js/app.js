@@ -361,7 +361,7 @@
     }
 
     // ========================================
-    // Accordion Toggle Icon Fix
+    // Accordion Toggle - Only One Open at a Time
     // ========================================
     const accordionButtons = document.querySelectorAll(".accordion-button");
 
@@ -371,8 +371,20 @@
         const accordionItem = button.closest(".accordion-item");
 
         if (targetElement) {
-            // Update icon on collapse show/hide events
+            // When an accordion is about to open, close all others
             targetElement.addEventListener("show.bs.collapse", function () {
+                // Close all other accordions
+                const allAccordionCollapses = document.querySelectorAll(".accordion-collapse.show");
+                allAccordionCollapses.forEach((collapse) => {
+                    if (collapse !== targetElement) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(collapse);
+                        if (bsCollapse) {
+                            bsCollapse.hide();
+                        }
+                    }
+                });
+
+                // Add active class to current accordion
                 button.classList.add("active");
                 if (accordionItem) {
                     accordionItem.classList.add("active-item");

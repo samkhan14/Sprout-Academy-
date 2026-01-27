@@ -26,7 +26,7 @@
                         <th>Clock Out For Lunch</th>
                         <th>Clock In From Lunch</th>
                         <th>Clock Out</th>
-                        <th>Supervisor</th>
+                        {{-- <th>Supervisor</th> --}} {{-- TEMPORARILY REMOVED --}}
                         <th>Created At</th>
                     </tr>
                 </thead>
@@ -77,10 +77,10 @@
                         data: 'clock_out_time',
                         name: 'clock_out_time'
                     },
-                    {
-                        data: 'supervisor_name',
-                        name: 'supervisor_name'
-                    },
+                    // { // TEMPORARILY REMOVED
+                    //     data: 'supervisor_name',
+                    //     name: 'supervisor_name'
+                    // },
                     {
                         data: 'created_at',
                         name: 'created_at'

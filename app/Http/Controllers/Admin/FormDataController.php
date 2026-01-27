@@ -74,9 +74,9 @@ class FormDataController extends Controller
                 ->addColumn('full_name', function ($request) {
                     return $request->first_name . ' ' . $request->last_name;
                 })
-                ->addColumn('supervisor_name', function ($request) {
-                    return $request->supervisor_first_name . ' ' . $request->supervisor_last_name;
-                })
+                // ->addColumn('supervisor_name', function ($request) { // TEMPORARILY REMOVED
+                //     return $request->supervisor_first_name . ' ' . $request->supervisor_last_name;
+                // })
                 ->editColumn('date_to_be_changed', function ($request) {
                     return $request->date_to_be_changed ? $request->date_to_be_changed->format('M d, Y') : '';
                 })

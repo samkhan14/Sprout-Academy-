@@ -105,7 +105,8 @@
                                 </div>
 
 
-                                <div class="form-field">
+                                {{-- E-Signature Fields - TEMPORARILY REMOVED --}}
+                                {{-- <div class="form-field">
                                     <label for="supervisorFirstName">E-Signature *</label>
                                     <input type="text" id="supervisorFirstName" name="supervisor_first_name"
                                         class="form-input" placeholder="First Name" required/>
@@ -115,7 +116,7 @@
                                     <label for="supervisorLastName" class="invisible">Supervisor Last Name</label>
                                     <input type="text" id="supervisorLastName" name="supervisor_last_name"
                                         class="form-input" placeholder="Last Name" required/>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <button type="submit" class="submit-btn" id="submitBtn">

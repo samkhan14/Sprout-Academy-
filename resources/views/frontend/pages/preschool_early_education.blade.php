@@ -88,7 +88,7 @@
                     ],
                     [
                         'title' => 'GROWING A HEALTHY BODY',
-                        'expanded' => true,
+                        'expanded' => false,
                         'content' =>
                             'The Sprout Academy helps your infant improve mobility and coordination. We support your baby as he or she rolls from side-to-side and learns to crawl, stand, and walk; support the development of motor skills with blocks and shape boards; and meet your child\'s individual needs for rest and nutrition.',
                     ],

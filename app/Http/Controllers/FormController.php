@@ -37,7 +37,7 @@ class FormController extends Controller
                     'end_date' => 'required|date|after_or_equal:start_date',
                     'paid_unpaid' => 'required|string|in:paid,unpaid',
                     'reason' => 'nullable|string|max:5000',
-                    'director_signature' => 'nullable|string|max:255',
+                    // 'director_signature' => 'nullable|string|max:255', // TEMPORARILY REMOVED
                 ];
 
                 if (!$user) {
@@ -85,7 +85,7 @@ class FormController extends Controller
                     'end_date' => $request->end_date,
                     'paid_unpaid' => $request->paid_unpaid,
                     'reason' => $request->reason,
-                    'director_signature' => $request->director_signature,
+                    // 'director_signature' => $request->director_signature, // TEMPORARILY REMOVED
                     'status' => 'pending', // Default status
                 ]);
 
@@ -100,7 +100,7 @@ class FormController extends Controller
                         'end_date' => $request->end_date,
                         'paid_unpaid' => ucfirst($request->paid_unpaid),
                         'reason' => $request->reason,
-                        'director_signature' => $request->director_signature,
+                        // 'director_signature' => $request->director_signature, // TEMPORARILY REMOVED
                     ]);
 
                     Mail::to(FormEmailHelper::getAdminEmail())->send(
@@ -405,8 +405,8 @@ class FormController extends Controller
                     'clock_in_from_lunch' => 'nullable|date_format:H:i',
                     'clock_out_time' => 'nullable|date_format:H:i',
                     'reason_for_change' => 'required|string|max:255',
-                    'supervisor_first_name' => 'required|string|max:255',
-                    'supervisor_last_name' => 'required|string|max:255',
+                    // 'supervisor_first_name' => 'required|string|max:255', // TEMPORARILY REMOVED
+                    // 'supervisor_last_name' => 'required|string|max:255', // TEMPORARILY REMOVED
                 ], [
                     'first_name.required' => 'First name is required.',
                     'last_name.required' => 'Last name is required.',
@@ -420,8 +420,8 @@ class FormController extends Controller
                     'clock_in_from_lunch.date_format' => 'Clock in from lunch must be in valid time format.',
                     'clock_out_time.date_format' => 'Clock out time must be in valid time format.',
                     'reason_for_change.required' => 'Reason for change is required.',
-                    'supervisor_first_name.required' => 'E-Signature first name is required.',
-                    'supervisor_last_name.required' => 'E-Signature last name is required.',
+                    // 'supervisor_first_name.required' => 'E-Signature first name is required.', // TEMPORARILY REMOVED
+                    // 'supervisor_last_name.required' => 'E-Signature last name is required.', // TEMPORARILY REMOVED
                 ]);
 
                 // If validation fails, return JSON response for AJAX
@@ -444,8 +444,8 @@ class FormController extends Controller
                     'clock_in_from_lunch' => $request->clock_in_from_lunch,
                     'clock_out_time' => $request->clock_out_time,
                     'reason_for_change' => $request->reason_for_change,
-                    'supervisor_first_name' => $request->supervisor_first_name,
-                    'supervisor_last_name' => $request->supervisor_last_name,
+                    // 'supervisor_first_name' => $request->supervisor_first_name, // TEMPORARILY REMOVED
+                    // 'supervisor_last_name' => $request->supervisor_last_name, // TEMPORARILY REMOVED
                 ]);
 
                 // Send email notification
@@ -460,8 +460,8 @@ class FormController extends Controller
                         'clock_in_from_lunch' => $request->clock_in_from_lunch,
                         'clock_out_time' => $request->clock_out_time,
                         'reason_for_change' => $request->reason_for_change,
-                        'supervisor_first_name' => $request->supervisor_first_name,
-                        'supervisor_last_name' => $request->supervisor_last_name,
+                        // 'supervisor_first_name' => $request->supervisor_first_name, // TEMPORARILY REMOVED
+                        // 'supervisor_last_name' => $request->supervisor_last_name, // TEMPORARILY REMOVED
                     ]);
 
                     Mail::to(FormEmailHelper::getAdminEmail())->send(

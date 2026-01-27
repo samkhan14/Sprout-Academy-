@@ -3299,12 +3299,14 @@ footer#footer-copyright .footer-bottom {
 }
 
 .accordion-list li::before {
-    content: "â€¢";
+    content: "";
     position: absolute;
     left: 0;
-    color: #000;
-    font-size: 1.25rem;
-    font-weight: 700;
+    width: 8px;
+    height: 8px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 0.5rem;
 }
 
 .accordion-list li:last-child {
@@ -3454,13 +3456,14 @@ footer#footer-copyright .footer-bottom {
 }
 
 .sprout-cares-faq li::before {
-    content: "â€¢";
+    content: "";
     position: absolute;
     left: 0;
-    color: var(--color-dark);
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-dark);
+    border-radius: 50%;
+    top: 0.5rem;
 }
 
 /* Right Column - Framed Image */

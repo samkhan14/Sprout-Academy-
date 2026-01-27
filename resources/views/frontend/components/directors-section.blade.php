@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="director-photo-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/team-dir-3.jpg') }}" alt="Crystal Jordan">
+                    <img src="{{ asset('frontend/assets/home_page_images/St.Petersburg-Director.png') }}" alt="Crystal Jordan">
                 </div>
             </div>
 
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="director-photo-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/team-dir-1.jpg') }}" alt="Trista Sanders">
+                    <img src="{{ asset('frontend/assets/home_page_images/Seminole-Director.png') }}" alt="Trista Sanders">
                 </div>
             </div>
 
@@ -210,7 +210,7 @@
                 </div>
 
                 <div class="director-photo-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/team-dir-2.jpg') }}" alt="Yessica Ortiz-Rodriguez">
+                    <img src="{{ asset('frontend/assets/home_page_images/Pinellas-Park-Director.png') }}" alt="Yessica Ortiz-Rodriguez">
                 </div>
             </div>
 
@@ -274,7 +274,7 @@
                 </div>
 
                 <div class="director-photo-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/team-dir-4.jpg') }}" alt="Debbie Snyder">
+                    <img src="{{ asset('frontend/assets/home_page_images/Largo-Director.png') }}" alt="Debbie Snyder">
                 </div>
             </div>
 
@@ -328,7 +328,7 @@
                 </div>
 
                 <div class="director-photo-card">
-                    <img src="{{ asset('frontend/assets/home_page_images/team-dir-6.jpg') }}" alt="Cierra Champagne">
+                    <img src="{{ asset('frontend/assets/home_page_images/Montessori-Director.png') }}" alt="Cierra Champagne">
                 </div>
             </div>
         </div>

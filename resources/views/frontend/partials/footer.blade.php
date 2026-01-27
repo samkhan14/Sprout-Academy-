@@ -51,7 +51,7 @@
             <div class="footer-col">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Apply To Work With Sprout</a></li>
+                    <li><a href="{{ route('form.employmentApplication') }}">Apply To Work With Sprout</a></li>
                     <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
                     <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
                     <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
