@@ -16,9 +16,10 @@
                 </div>
 
                 <!-- Thank You Message -->
-                <h1 class="thank-you-title">THANK YOU!</h1>
-                <h2 class="thank-you-subtitle">FOR ENROLLING YOUR CHILD AT</h2>
-                <h2 class="thank-you-academy">SPROUT ACADEMY</h2>
+                <h2 class="thank-you-title">THANK YOU!</h2>
+                <h3 class="thank-you-subtitle">
+                    FOR ENROLLING YOUR CHILD AT <span class="thank-you-academy">SPROUT ACADEMY</span>
+                </h3>
 
                 <!-- Instructions -->
                 <div class="thank-you-message">
@@ -30,7 +31,10 @@
                 <div class="thank-you-contact">
                     <p>If You Have Any Queries, You Can Contact Us At This Number:</p>
                     <div class="thank-you-phone">
-                        <i class="fas fa-phone"></i>
+                        <span class="thank-you-phone-icon" aria-hidden="true">
+                            <img src="{{ asset('frontend/assets/home_page_images/phone-icon-white.png') }}"
+                                alt="Phone" class="thank-you-phone-icon-image">
+                        </span>
                         <span>PHONE: {{ $locationData['phone'] }}</span>
                     </div>
                 </div>

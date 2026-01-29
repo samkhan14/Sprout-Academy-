@@ -23,7 +23,7 @@
             <!-- Right Column - Content -->
             <div class="founders-content-column">
                 <div class="founders-content-inner">
-                    <div class="mt-5">
+                    <div class="">
                         @include('frontend.components.section-heading', [
                             'text' => 'Founders of The Sprout Academy',
                             'bgColor' => '#6daa44',

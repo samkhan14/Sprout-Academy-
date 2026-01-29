@@ -2665,12 +2665,26 @@
 }
 
 .location-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
     color: #ed9b04;
     margin-top: 5px;
     background-color: #fff;
     padding: 20px;
     border-radius: 32px;
+}
+
+.location-icon-image {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.location-icon-image--orange {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(86%) saturate(1208%) hue-rotate(2deg)
+        brightness(104%) contrast(102%);
 }
 
 .location-info-details {
@@ -2838,7 +2852,7 @@
 .thank-you-academy {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #1a5f7a;
+    color: #007b9a;
     margin-bottom: 40px;
     letter-spacing: 2px;
 }
@@ -2874,9 +2888,20 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.thank-you-phone i {
-    font-size: 1.5rem;
-    color: #ed9b04;
+.thank-you-phone-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #ed9b04;
+    border-radius: 50%;
+}
+
+.thank-you-phone-icon-image {
+    width: 18px;
+    height: 18px;
+    display: block;
 }
 
 .thank-you-phone span {

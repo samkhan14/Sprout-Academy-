@@ -181,53 +181,89 @@
                 <div class="benefits-cards-grid">
                     {{-- Row 1 --}}
                     <div class="benefit-card">
-                        <div class="benefit-card-icon triangle-icon">△</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i3.svg') }}"
+                                alt="Trained early childhood teachers icon">
+                        </div>
                         <p class="benefit-card-text">Trained Early Childhood Teachers</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon circle-icon">○</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i2.svg') }}"
+                                alt="Attention and support icon">
+                        </div>
                         <p class="benefit-card-text">Attention and Support</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon star-icon">☆</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i1.svg') }}"
+                                alt="Confidence building icon">
+                        </div>
                         <p class="benefit-card-text">Building Blocks For Your Child's Confidence</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon square-icon">□</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i6.svg') }}"
+                                alt="Safety and security icon">
+                        </div>
                         <p class="benefit-card-text">Approved Child Care Safety And Security</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon star-icon">☆</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i5.svg') }}"
+                                alt="Clean and healthy environment icon">
+                        </div>
                         <p class="benefit-card-text">A Clean And Healthy Environment</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon heart-icon">♡</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i4.svg') }}"
+                                alt="Nutritious meals icon">
+                        </div>
                         <p class="benefit-card-text">Nutritious Meals For Children</p>
                     </div>
 
                     {{-- Row 2 --}}
                     <div class="benefit-card">
-                        <div class="benefit-card-icon triangle-icon">△</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i3.svg') }}"
+                                alt="Socialization with peers icon">
+                        </div>
                         <p class="benefit-card-text">Socialization with peers</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon circle-icon">○</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i2.svg') }}"
+                                alt="Social and emotional growth icon">
+                        </div>
                         <p class="benefit-card-text">Social And Emotional Growth</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon star-icon">☆</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i1.svg') }}"
+                                alt="Early education programs icon">
+                        </div>
                         <p class="benefit-card-text">Early Education Programs</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon square-icon">□</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i6.svg') }}"
+                                alt="Research-based curriculum icon">
+                        </div>
                         <p class="benefit-card-text">Curriculum Based On Scientific Research</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon star-icon">☆</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i5.svg') }}"
+                                alt="Multiple locations icon">
+                        </div>
                         <p class="benefit-card-text">The Convenience Of Multiple Locations</p>
                     </div>
                     <div class="benefit-card">
-                        <div class="benefit-card-icon heart-icon">♡</div>
+                        <div class="benefit-card-icon">
+                            <img src="{{ asset('frontend/assets/home_page_images/cl-i4.svg') }}"
+                                alt="Flexible early and late hours icon">
+                        </div>
                         <p class="benefit-card-text">Flexible Early And Late Hours Available</p>
                     </div>
                 </div>

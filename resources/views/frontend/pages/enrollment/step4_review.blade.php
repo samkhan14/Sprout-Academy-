@@ -21,14 +21,17 @@
                     <div class="review-left">
                         <div class="location-info-card">
                             <div class="location-info-item">
-                                <i class="far fa-map-marker-alt location-icon"></i>
+                                <i class="fas fa-map-marker-alt location-icon" aria-hidden="true"></i>
                                 <div class="location-info-details">
                                     <span class="location-label">LOCATION ADDRESS:</span>
                                     <span class="location-value">{{ $locationData['address'] }}</span>
                                 </div>
                             </div>
                             <div class="location-info-item">
-                                <i class="far fa-phone location-icon"></i>
+                                <span class="location-icon" aria-hidden="true">
+                                    <img src="{{ asset('frontend/assets/home_page_images/phone-icon-white.png') }}"
+                                        alt="Phone" class="location-icon-image location-icon-image--orange">
+                                </span>
                                 <div class="location-info-details">
                                     <span class="location-label">PHONE:</span>
                                     <span class="location-value">{{ $locationData['phone'] }}</span>
@@ -57,10 +60,10 @@
                                 </div>
                                 <div class="review-card-content">
                                     <div class="review-profile">
-                                        <img src="{{ $primaryContact && $primaryContact->profile_image ? (str_starts_with($primaryContact->profile_image, 'http') ? $primaryContact->profile_image : \Illuminate\Support\Facades\Storage::url($primaryContact->profile_image)) : asset('frontend/assets/home_page_images/default-profile.png') }}"
+                                        <img src="{{ $primaryContact && $primaryContact->profile_image ? (str_starts_with($primaryContact->profile_image, 'http') ? $primaryContact->profile_image : \Illuminate\Support\Facades\Storage::url($primaryContact->profile_image)) : asset('frontend/assets/home_page_images/enroll-avatar.png') }}"
                                             alt="{{ $primaryContact && $primaryContact->first_name ? $primaryContact->first_name : 'Profile' }}"
                                             class="review-profile-image"
-                                            onerror="this.src='{{ asset('frontend/assets/home_page_images/default-profile.png') }}'" />
+                                            onerror="this.src='{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}'" />
                                         <div class="review-profile-info">
                                             <div class="review-name">
                                                 {{ $primaryContact && $primaryContact->first_name ? $primaryContact->first_name : 'N/A' }}
@@ -86,9 +89,9 @@
                                     </div>
                                     <div class="review-card-content">
                                         <div class="review-profile">
-                                            <img src="{{ $child->profile_image ? (str_starts_with($child->profile_image, 'http') ? $child->profile_image : \Illuminate\Support\Facades\Storage::url($child->profile_image)) : asset('frontend/assets/home_page_images/default-profile.png') }}"
+                                            <img src="{{ $child->profile_image ? (str_starts_with($child->profile_image, 'http') ? $child->profile_image : \Illuminate\Support\Facades\Storage::url($child->profile_image)) : asset('frontend/assets/home_page_images/enroll-avatar.png') }}"
                                                 alt="{{ $child->first_name ?? 'Child' }}" class="review-profile-image"
-                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/default-profile.png') }}'" />
+                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}'" />
                                             <div class="review-profile-info">
                                                 <div class="review-name">{{ $child->first_name ?? 'N/A' }}</div>
                                                 <div class="review-detail">{{ ucfirst($child->gender ?? 'Not Specified') }}
@@ -122,10 +125,10 @@
                                     @endif
                                     <div class="review-card-content">
                                         <div class="review-profile">
-                                            <img src="{{ $contact->profile_image ? (str_starts_with($contact->profile_image, 'http') ? $contact->profile_image : \Illuminate\Support\Facades\Storage::url($contact->profile_image)) : asset('frontend/assets/home_page_images/default-profile.png') }}"
+                                            <img src="{{ $contact->profile_image ? (str_starts_with($contact->profile_image, 'http') ? $contact->profile_image : \Illuminate\Support\Facades\Storage::url($contact->profile_image)) : asset('frontend/assets/home_page_images/enroll-avatar.png') }}"
                                                 alt="{{ $contact->first_name ?? 'Contact' }}"
                                                 class="review-profile-image"
-                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/default-profile.png') }}'" />
+                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}'" />
                                             <div class="review-profile-info">
                                                 <div class="review-name">{{ $contact->first_name ?? 'N/A' }}</div>
                                                 <div class="review-detail">
@@ -159,10 +162,10 @@
                                                     {{ ucfirst($contact->relationship_type) }} to</div>
                                             @endif
                                         <div class="review-profile">
-                                            <img src="{{ $contact->profile_image ? (str_starts_with($contact->profile_image, 'http') ? $contact->profile_image : \Illuminate\Support\Facades\Storage::url($contact->profile_image)) : asset('frontend/assets/home_page_images/default-profile.png') }}"
+                                            <img src="{{ $contact->profile_image ? (str_starts_with($contact->profile_image, 'http') ? $contact->profile_image : \Illuminate\Support\Facades\Storage::url($contact->profile_image)) : asset('frontend/assets/home_page_images/enroll-avatar.png') }}"
                                                 alt="{{ $contact->first_name ?? 'Contact' }}"
                                                 class="review-profile-image"
-                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/default-profile.png') }}'" />
+                                                onerror="this.src='{{ asset('frontend/assets/home_page_images/enroll-avatar.png') }}'" />
                                             <div class="review-profile-info">
                                                 <div class="review-name">{{ $contact->first_name ?? 'N/A' }}</div>
                                             </div>
