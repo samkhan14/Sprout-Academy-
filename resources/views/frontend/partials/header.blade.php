@@ -32,12 +32,8 @@
                     <li class="nav-item dropdown">
                         @php
                             $isParentsActive =
-                                request()->routeIs('frontend.virtualTour') ||
                                 request()->routeIs('frontend.theSproutAcademyDifference') ||
-                                request()->routeIs('frontend.weCareForYourChild') ||
-                                request()->routeIs('frontend.tuitionCosts') ||
                                 request()->routeIs('frontend.meetTheTeam') ||
-                                request()->routeIs('frontend.meetTheOwner') ||
                                 request()->routeIs('frontend.downloadForms');
                         @endphp
                         <a class="nav-link dropdown-toggle {{ $isParentsActive ? 'active' : '' }}" href="#"
@@ -45,40 +41,21 @@
                             For Parents
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="parentsDropdown">
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.virtualTour') ? 'active' : '' }}"
-                                    href="{{ route('frontend.virtualTour') }}"
-                                    @if (request()->routeIs('frontend.virtualTour')) aria-current="page" @endif>Virtual
-                                    Tour</a>
-                            </li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.theSproutAcademyDifference') ? 'active' : '' }}"
                                     href="{{ route('frontend.theSproutAcademyDifference') }}"
                                     @if (request()->routeIs('frontend.theSproutAcademyDifference')) aria-current="page" @endif>The Sprout Academy
                                     Difference</a></li>
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.weCareForYourChild') ? 'active' : '' }}"
-                                    href="{{ route('frontend.weCareForYourChild') }}"
-                                    @if (request()->routeIs('frontend.weCareForYourChild')) aria-current="page" @endif>We Care for Your
-                                    Child</a></li>
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.tuitionCosts') ? 'active' : '' }}"
-                                    href="{{ route('frontend.tuitionCosts') }}"
-                                    @if (request()->routeIs('frontend.tuitionCosts')) aria-current="page" @endif>Tuition Costs</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheTeam') ? 'active' : '' }}"
                                     href="{{ route('frontend.meetTheTeam') }}"
                                     @if (request()->routeIs('frontend.meetTheTeam')) aria-current="page" @endif>Meet the Team</a></li>
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheOwner') ? 'active' : '' }}"
-                                    href="{{ route('frontend.meetTheOwner') }}"
-                                    @if (request()->routeIs('frontend.meetTheOwner')) aria-current="page" @endif>Meet the Owner</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
                                     href="{{ route('frontend.downloadForms') }}"
                                     @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li>
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.childAbsentForm') ? 'active' : '' }}"
-                                    href="{{ route('frontend.childAbsentForm') }}"
-                                    @if (request()->routeIs('frontend.childAbsentForm')) aria-current="page" @endif>Child Absent Form</a>
-                            </li>
                         </ul>
                     </li>
 
-                    <!-- Programs & Curriculum -->
-                    <li class="nav-item">
+                    <!-- Programs & Curriculum - Dropdown -->
+                    <li class="nav-item dropdown">
                         @php
                             $isProgramsActive =
                                 request()->routeIs('frontend.ourPrograms') ||
@@ -86,11 +63,27 @@
                                 request()->routeIs('frontend.preschoolEarlyEducation') ||
                                 request()->routeIs('frontend.educationFor512YearOld');
                         @endphp
-                        <a class="nav-link {{ $isProgramsActive ? 'active' : '' }}"
-                            href="{{ route('frontend.ourPrograms') }}"
-                            @if ($isProgramsActive) aria-current="page" @endif>
+                        <a class="nav-link dropdown-toggle {{ $isProgramsActive ? 'active' : '' }}"
+                            id="programsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Programs & Curriculum
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="programsDropdown">
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.infantToddlerEducation') ? 'active' : '' }}"
+                                    href="{{ route('frontend.infantToddlerEducation') }}"
+                                    @if (request()->routeIs('frontend.infantToddlerEducation')) aria-current="page" @endif>Daycare (Age 2 & Under)
+                                    </a>
+                            </li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.preschoolEarlyEducation') ? 'active' : '' }}"
+                                    href="{{ route('frontend.preschoolEarlyEducation') }}"
+                                    @if (request()->routeIs('frontend.preschoolEarlyEducation')) aria-current="page" @endif>Preschool (3-5 years)
+                                    </a>
+                            </li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.educationFor512YearOld') ? 'active' : '' }}"
+                                    href="{{ route('frontend.educationFor512YearOld') }}"
+                                    @if (request()->routeIs('frontend.educationFor512YearOld')) aria-current="page" @endif>School age (5-12 years)
+                                    </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <!-- Locations -->
@@ -113,21 +106,20 @@
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link" href="https://thesproutstore.com/" target="_blank">
                             <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
-                            Store
+                            Sprout Store
                         </a>
                     </li>
 
                     <!-- Enroll Button (Teal) -->
-                    <li class="nav-item ms-lg-3">
+                    <!-- <li class="nav-item ms-lg-3">
                         <a class="btn btn-enroll  @if (request()->routeIs('frontend.enroll')) active @endif"
                             href="{{ route('frontend.enroll') }}"
                             @if (request()->routeIs('frontend.enroll')) aria-current="page" @endif>Enroll</a>
-                    </li>
+                    </li> -->
 
-                    <!-- Sprout Foundation Button (Orange) -->
+                    <!-- Schedule a Tour Button (Orange) -->
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-foundation" href="https://sproutfoundation.org/" target="_blank">Sprout
-                            Foundation</a>
+                        <a class="btn btn-foundation" href="{{ route('frontend.virtualTour') }}" target="_blank">Schedule a Tour &raquo;</a>
                     </li>
                 </ul>
             </div>

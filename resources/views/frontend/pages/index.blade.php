@@ -63,31 +63,34 @@
                 <!-- Step 1 -->
                 <div class="step-item">
                     <div class="step-icon blue" aria-hidden="true">
-                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon1.png') }}" alt="Choose Location"
+                        <img src="{{ asset('frontend/assets/home_page_images/3-step-icon-1.png') }}" alt="Choose Location"
                             loading="lazy">
                     </div>
-                    <h3 class="step-title">CHOOSE LOCATION</h3>
-                    <p class="step-description">Start by choosing a location.</p>
+                    <h3 class="step-title">Schedule a Tour</h3>
+                    <p class="step-description">Visit our school, meet our teachers, &
+                    see the Sprout difference.</p>
                 </div>
-
+ 
                 <!-- Step 2 -->
                 <div class="step-item">
                     <div class="step-icon orange" aria-hidden="true">
-                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon2.png') }}" alt="Schedule a Tour"
+                        <img src="{{ asset('frontend/assets/home_page_images/3-step-icon-2.png') }}" alt="Schedule a Tour"
                             loading="lazy">
                     </div>
-                    <h3 class="step-title">SCHEDULE A TOUR</h3>
-                    <p class="step-description">Schedule a tour and experience.</p>
+                    <h3 class="step-title">Enroll Your Child</h3>
+                    <p class="step-description">Complete a simple enrollment process on site
+                    with guidance every step of the way.</p>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="step-item">
                     <div class="step-icon green" aria-hidden="true">
-                        <img src="{{ asset('frontend/assets/home_page_images/loc_icon3.png') }}" alt="Relax"
+                        <img src="{{ asset('frontend/assets/home_page_images/3-step-icon-3.png') }}" alt="Relax"
                             loading="lazy">
                     </div>
-                    <h3 class="step-title">RELAX</h3>
-                    <p class="step-description">Know your child is in good hands.</p>
+                    <h3 class="step-title">Watch Them Grow</h3>
+                    <p class="step-description">Your child learns, plays, and thrives in a
+                    caring, joyful environment.</p>
                 </div>
             </div>
 
@@ -289,12 +292,12 @@
                         <a href="https://thesproutstore.com/" target="_blank" rel="noopener noreferrer" class="btn btn-sprout-store">Shop Now</a>
                     </div>
                     <!-- Right Merchandise (Visual Elements) -->
-                    <div class="sprout-store-merchandise">
+                    <!-- <div class="sprout-store-merchandise">
                         <img src="{{ asset('frontend/assets/home_page_images/Products-loop.png') }}" 
                              alt="Sprout Store merchandise - t-shirt, cap, backpack, slides, and face mask" 
                              class="sprout-store-products-img"
                              loading="lazy">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -354,6 +357,9 @@
         </div>
     </section>
 
+    <!-- Sproutvine NEWS Section (before footer) -->
+    @include('frontend.components.sproutvine-news')
+
 @endsection
 
 @push('scripts')
@@ -395,11 +401,11 @@
                     });
                 }
 
-                // Initialize Marquee Video Gallery - Continuous Slow Scroll
+                // Initialize Marquee Video Gallery - Continuous Slow Scroll (3 full + 4th ~30% visible)
                 if ($('.marquee-gallery-slider').length > 0) {
                     $('.marquee-gallery-slider').slick({
                         infinite: true,
-                        slidesToShow: 3,
+                        slidesToShow: 3.5,
                         slidesToScroll: 1,
                         autoplay: true,
                         autoplaySpeed: 0, // Continuous movement without pause
@@ -413,7 +419,7 @@
                         responsive: [{
                                 breakpoint: 1200,
                                 settings: {
-                                    slidesToShow: 2,
+                                    slidesToShow: 2.5,
                                     slidesToScroll: 1,
                                     speed: 5000
                                 }
