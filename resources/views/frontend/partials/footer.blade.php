@@ -35,53 +35,90 @@
 <footer class="site-footer">
     <div class="container">
         <div class="footer-content">
-            <!-- Brand Column -->
-            <div class="footer-col">
+            <!-- Column 1: Brand -->
+            <div class="footer-col footer-col-brand">
                 <a class="footer-brand" href="{{ route('frontend.home') }}">
                     <img src="{{ asset('frontend/assets/home_page_images/footer-logo.png') }}" alt="The Sprout Academy"
-                        width="180" height="50" loading="lazy">
+                        class="footer-brand-img" loading="lazy">
                 </a>
                 <p class="footer-description">
                     The Sprout Academy develops the whole child by meeting social, emotional, physical, and intellectual
                     needs through learning and growing every day.
                 </p>
+                <div class="footer-social">
+                    <a href="#" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="footer-social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
 
-            <!-- Quick Links Column -->
+            <!-- Column 2: Company -->
             <div class="footer-col">
-                <h3 class="footer-title">Quick Links</h3>
+                <h3 class="footer-title">Company</h3>
                 <ul class="footer-links">
+                    <li><a href="{{ route('frontend.theSproutAcademyDifference') }}">About Us</a></li>
+                    <li><a href="{{ route('frontend.locations') }}">Contact Us</a></li>
                     <li><a href="{{ route('form.employmentApplication') }}">Apply To Work With Sprout</a></li>
-                    <li><a href="{{ route('frontend.employeeForms') }}">Employee Forms</a></li>
-                    <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
-                    <li><a href="{{ route('frontend.locations') }}">Locations</a></li>
-                    <li><a href="https://sproutvine.com/" target="_blank">SproutVine</a></li>
                 </ul>
             </div>
 
-            <!-- Locations Column -->
+            <!-- Column 3: Programs -->
+            <div class="footer-col">
+                <h3 class="footer-title">Programs</h3>
+                <ul class="footer-links">
+                    <li><a href="{{ route('frontend.ourPrograms') }}">Program Overview</a></li>
+                    <li><a href="{{ route('frontend.infantToddlerEducation') }}">Infant</a></li>
+                    <li><a href="{{ route('frontend.infantToddlerEducation') }}">Toddler</a></li>
+                    <li><a href="{{ route('frontend.preschoolEarlyEducation') }}">Preschool</a></li>
+                    <li><a href="{{ route('frontend.educationFor512YearOld') }}">Pre-K, School Age</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Resources -->
+            <div class="footer-col">
+                <h3 class="footer-title">Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="{{ route('frontend.employeeForms') }}">Employee Portal</a></li>
+                    <li><a href="{{ route('frontend.downloadForms') }}">Parent Forms</a></li>
+                    <li><a href="#">Non-Discrimination Policy</a></li>
+                    <li><a href="#">Corporate Responsibility</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Other -->
+            <div class="footer-col">
+                <h3 class="footer-title">Other</h3>
+                <ul class="footer-links">
+                    <li><a href="https://thesproutstore.com/" target="_blank" rel="noopener noreferrer">Sprout Store</a></li>
+                    <li><a href="https://sproutvine.com/" target="_blank" rel="noopener noreferrer">SproutVine</a></li>
+                    <li><a href="https://sproutfoundation.org/" target="_blank" rel="noopener noreferrer">Sprout Foundation</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 6: Our Locations -->
             <div class="footer-col">
                 <h3 class="footer-title">Our Locations</h3>
-                <ul class="footer-links footer-locations-grid">
+                <ul class="footer-links footer-locations-list">
                     <li>
-                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="" class="footer-location-icon" loading="lazy">
                         <a href="{{ route('frontend.locationSeminole') }}">Seminole</a>
                     </li>
                     <li>
-                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
-                        <a href="{{ route('frontend.locationStPetersburg') }}">ST. Pete</a>
-                    </li>
-                    <li>
-                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="" class="footer-location-icon" loading="lazy">
                         <a href="{{ route('frontend.locationPinellasPark') }}">Pinellas Park</a>
                     </li>
                     <li>
-                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
-                        <a href="{{ route('frontend.locationLargo') }}">Largo</a>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationMontessori') }}">Montessori</a>
                     </li>
                     <li>
-                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="Location icon" class="footer-location-icon" loading="lazy">
-                        <a href="{{ route('frontend.locationMontessori') }}">Montessori</a>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationStPetersburg') }}">St. Pete</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('frontend/assets/home_page_images/loc-ico.png') }}" alt="" class="footer-location-icon" loading="lazy">
+                        <a href="{{ route('frontend.locationLargo') }}">Largo</a>
                     </li>
                 </ul>
             </div>

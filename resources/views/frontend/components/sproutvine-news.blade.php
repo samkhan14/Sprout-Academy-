@@ -18,14 +18,14 @@
             'views' => 145,
         ],
         [
-            'image' => asset('frontend/assets/home_page_images/blog-img-2.png'),
+            'image' => asset('frontend/assets/home_page_images/blog-img-4.png'),
             'date' => 'February 13, 2026',
             'title' => 'THE IMPORTANCE OF BEING FINANCIALLY READY FOR RETIREMENT',
             'comments' => 76,
             'views' => 145,
         ],
         [
-            'image' => asset('frontend/assets/home_page_images/blog-img-4.png'),
+            'image' => asset('frontend/assets/home_page_images/blog-img-2.png'),
             'date' => 'February 18, 2026',
             'title' => 'MARRIAGE: BUILDING A PARTNERSHIP THAT LASTS THROUGH EVERY SEASON',
             'comments' => 76,
@@ -88,6 +88,9 @@
 
                         {{-- Title / excerpt / meta — overlaid on gradient at bottom --}}
                         <div class="sproutvine-news-featured-body">
+                            <span class="sproutvine-news-date-pill">
+                                <i class="far fa-clock" aria-hidden="true"></i> {{ $featured['date'] }}
+                            </span>
                             <h3 class="sproutvine-news-featured-title">{{ $featured['title'] }}</h3>
                             <p class="sproutvine-news-featured-excerpt">{{ $featured['excerpt'] }}</p>
                             <div class="sproutvine-news-meta">

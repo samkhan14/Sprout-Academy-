@@ -181,20 +181,15 @@
                         'borderColor' => '#6CAA43',
                         'rotation' => 'left',
                     ])
-                    <h3 class="why-choose-title">YOUR CHILD WON'T COME HOME A MESS</h3>
-                    <a href="{{ route('frontend.enroll') }}" class="btn btn-foundation btn-lg mt-3">Enroll Now</a>
+                    <h3 class="why-choose-title">Keeping Your Child Safe is Our Top Priority</h3>
+                    <a href="{{ route('frontend.virtualTour') }}" class="btn btn-foundation btn-lg mt-3">Schedule a Tour &raquo;</a>
                 </div>
                 <div class="col-lg-7">
                     <p class="why-choose-text-right mb-3">
-                        Finding quality childcare that balances education, safety, and fun can be challenging for parents.
-                        Many facilities promise engaging activities but often send children home covered in mess, which can
-                        be stressful for busy families.
+                        From the time you drop off to the moment you return, we’ll keep them safe, sound, and smiling. Finding quality childcare that balances education, safety, and fun can be challenging for parents. Many facilities promise engaging activities but often neglect the simple safeties, which can be stressful for busy families.
                     </p>
                     <p class="why-choose-text-right">
-                        At The Sprout Academy, we've solved this problem. Our innovative approach provides hands-on learning
-                        experiences that engage children's natural curiosity while maintaining a clean, organized
-                        environment.
-                        We guarantee your child will explore, learn, and grow—without coming home a mess.
+                        At The Sprout Academy, we've solved this problem. Our innovative approach provides hands-on learning experiences that engage children's natural curiosity while maintaining a clean, organized and extremely safe environment. We guarantee your child will explore, learn, and grow while being safe all along the way. Our goal now (and forever) is to prioritize safety first
                     </p>
                 </div>
             </div>
