@@ -134,6 +134,12 @@ class FrontendController extends Controller
         return view('frontend.pages.download_forms');
     }
 
+    public function ParentsForms()
+    {
+        return view('frontend.pages.parents_forms');
+    }
+
+
     public function LocationSeminole()
     {
         return view('frontend.pages.location_seminole');
@@ -193,6 +199,16 @@ class FrontendController extends Controller
     {
         $locations = Location::active()->get();
         return view('frontend.pages.enrollment', compact('locations'));
+    }
+
+    public function CorporateResponsibility()
+    {
+        return view('frontend.pages.corporate_responsibility');
+    }
+
+    public function NonDiscriminationPolicy()
+    {
+        return view('frontend.pages.non_discrimination_policy');
     }
 
     public function ChildAbsentForm(Request $request)

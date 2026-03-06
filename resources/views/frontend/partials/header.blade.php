@@ -34,6 +34,7 @@
                             $isParentsActive =
                                 request()->routeIs('frontend.theSproutAcademyDifference') ||
                                 request()->routeIs('frontend.meetTheTeam') ||
+                                request()->routeIs('frontend.parentsForms') ||
                                 request()->routeIs('frontend.downloadForms');
                         @endphp
                         <a class="nav-link dropdown-toggle {{ $isParentsActive ? 'active' : '' }}" href="#"
@@ -48,6 +49,9 @@
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.meetTheTeam') ? 'active' : '' }}"
                                     href="{{ route('frontend.meetTheTeam') }}"
                                     @if (request()->routeIs('frontend.meetTheTeam')) aria-current="page" @endif>Meet the Team</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.parentsForms') ? 'active' : '' }}"
+                                    href="{{ route('frontend.parentsForms') }}"
+                                    @if (request()->routeIs('frontend.parentsForms')) aria-current="page" @endif>Parent Forms</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
                                     href="{{ route('frontend.downloadForms') }}"
                                     @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li>

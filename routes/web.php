@@ -17,6 +17,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/meet-the-team', 'MeetTheTeam')->name('meetTheTeam');
     Route::get('/meet-the-owner', 'MeetTheOwner')->name('meetTheOwner');
     Route::get('/download-forms', 'DownloadForms')->name('downloadForms');
+    Route::get('/parents-forms', 'ParentsForms')->name('parentsForms');
     Route::get('/locations', 'Locations')->name('locations');
     Route::get('/location/seminole', 'LocationSeminole')->name('locationSeminole');
     Route::get('/location/clearwater', 'LocationClearwater')->name('locationClearwater');
@@ -33,6 +34,8 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/thank-you', 'ThankYou')->name('thankYou');
     Route::get('/enroll', 'Enroll')->name('enroll');
     Route::any('/child-absent-form', 'ChildAbsentForm')->name('childAbsentForm');
+    Route::get('/corporate-responsibility', 'CorporateResponsibility')->name('corporateResponsibility');
+    Route::get('/non-discrimination-policy', 'NonDiscriminationPolicy')->name('nonDiscriminationPolicy');
 });
 
 // Employee Forms (Public - No Authentication Required)

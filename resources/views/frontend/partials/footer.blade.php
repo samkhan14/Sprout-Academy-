@@ -80,9 +80,10 @@
                 <h3 class="footer-title">Resources</h3>
                 <ul class="footer-links">
                     <li><a href="{{ route('frontend.employeeForms') }}">Employee Portal</a></li>
-                    <li><a href="{{ route('frontend.downloadForms') }}">Parent Forms</a></li>
-                    <li><a href="#">Non-Discrimination Policy</a></li>
-                    <li><a href="#">Corporate Responsibility</a></li>
+                    <li><a href="{{ route('frontend.parentsForms') }}">Parent Forms</a></li>
+                    <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
+                    <li><a href="{{ route('frontend.nonDiscriminationPolicy') }}">Non-Discrimination Policy</a></li>
+                    <li><a href="{{ route('frontend.corporateResponsibility') }}">Corporate Responsibility</a></li>
                 </ul>
             </div>
 
