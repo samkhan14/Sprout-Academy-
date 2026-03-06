@@ -174,6 +174,60 @@
         </div>
     </section>
 
+    {{-- Your Infant's Early Education Section --}}
+    <section class="infant-education-accordion-section">
+        <div class="container">
+            {{-- Header with Icon, Title, and Subtitle --}}
+            <div class="infant-education-header">
+                <img src="{{ asset('frontend/assets/home_page_images/123.png') }}" alt="Education Icon"
+                    class="infant-education-icon">
+                <h2 class="infant-education-title">YOUR TODDLER’S EARLY EDUCATION AT THE SPROUT ACADEMY</h2>
+                <p class="infant-education-subtitle">Our five areas of focus give your child endless opportunities to
+                    learn and grow. </p>
+            </div>
+
+            {{-- Accordion Section --}}
+            @include('frontend.components.accordion-section', [
+                'sectionTitle' => '',
+                'leftIcon' => null,
+                'rightIcon' => null,
+                'columns' => 1,
+                'accordionItems' => [
+                    [
+                        'title' => 'COMMUNICATING WITH OTHERS',
+                        'expanded' => false,
+                        'content' =>
+                            'The Sprout Academy helps your infant develop communication skills through daily interactions, songs, and age-appropriate activities that encourage vocalization and early language development.',
+                    ],
+                    [
+                        'title' => 'BUILDING BRAIN POWER',
+                        'expanded' => false,
+                        'content' =>
+                            'We provide stimulating experiences that support cognitive development, including sensory exploration, cause-and-effect activities, and opportunities for your infant to discover and learn about their world.',
+                    ],
+                    [
+                        'title' => 'MAKING NEW FRIENDS',
+                        'expanded' => false,
+                        'content' =>
+                            'Your infant will have opportunities to interact with other children in a safe, supervised environment, helping them develop early social skills and emotional connections.',
+                    ],
+                    [
+                        'title' => 'GROWING A HEALTHY BODY',
+                        'expanded' => false,
+                        'content' =>
+                            'The Sprout Academy helps your infant improve mobility and coordination. We support your baby as he or she rolls from side-to-side and learns to crawl, stand, and walk; support the development of motor skills with blocks and shape boards; and meet your child\'s individual needs for rest and nutrition.',
+                    ],
+                    [
+                        'title' => 'NURTURING CREATIVITY',
+                        'expanded' => false,
+                        'content' =>
+                            'Through art, music, and imaginative play, we encourage your infant\'s natural creativity and curiosity, providing a foundation for creative thinking and self-expression.',
+                    ],
+                ],
+            ])
+        </div>
+    </section>
+
     @include('frontend.components.footer-cta', [
         'bgImage' => asset('frontend/assets/home_page_images/cta-banner.png'),
         'fancytitle' => 'Inquire About Openings',

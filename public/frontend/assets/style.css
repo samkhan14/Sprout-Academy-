@@ -512,6 +512,11 @@ body {
     padding-bottom: var(--space-3xl);
 }
 
+body.page-enroll section.inner-page-header {
+    background-position: center;
+    min-height: 720px;
+}
+
 /* .inner-page-header::before {
     content: "";
     position: absolute;
@@ -3940,6 +3945,10 @@ footer#footer-copyright .footer-bottom {
 
 .section-heading-wrapper.we_care_page h2.section-title {
     width: 68%;
+}
+
+.spr-aca-diff-accordion {
+    margin-top: 70px;
 }
 
 /* Responsive Design - Tablets */

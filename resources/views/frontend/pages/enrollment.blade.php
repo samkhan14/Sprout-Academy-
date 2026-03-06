@@ -2,7 +2,7 @@
 
 @section('content')
     @include('frontend.partials.header_inner', [
-        'bgImage' => asset('frontend/assets/home_page_images/hdr-pr.png'),
+        'bgImage' => asset('frontend/assets/home_page_images/enroll-bg.png'),
         'title' => 'Spots are Limited!',
         'subtitle' => 'The Sprout Academy',
         'text' => 'Schools fill up quickly. Enroll today!',
@@ -12,10 +12,10 @@
     <!-- Spots Are Limited / Locations Section -->
     <section class="locations-section section" aria-labelledby="locations-heading">
         <div class="container">
-            <div class="locations-header">
+            {{-- <div class="locations-header">
                 <h2 id="locations-heading" class="section-title">SPOTS ARE LIMITED!</h2>
                 <p class="locations-subtitle">Enroll Today & Secure Your Child's Spot</p>
-            </div>
+            </div> --}}
 
             <div class="locations-grid">
                 @forelse ($locations as $location)
@@ -48,7 +48,7 @@
                                 <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
                                 <a href="{{ route('enrollment.start', ['location' => $location->slug, 'ref' => 'enroll']) }}"
-                                    class="btn btn-secondary">Schedule a Tour</a>
+                                    class="btn btn-secondary">Enroll Your Child</a>
                             </div>
                         </div>
                     </div>

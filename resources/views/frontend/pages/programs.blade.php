@@ -4,8 +4,8 @@
     <!-- Inner Page Header -->
     @include('frontend.partials.header_inner', [
         'bgImage' => asset('frontend/assets/home_page_images/hdr-programs.png'),
-        'title' => 'OUR PROGRAMS',
-        'subtitle' => 'Explore Our Programs',
+        'title' => 'OUR PROGRAM',
+        'subtitle' => 'The Sprout Academy',
     ])
 
     <!-- Our Mission Section -->
@@ -13,8 +13,8 @@
         <div class="container">
             <div class="mission-content">
                 @include('frontend.components.section-heading', [
-                    'text' => 'Our Mission',
-                    'bgColor' => '#6daa44',
+                    'text' => 'You Will Love What we offer',
+                    'bgColor' => '#6daa44', 
                     'borderColor' => '#6CAA43',
                     'rotation' => 'right',
                 ])
