@@ -13,6 +13,15 @@
     {{-- Employee Forms Section --}}
     <section class="employee-forms-section">
         <div class="container">
+            @auth
+            <div class="employee-forms-hi-tab">
+                <span class="employee-forms-hi-text">Hi, {{ auth()->user()->name ?? auth()->user()->email }}</span>
+                <a href="{{ route('logout') }}" class="employee-forms-logout-link" onclick="event.preventDefault(); document.getElementById('employee-logout-form').submit();">Logout</a>
+                <form id="employee-logout-form" action="{{ route('logout') }}" method="POST" class="employee-logout-form">
+                    @csrf
+                </form>
+            </div>
+            @endauth
             <div class="employee-forms-grid">
                 {{-- Form Card 1: Time Of Request --}}
                 <a href="{{ route('form.timeOffRequestForm') }}" class="employee-form-card">

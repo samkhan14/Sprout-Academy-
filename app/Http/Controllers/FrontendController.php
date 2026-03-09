@@ -187,7 +187,15 @@ class FrontendController extends Controller
 
     public function EmployeeForms()
     {
+        if (!auth()->check()) {
+            return redirect()->guest(route('frontend.employeeLogin'));
+        }
         return view('frontend.pages.employee_forms');
+    }
+
+    public function EmployeeLoginForm()
+    {
+        return view('frontend.pages.forms.employee_login_form');
     }
 
     public function ThankYou()

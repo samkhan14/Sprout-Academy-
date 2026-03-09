@@ -40,6 +40,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 
 // Employee Forms (Public - No Authentication Required)
 Route::get('/employee-forms', [FrontendController::class, 'EmployeeForms'])->name('frontend.employeeForms');
+Route::get('/employee-login', [FrontendController::class, 'EmployeeLoginForm'])->name('frontend.employeeLogin');
 
 
 // Form Routes (Public - No Authentication Required)
