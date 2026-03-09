@@ -52,9 +52,9 @@
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.parentsForms') ? 'active' : '' }}"
                                     href="{{ route('frontend.parentsForms') }}"
                                     @if (request()->routeIs('frontend.parentsForms')) aria-current="page" @endif>Parent Forms</a></li>
-                            <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
+                            {{-- <li><a class="dropdown-item {{ request()->routeIs('frontend.downloadForms') ? 'active' : '' }}"
                                     href="{{ route('frontend.downloadForms') }}"
-                                    @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li>
+                                    @if (request()->routeIs('frontend.downloadForms')) aria-current="page" @endif>Download Forms</a></li> --}}
                         </ul>
                     </li>
 

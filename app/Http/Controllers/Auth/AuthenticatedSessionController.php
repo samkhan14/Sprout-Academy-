@@ -22,7 +22,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
@@ -30,19 +30,25 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-        // Redirect based on user role
-        if ($user && $user->role === 'admin') {
-            // Admins go to admin dashboard
-            return redirect()->intended(route('admin.dashboard'));
-        }
-
         if ($user && $user->role === 'employee') {
-            // Employees go to employee forms page on the website
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'redirect_url' => route('frontend.employeeForms'),
+                ]);
+            }
+
             return redirect()->intended(route('frontend.employeeForms'));
         }
 
-        // Fallback: send any other user to the website home
-        return redirect()->intended(route('frontend.home'));
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'redirect_url' => route('admin.dashboard'),
+            ]);
+        }
+
+        return redirect()->intended(route('admin.dashboard'));
     }
 
     /**

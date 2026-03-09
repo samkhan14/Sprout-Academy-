@@ -53,6 +53,39 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * Attempt to authenticate and ensure the user matches the required role.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function authenticateForRole(string $role): void
+    {
+        $this->ensureIsNotRateLimited();
+
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        $user = Auth::user();
+
+        if (! $user || $user->role !== $role) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => $role === 'admin'
+                    ? 'Only admins can sign in from this page.'
+                    : 'Only employees can sign in from this page.',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
      * Ensure the login request is not rate limited.
      *
      * @throws \Illuminate\Validation\ValidationException

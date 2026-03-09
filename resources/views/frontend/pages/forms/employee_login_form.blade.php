@@ -1,6 +1,6 @@
 @extends('frontend.partials.master')
 
-@section('title')
+@section('title', 'Login')
 
 @section('content')
     <!-- Enrollment Form Section -->
@@ -14,18 +14,27 @@
 
                 <!-- Form -->
                 <div class="location-enrollment-form-content">
-                    <p class="location-enrollment-instruction">To begin, please enter your email address below.</p>
+                    <p class="location-enrollment-instruction">Log in with your account to access the dashboard or employee forms.</p>
 
-                    <form id="locationEnrollmentForm" method="POST" action="{{ route('login') }}" novalidate>
+                    @if ($errors->any())
+                        <div class="form-message error" style="display: block;">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <div id="formMessage" class="form-message error" style="display: none;"></div>
+
+                    <form id="employeeLoginForm" method="POST" action="{{ route('login') }}" novalidate>
                         @csrf
-
-                        <div id="formMessage" class="form-message" style="display: none;"></div>
 
                         <!-- Email Field -->
                         <div class="form-field location-enrollment-email-field">
                             <label for="emailAddress">Email Address*</label>
                             <input type="email" id="emailAddress" name="email"
                                 class="form-input location-enrollment-input" placeholder="Johnsmith@gmail.com" required
+                                value="{{ old('email') }}"
                                 aria-label="Email address">
                         </div>
 
@@ -40,7 +49,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn location-enrollment-submit-btn mt-5" id="submitBtn">
-                    GO
+                    Login
                 </button>
                 </form>
 
@@ -63,72 +72,51 @@
             const formMessage = document.getElementById('formMessage');
             const submitBtn = document.getElementById('submitBtn');
 
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    // Hide previous messages
-                    formMessage.style.display = 'none';
-
-                    // Disable button
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Loading...';
-
-                    // Create FormData
-                    const formData = new FormData(form);
-
-                    // AJAX submission
-                    fetch(form.action, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'Accept': 'application/json',
-                            }
-                        })
-                        .then(response => {
-                            return response.json().then(data => ({
-                                status: response.status,
-                                data: data
-                            }));
-                        })
-                        .then(result => {
-                            if (result.status === 200 && result.data.success) {
-                                // Success - redirect to step1
-                                window.location.href = result.data.redirect_url ||
-                                    '{{ route('dashboard') }}';
-                            } else {
-                                // Error
-                                let errorMessage = 'An error occurred. Please try again.';
-                                if (result.data.message) {
-                                    errorMessage = result.data.message;
-                                }
-                                if (result.data.errors) {
-                                    const errorList = Object.values(result.data.errors).flat().join(
-                                        '<br>');
-                                    errorMessage += '<br>' + errorList;
-                                }
-                                formMessage.innerHTML = errorMessage;
-                                formMessage.className = 'form-message error';
-                                formMessage.style.display = 'block';
-
-                                // Re-enable button
-                                submitBtn.disabled = false;
-                                submitBtn.textContent = 'GO';
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            formMessage.textContent = 'An error occurred. Please try again later.';
-                            formMessage.className = 'form-message error';
-                            formMessage.style.display = 'block';
-
-                            // Re-enable button
-                            submitBtn.disabled = false;
-                            submitBtn.textContent = 'GO';
-                        });
-                });
+            if (!form) {
+                return;
             }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                formMessage.style.display = 'none';
+                formMessage.innerHTML = '';
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...';
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        window.location.href = data.redirect_url;
+                        return;
+                    }
+
+                    let errorMessage = data.message || 'An error occurred. Please try again.';
+
+                    if (data.errors) {
+                        errorMessage = Object.values(data.errors).flat().join('<br>');
+                    }
+
+                    formMessage.innerHTML = errorMessage;
+                    formMessage.style.display = 'block';
+                } catch (error) {
+                    formMessage.innerHTML = 'An error occurred. Please try again later.';
+                    formMessage.style.display = 'block';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Login';
+                }
+            });
         });
     </script>
 @endpush

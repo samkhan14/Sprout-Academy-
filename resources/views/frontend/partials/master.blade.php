@@ -72,7 +72,9 @@
                 'enrollment.step3',
                 'enrollment.step4',
                 'frontend.thankYou',
-                'enrollment.thankYou'
+                'enrollment.thankYou',
+                'frontend.employeeLogin',
+                'login',
             ]);
         @endphp
 

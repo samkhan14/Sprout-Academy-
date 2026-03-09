@@ -2114,23 +2114,20 @@ body.page-meetTheTeam .founders-section .founders-icon {
 .parents-form-card {
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    /* background: #fff; */
+    /* border-radius: var(--radius-lg); */
+    /* overflow: hidden; */
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); */
     text-decoration: none;
     color: inherit;
     transition: var(--transition-base);
-}
-
-.parents-form-card:hover {
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
 }
 
 .parents-form-card-image {
     width: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    border-radius: 20px;
 }
 
 .parents-form-card-image img {
@@ -2141,16 +2138,16 @@ body.page-meetTheTeam .founders-section .founders-icon {
     transition: transform 0.3s ease;
 }
 
-.parents-form-card:hover .parents-form-card-image img {
+/* .parents-form-card:hover .parents-form-card-image img {
     transform: scale(1.03);
-}
+} */
 
 .parents-form-card-title {
     font-family: var(--font-primary);
     font-size: 1.5rem;
     font-weight: 700;
     color: #000;
-    text-align: center;
+    text-align: left;
     margin: 0;
     padding: var(--space-lg);
 }
@@ -2261,6 +2258,11 @@ body.page-meetTheTeam .founders-section .founders-icon {
     font-size: 0.9rem;
     color: #2d4578;
     text-decoration: none;
+}
+
+body.page-employeeLogin button#submitBtn {
+    text-transform: capitalize;
+    font-weight: 500;
 }
 
 .employee-forms-logout-link:hover {

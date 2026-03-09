@@ -40,7 +40,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
 
 // Employee Forms (Public - No Authentication Required)
 Route::get('/employee-forms', [FrontendController::class, 'EmployeeForms'])->name('frontend.employeeForms');
-Route::get('/employee-login', [FrontendController::class, 'EmployeeLoginForm'])->name('frontend.employeeLogin');
+Route::get('/employee-login', [FrontendController::class, 'EmployeeLoginForm'])->middleware('guest')->name('frontend.employeeLogin');
 
 
 // Form Routes (Public - No Authentication Required)
@@ -65,7 +65,9 @@ require __DIR__ . '/auth.php';
 // Dashboard Redirect (for backward compatibility)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        return redirect()->route('admin.dashboard');
+        return auth()->user()?->role === 'employee'
+            ? redirect()->route('frontend.employeeForms')
+            : redirect()->route('admin.dashboard');
     })->name('dashboard');
 });
 
