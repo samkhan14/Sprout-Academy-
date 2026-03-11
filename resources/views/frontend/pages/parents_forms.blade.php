@@ -26,16 +26,16 @@
     <section class="parents-forms-cards-section">
         <div class="container">
             <div class="parents-forms-grid">
-                <a href="{{ asset('frontend/assets/docs/pcbl-child-enrollment-record.pdf') }}" class="parents-form-card"
-                    target="_blank" rel="noopener noreferrer">
-                    <div class="parents-form-card-image">
-                        <img src="{{ asset('frontend/assets/home_page_images/parent-page-img1.png') }}"
-                            alt="Enrollment Packet" loading="lazy">
-                    </div>
+                <a href="{{ asset('frontend/assets/docs/Sprout-Employee-Handbook-3.1.docx') }}" class="parents-form-card"
+                target="_blank" rel="noopener noreferrer" download="Sprout-Employee-Handbook-3.1.docx">
+                <div class="parents-form-card-image">
+                    <img src="{{ asset('frontend/assets/home_page_images/parent-page-img2.png') }}"
+                        alt="Employee Handbook" loading="lazy">
+                </div>
                     <h3 class="parents-form-card-title">Enrollment Packet</h3>
                 </a>
-                <a href="{{ asset('frontend/assets/docs/Parent-Orientation.pdf') }}" class="parents-form-card"
-                    target="_blank" rel="noopener noreferrer">
+                <a href="{{ asset('frontend/assets/docs/Sprout-Parent-Handbook-2020-v6.docx') }}" class="parents-form-card"
+                    target="_blank" rel="noopener noreferrer" download="Sprout-Parent-Handbook-2020-v6.docx">
                     <div class="parents-form-card-image">
                         <img src="{{ asset('frontend/assets/home_page_images/parent-page-img2.png') }}"
                             alt="Parent Handbook" loading="lazy">

@@ -90,13 +90,43 @@
                         </ul>
                     </li>
 
-                    <!-- Locations -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.locations') ? 'active' : '' }}"
-                            href="{{ route('frontend.locations') }}"
-                            @if (request()->routeIs('frontend.locations')) aria-current="page" @endif>
+                    <!-- Locations - Dropdown -->
+                    <li class="nav-item dropdown">
+                        @php
+                            $isLocationsActive =
+                                request()->routeIs('frontend.locations') ||
+                                request()->routeIs('frontend.locationSeminole') ||
+                                request()->routeIs('frontend.locationClearwater') ||
+                                request()->routeIs('frontend.locationStPetersburg') ||
+                                request()->routeIs('frontend.locationPinellasPark') ||
+                                request()->routeIs('frontend.locationMontessori') ||
+                                request()->routeIs('frontend.locationLargo');
+                        @endphp
+                        <a class="nav-link dropdown-toggle {{ $isLocationsActive ? 'active' : '' }}" href="#"
+                            id="locationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Locations
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="locationsDropdown">
+                           
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationSeminole') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationSeminole') }}"
+                                    @if (request()->routeIs('frontend.locationSeminole')) aria-current="page" @endif>Seminole</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationClearwater') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationClearwater') }}"
+                                    @if (request()->routeIs('frontend.locationClearwater')) aria-current="page" @endif>Clearwater</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationStPetersburg') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationStPetersburg') }}"
+                                    @if (request()->routeIs('frontend.locationStPetersburg')) aria-current="page" @endif>St. Petersburg</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationPinellasPark') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationPinellasPark') }}"
+                                    @if (request()->routeIs('frontend.locationPinellasPark')) aria-current="page" @endif>Pinellas Park</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationLargo') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationLargo') }}"
+                                    @if (request()->routeIs('frontend.locationLargo')) aria-current="page" @endif>Largo</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('frontend.locationMontessori') ? 'active' : '' }}"
+                                    href="{{ route('frontend.locationMontessori') }}"
+                                    @if (request()->routeIs('frontend.locationMontessori')) aria-current="page" @endif>Montessori</a></li>
+                        </ul>
                     </li>
 
                     <!-- Sproutvine with Icon -->
