@@ -269,12 +269,20 @@ body {
 .nav-link {
     font-family: "Nunito Sans", sans-serif;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 100%;
     letter-spacing: 0%;
     color: #222222;
     padding: 0.5rem 1rem;
     transition: var(--transition-base);
+}
+
+.container.container-expanded {
+    max-width: 1490px;
+}
+
+.container.container-expanded .btn-foundation {
+    padding:0.75rem 1.15rem;
 }
 
 .navbar-nav li.nav-item.sproutvine-link i {
@@ -417,7 +425,7 @@ body {
     color: var(--color-white);
     font-family: var(--font-secondary);
     font-weight: 700;
-    padding: 0.75rem 1.75rem;
+    padding: 0.75rem 1.15rem;
     border-radius: 50px;
     transition: var(--transition-base);
     border: none;
@@ -2683,6 +2691,11 @@ footer#footer-copyright {
 footer#footer-copyright .footer-bottom {
     border-top: transparent;
     padding-top: 0;
+}
+
+body.page-login footer#footer-copyright .footer-bottom {
+    padding-bottom: 0;
+    height: 40px;
 }
 
 .site-footer {
@@ -7495,6 +7508,20 @@ select.form-control {
     z-index: 0;
 }
 
+/* Login page: background image + less vertical padding */
+body.page-login .location-enrollment-form-section {
+    background: url(/frontend/assets/home_page_images/bg-login-page.png) center center / cover no-repeat;
+    padding: 48px 0;
+}
+
+body.page-login .location-enrollment-form-section::before {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+body.page-login .location-enrollment-form-section::after {
+    display: none;
+}
+
 .location-enrollment-bg-icon {
     position: absolute;
     right: -100px;
@@ -7773,6 +7800,10 @@ select.form-control {
 @media (max-width: 768px) {
     .location-enrollment-form-section {
         padding: var(--space-lg) var(--space-sm);
+    }
+
+    body.page-login .location-enrollment-form-section {
+        padding: 32px var(--space-sm);
     }
 
     .location-enrollment-card {

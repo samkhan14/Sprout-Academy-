@@ -56,10 +56,6 @@
         </div>
         </div>
 
-        <div class="location-enrollment-bg-icon">
-            <img src="{{ asset('frontend/assets/home_page_images/gallery-img-icon.png') }}" alt="Sprout Icon"
-                aria-hidden="true">
-        </div>
     </section>
 @endsection
 

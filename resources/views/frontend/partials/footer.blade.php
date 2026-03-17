@@ -58,7 +58,7 @@
                 <h3 class="footer-title">Company</h3>
                 <ul class="footer-links">
                     <li><a href="{{ route('frontend.theSproutAcademyDifference') }}">About Us</a></li>
-                    <li><a href="{{ route('frontend.locations') }}">Contact Us</a></li>
+                    <li><a href="{{ route('frontend.enroll') }}">Contact Us</a></li>
                     <li><a href="{{ route('form.employmentApplication') }}">Apply To Work With Sprout</a></li>
                 </ul>
             </div>
@@ -81,7 +81,7 @@
                 <ul class="footer-links">
                     <li><a href="{{ route('frontend.employeeForms') }}">Employee Portal</a></li>
                     <li><a href="{{ route('frontend.parentsForms') }}">Parent Forms</a></li>
-                    <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li>
+                    {{-- <li><a href="{{ route('frontend.downloadForms') }}">Download Forms</a></li> --}}
                     <li><a href="{{ route('frontend.nonDiscriminationPolicy') }}">Non-Discrimination Policy</a></li>
                     <li><a href="{{ route('frontend.corporateResponsibility') }}">Corporate Responsibility</a></li>
                 </ul>
@@ -131,7 +131,7 @@
                 Copyrights &copy; {{ date('Y') }}. The Sprout Academy. All rights reserved.
             </p>
             <p class="mb-0">
-                Site Design by <a href="https://webenixsolutions.com/" target="_blank" rel="noopener noreferrer">Webenix Solutions</a>
+                Site by <a href="https://webenixsolutions.com/" target="_blank" rel="noopener noreferrer">Webenix Solutions</a>
             </p>
         </div>
     </div>

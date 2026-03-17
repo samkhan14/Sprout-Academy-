@@ -307,15 +307,16 @@
             </div>
 
             <div class="locations-grid">
-                @forelse ($locations as $location)
+
+                @forelse ($locations as $index => $location)
                     @php
                         // Static images map based on location slug
                         $locationImages = [
                             'seminole' => 'sch-img-1.png',                           
-                            'pinellas_park' => 'sch-img-3.png',
+                            'st-petersburg' => 'sch-img-2.png',
+                            'pinellas-park' => 'sch-img-3.png',
                             'montessori' => 'sch-img-4.png',
                             'largo' => 'sch-img-5.png',
-                            'st_petersburg' => 'sch-img-1.png',
                         ];
                         $imageName = $locationImages[$location->slug] ?? 'sch-img-1.png';
                     @endphp
