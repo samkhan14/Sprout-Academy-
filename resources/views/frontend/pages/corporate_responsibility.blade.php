@@ -154,7 +154,7 @@
                     </div>
                     <div class="timeline-image">
                         <div class="timeline-image-spacing">
-                            <img src="{{ asset('frontend/assets/home_page_images/corporate-img-1.png') }}"
+                            <img src="{{ asset('frontend/assets/home_page_images/corporate-page-img-6.png') }}"
                                 alt="Technical Excellence">
                         </div>
                     </div>

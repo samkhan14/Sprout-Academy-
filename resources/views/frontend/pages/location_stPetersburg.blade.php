@@ -58,9 +58,9 @@
                         </div>
                     </div>
                     <!-- <div class="vt-action-buttons">
-                        <a href="#register" class="btn btn-enroll">Register Here</a>
+                            <a href="#register" class="btn btn-enroll">Register Here</a>
 
-                    </div> -->
+                        </div> -->
                 </div>
                 @include('frontend.components.google-map', [
                     'address' => '1100 1st Ave N, St. Petersburg, FL 33701',
@@ -75,7 +75,8 @@
                             the last year and offers the highest quality educational facility in the area. We rigorously
                             follow and uphold all the top standards of the Apple accreditation, Gold Seal Florida Quality
                             Care, and the The Sprout Academy policies.</p>
-                        <a href="https://www.facebook.com/SproutStPete/" target="_blank" class="location-text-link">Follow Our Socials:
+                        <a href="https://www.facebook.com/SproutStPete/" target="_blank" class="location-text-link">Follow
+                            Our Socials:
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -86,11 +87,12 @@
             @include('frontend.components.masonry-gallery', [
                 'locationName' => 'seminole',
             ])
-            
+
             <!-- View All Images on Facebook Button -->
             <div class="container mt-4 mb-5">
                 <div class="text-center">
-                    <a href="https://www.facebook.com/SproutStPete/photos" target="_blank" rel="noopener noreferrer" class="btn btn-foundation btn-lg">
+                    <a href="https://www.facebook.com/SproutStPete/photos" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-foundation btn-lg">
                         View All Images on Facebook
                     </a>
                 </div>

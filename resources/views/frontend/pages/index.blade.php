@@ -14,7 +14,8 @@
 
     <!-- Hero Section -->
     <section class="hero-section" aria-label="Hero banner">
-        <video class="hero-video" autoplay muted loop playsinline poster="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}">
+        <video class="hero-video" autoplay muted loop playsinline
+            poster="{{ asset('frontend/assets/home_page_images/vdo-img1.png') }}">
             <source src="{{ asset('frontend/assets/home_page_images/vdo-1.mp4') }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -68,9 +69,9 @@
                     </div>
                     <h3 class="step-title">Schedule a Tour</h3>
                     <p class="step-description">Visit our school, meet our teachers, &
-                    see the Sprout difference.</p>
+                        see the Sprout difference.</p>
                 </div>
- 
+
                 <!-- Step 2 -->
                 <div class="step-item">
                     <div class="step-icon orange" aria-hidden="true">
@@ -79,7 +80,7 @@
                     </div>
                     <h3 class="step-title">Enroll Your Child</h3>
                     <p class="step-description">Complete a simple enrollment process on site
-                    with guidance every step of the way.</p>
+                        with guidance every step of the way.</p>
                 </div>
 
                 <!-- Step 3 -->
@@ -90,13 +91,14 @@
                     </div>
                     <h3 class="step-title">Watch Them Grow</h3>
                     <p class="step-description">Your child learns, plays, and thrives in a
-                    caring, joyful environment.</p>
+                        caring, joyful environment.</p>
                 </div>
             </div>
 
             <div class="steps-cta">
                 <p class="steps-cta-text">So, what are you waiting for?</p>
-                <a href="{{ route('frontend.virtualTour') }}" class="btn btn-tour-outline btn-lg">Schedule a Tour &raquo;</a>
+                <a href="{{ route('frontend.virtualTour') }}" class="btn btn-tour-outline btn-lg">Schedule a Tour
+                    &raquo;</a>
             </div>
         </div>
     </section>
@@ -182,14 +184,21 @@
                         'rotation' => 'left',
                     ])
                     <h3 class="why-choose-title">Keeping Your Child Safe is Our Top Priority</h3>
-                    <a href="{{ route('frontend.virtualTour') }}" class="btn btn-foundation btn-lg mt-3">Schedule a Tour &raquo;</a>
+                    <a href="{{ route('frontend.virtualTour') }}" class="btn btn-foundation btn-lg mt-3">Schedule a Tour
+                        &raquo;</a>
                 </div>
                 <div class="col-lg-7">
                     <p class="why-choose-text-right mb-3">
-                        From the time you drop off to the moment you return, we’ll keep them safe, sound, and smiling. Finding quality childcare that balances education, safety, and fun can be challenging for parents. Many facilities promise engaging activities but often neglect the simple safeties, which can be stressful for busy families.
+                        From the time you drop off to the moment you return, we’ll keep them safe, sound, and smiling.
+                        Finding quality childcare that balances education, safety, and fun can be challenging for parents.
+                        Many facilities promise engaging activities but often neglect the simple safeties, which can be
+                        stressful for busy families.
                     </p>
                     <p class="why-choose-text-right">
-                        At The Sprout Academy, we've solved this problem. Our innovative approach provides hands-on learning experiences that engage children's natural curiosity while maintaining a clean, organized and extremely safe environment. We guarantee your child will explore, learn, and grow while being safe all along the way. Our goal now (and forever) is to prioritize safety first
+                        At The Sprout Academy, we've solved this problem. Our innovative approach provides hands-on learning
+                        experiences that engage children's natural curiosity while maintaining a clean, organized and
+                        extremely safe environment. We guarantee your child will explore, learn, and grow while being safe
+                        all along the way. Our goal now (and forever) is to prioritize safety first
                     </p>
                 </div>
             </div>
@@ -268,8 +277,8 @@
 
     <!-- Sprout Store Section -->
     <section class="sprout-store-section" aria-labelledby="sprout-store-heading">
-        <div class="sprout-store-wrapper">
-            <div class="container">
+        <div class="container">
+            <div class="sprout-store-wrapper">
                 <div class="sprout-store-content-wrapper">
                     <!-- Left Content -->
                     <div class="sprout-store-content">
@@ -284,15 +293,15 @@
                             WEAR WITH PRIDE.
                         </h2>
                         <p class="sprout-store-tagline">Where school spirit meets everyday style.</p>
-                        <a href="https://thesproutstore.com/" target="_blank" rel="noopener noreferrer" class="btn btn-sprout-store">Shop Now</a>
+                        <a href="https://thesproutstore.com/" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-sprout-store">Shop Now</a>
                     </div>
                     <!-- Right Merchandise (Visual Elements) -->
-                    <!-- <div class="sprout-store-merchandise">
-                        <img src="{{ asset('frontend/assets/home_page_images/Products-loop.png') }}" 
-                             alt="Sprout Store merchandise - t-shirt, cap, backpack, slides, and face mask" 
-                             class="sprout-store-products-img"
-                             loading="lazy">
-                    </div> -->
+                    <div class="sprout-store-merchandise">
+                        <img src="{{ asset('frontend/assets/home_page_images/store-girl1.png') }}"
+                            alt="Sprout Store merchandise - t-shirt, cap, backpack, slides, and face mask"
+                            class="sprout-store-products-img" loading="lazy">
+                    </div>
                 </div>
             </div>
         </div>
@@ -312,7 +321,7 @@
                     @php
                         // Static images map based on location slug
                         $locationImages = [
-                            'seminole' => 'sch-img-1.png',                           
+                            'seminole' => 'sch-img-1.png',
                             'st-petersburg' => 'sch-img-2.png',
                             'pinellas-park' => 'sch-img-3.png',
                             'montessori' => 'sch-img-4.png',
@@ -337,8 +346,8 @@
                                 <h3 class="location-overlay-title">{{ strtoupper($location->name) }}</h3>
                                 <p class="location-overlay-address">{{ $location->address }}</p>
                                 <div class="location-overlay-buttons">
-                                    <a href="{{ route('frontend.virtualTour') }}"
-                                        class="btn btn-secondary">Schedule a Tour</a>
+                                    <a href="{{ route('frontend.virtualTour') }}" class="btn btn-secondary">Schedule a
+                                        Tour</a>
                                     <a href="{{ route('frontend.enroll') }}" class="btn btn-enroll-overlay">Enroll</a>
                                 </div>
                             </div>

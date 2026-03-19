@@ -29,7 +29,8 @@
                 <div class="location-enrollment-form-content">
                     <p class="location-enrollment-instruction">To begin, please enter your email address below.</p>
 
-                    <form id="locationEnrollmentForm" method="POST" action="{{ route('enrollment.start', ['location' => $location]) }}" novalidate>
+                    <form id="locationEnrollmentForm" method="POST"
+                        action="{{ route('enrollment.start', ['location' => $location]) }}" novalidate>
                         @csrf
                         <input type="hidden" name="referrer" value="{{ $referrer ?? '' }}">
 
@@ -38,16 +39,18 @@
                         <!-- Email Field -->
                         <div class="form-field location-enrollment-email-field">
                             <label for="emailAddress">Email Address*</label>
-                            <input type="email" id="emailAddress" name="email" class="form-input location-enrollment-input"
-                                placeholder="Johnsmith@gmail.com" required aria-label="Email address">
+                            <input type="email" id="emailAddress" name="email"
+                                class="form-input location-enrollment-input" placeholder="Johnsmith@gmail.com" required
+                                aria-label="Email address">
                         </div>
 
                         <!-- Privacy Policy Checkbox -->
                         <div class="location-enrollment-privacy">
                             <label class="location-enrollment-checkbox-label">
-                                <input type="checkbox" id="privacyPolicy" name="privacy_policy" 
+                                <input type="checkbox" id="privacyPolicy" name="privacy_policy"
                                     class="checkbox-input location-enrollment-checkbox" value="1" required>
-                                <span class="location-enrollment-checkbox-text">By Using This Site You Agree That You Have Read, Understand, And Agree To Our Privacy Policy.</span>
+                                <span class="location-enrollment-checkbox-text">By Using This Site You Agree That You Have
+                                    Read, Understand, And Agree To Our Privacy Policy.</span>
                             </label>
                         </div>
 
@@ -59,16 +62,17 @@
 
                     <!-- Footer Link -->
                     <p class="location-enrollment-footer-link">
-                        <a href="{{ route('frontend.locations') }}">Not The Location You're Looking For? Please Contact Your Child Care Provider For The Correct Link.</a>
+                        <a href="{{ route('frontend.locations') }}">Not The Location You're Looking For? Please Contact Your
+                            Child Care Provider For The Correct Link.</a>
                     </p>
                 </div>
             </div>
         </div>
 
         <!-- Background Sprout Icon -->
-        <div class="location-enrollment-bg-icon">
+        {{-- <div class="location-enrollment-bg-icon">
             <img src="{{ asset('frontend/assets/home_page_images/gallery-img-icon.png') }}" alt="Sprout Icon" aria-hidden="true">
-        </div>
+        </div> --}}
     </section>
 @endsection
 
@@ -104,55 +108,56 @@
 
                     // AJAX submission
                     fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json',
-                        }
-                    })
-                    .then(response => {
-                        return response.json().then(data => ({
-                            status: response.status,
-                            data: data
-                        }));
-                    })
-                    .then(result => {
-                        if (result.status === 200 && result.data.success) {
-                            // Success - redirect to step1
-                            window.location.href = result.data.redirect_url || '{{ route("enrollment.form", ["location" => $location]) }}';
-                        } else {
-                            // Error
-                            let errorMessage = 'An error occurred. Please try again.';
-                            if (result.data.message) {
-                                errorMessage = result.data.message;
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
                             }
-                            if (result.data.errors) {
-                                const errorList = Object.values(result.data.errors).flat().join('<br>');
-                                errorMessage += '<br>' + errorList;
+                        })
+                        .then(response => {
+                            return response.json().then(data => ({
+                                status: response.status,
+                                data: data
+                            }));
+                        })
+                        .then(result => {
+                            if (result.status === 200 && result.data.success) {
+                                // Success - redirect to step1
+                                window.location.href = result.data.redirect_url ||
+                                    '{{ route('enrollment.form', ['location' => $location]) }}';
+                            } else {
+                                // Error
+                                let errorMessage = 'An error occurred. Please try again.';
+                                if (result.data.message) {
+                                    errorMessage = result.data.message;
+                                }
+                                if (result.data.errors) {
+                                    const errorList = Object.values(result.data.errors).flat().join(
+                                        '<br>');
+                                    errorMessage += '<br>' + errorList;
+                                }
+                                formMessage.innerHTML = errorMessage;
+                                formMessage.className = 'form-message error';
+                                formMessage.style.display = 'block';
+
+                                // Re-enable button
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = 'GO';
                             }
-                            formMessage.innerHTML = errorMessage;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            formMessage.textContent = 'An error occurred. Please try again later.';
                             formMessage.className = 'form-message error';
                             formMessage.style.display = 'block';
-                            
+
                             // Re-enable button
                             submitBtn.disabled = false;
                             submitBtn.textContent = 'GO';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        formMessage.textContent = 'An error occurred. Please try again later.';
-                        formMessage.className = 'form-message error';
-                        formMessage.style.display = 'block';
-                        
-                        // Re-enable button
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'GO';
-                    });
+                        });
                 });
             }
         });
     </script>
 @endpush
-

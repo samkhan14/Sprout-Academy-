@@ -75,10 +75,11 @@
                 'enrollment.thankYou',
                 'frontend.employeeLogin',
                 'login',
+                'enrollment.start',
             ]);
         @endphp
 
-        @if($isFormPage)
+        @if ($isFormPage)
             @include('frontend.partials.footer_copyright')
         @else
             @include('frontend.partials.footer')
@@ -87,7 +88,8 @@
 
     <!-- Floating Chat Button -->
     <button class="floating-chat-btn" aria-label="Open chat support">
-        <img src="{{ asset('frontend/assets/home_page_images/chat-icon.png') }}" alt="Chat" width="26" height="26" loading="lazy">
+        <img src="{{ asset('frontend/assets/home_page_images/chat-icon.png') }}" alt="Chat" width="26"
+            height="26" loading="lazy">
     </button>
 
     <!-- jQuery (required for Slick - must load first) -->

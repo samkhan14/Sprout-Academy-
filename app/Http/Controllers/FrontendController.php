@@ -44,7 +44,7 @@ class FrontendController extends Controller
     public function VirtualTour()
     {
         $locations = Location::active()->get();
-        
+
         // Map location slugs to folder names
         $locationFolderMap = [
             'seminole' => 'Seminole',
@@ -54,7 +54,7 @@ class FrontendController extends Controller
             'st-petersburg' => 'St. Pete',
             'clearwater' => 'Clearwater',
         ];
-        
+
         // Get all panorama images for each location
         $panoramaImages = [];
         $panoramaImageLists = [];
@@ -100,7 +100,7 @@ class FrontendController extends Controller
                 }
             }
         }
-        
+
         return view('frontend.pages.virtual_tour', compact('locations', 'panoramaImages', 'panoramaImageLists'));
     }
 
@@ -187,7 +187,7 @@ class FrontendController extends Controller
 
     public function EmployeeForms()
     {
-        if (!auth()->check()) {
+        if (!auth()->user()) {
             return redirect()->guest(route('login'));
         }
 

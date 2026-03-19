@@ -282,7 +282,7 @@ body {
 }
 
 .container.container-expanded .btn-foundation {
-    padding:0.75rem 1.15rem;
+    padding: 0.75rem 1.15rem;
 }
 
 .navbar-nav li.nav-item.sproutvine-link i {
@@ -1267,7 +1267,8 @@ body.page-nonDiscriminationPolicy section.inner-page-header {
     margin: 0 auto;
 
     /* Curved gradient border ONLY */
-    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
         linear-gradient(135deg, #c9a961 0%, #6daa44 100%) border-box;
     border: 2px solid transparent;
     border-radius: 16px;
@@ -1418,7 +1419,9 @@ body.page-nonDiscriminationPolicy section.inner-page-header {
     position: relative;
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
@@ -1591,7 +1594,6 @@ body.page-nonDiscriminationPolicy section.inner-page-header {
     border-radius: 10px;
     pointer-events: none;
 }
-
 
 .founders-title {
     font-size: 2.25rem;
@@ -2693,7 +2695,8 @@ footer#footer-copyright .footer-bottom {
     padding-top: 0;
 }
 
-body.page-login footer#footer-copyright .footer-bottom {
+body.page-login footer#footer-copyright .footer-bottom,
+body.page-enrollment-start footer#footer-copyright .footer-bottom {
     padding-bottom: 0;
     height: 40px;
 }
@@ -3470,7 +3473,9 @@ body.page-login footer#footer-copyright .footer-bottom {
     position: absolute;
     font-size: 1.125rem;
     color: var(--color-dark-blue);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -4092,7 +4097,8 @@ body.page-corporateResponsibility .timeline-section {
     box-shadow: var(--shadow-md);
 }
 
-.why-choose-section h2, .benifits-receive-wrapper h2 {
+.why-choose-section h2,
+.benifits-receive-wrapper h2 {
     font-size: 40px;
 }
 
@@ -4467,7 +4473,8 @@ div#programs-content-two-cols::before {
     border-radius: 20px;
     padding: var(--space-lg) var(--space-xl);
     border: 4px solid #fff;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    box-shadow:
+        rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
         rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
@@ -4785,7 +4792,9 @@ div#programs-content-two-cols::before {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .development-card:hover {
@@ -7158,7 +7167,7 @@ select.form-control {
 .sprout-store-section {
     position: relative;
     padding: var(--space-xl) 0 var(--space-lg);
-    overflow: hidden;
+    height: 100%;
 }
 
 .sprout-store-wrapper {
@@ -7167,40 +7176,22 @@ select.form-control {
     display: flex;
     align-items: center;
     border-radius: var(--radius-xl);
-    margin: 0 var(--space-2xl);
     background: #f3f3f3;
 }
 
 .sprout-store-content-wrapper {
     position: relative;
-    background-image: url('/frontend/assets/home_page_images/store-girl1.png');
-    background-size: contain;
-    background-position: right;
-    background-repeat: no-repeat;
-    background-color: #f3f3f3;
     width: 100%;
-    min-height: 500px;
     display: flex;
     align-items: center;
-}
-
-.sprout-store-content-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 55%;
-    bottom: 0;
-    background: linear-gradient(89deg, rgba(243, 243, 243, 0.95) 0%, rgba(243, 243, 243, 0.5) 50%, transparent 100%);
-    pointer-events: none;
-    z-index: 1;
+    justify-content: space-between;
 }
 
 .sprout-store-content {
     position: relative;
     z-index: 2;
     max-width: 590px;
-    margin-left: 20px;
+    margin-left: 70px;
 }
 
 .sprout-store-headline {
@@ -7250,8 +7241,8 @@ select.form-control {
 
 .sprout-store-merchandise {
     position: relative;
-    height: 100%;
-    min-height: 490px;
+    /* height: 100%; */
+    /* min-height: 490px; */
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -7260,10 +7251,8 @@ select.form-control {
 }
 
 .sprout-store-products-img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 500px;
+    max-height: 600px;
+    padding: 30px 0 0;
 }
 
 /* Responsive Styles for Sprout Store Section */
@@ -7474,7 +7463,8 @@ select.form-control {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
+    background:
+        radial-gradient(
             circle at 20% 30%,
             rgba(232, 244, 248, 0.8) 0%,
             transparent 60%
@@ -7505,16 +7495,20 @@ select.form-control {
 }
 
 /* Login page: background image + less vertical padding */
-body.page-login .location-enrollment-form-section {
-    background: url(/frontend/assets/home_page_images/bg-login-page.png) center center / cover no-repeat;
+body.page-login .location-enrollment-form-section,
+body.page-enrollment-start .location-enrollment-form-section {
+    background: url(/frontend/assets/home_page_images/bg-login-page.png) center
+        center / cover no-repeat;
     padding: 48px 0;
 }
 
-body.page-login .location-enrollment-form-section::before {
+body.page-login .location-enrollment-form-section::before,
+body.page-enrollment-start .location-enrollment-form-section::before {
     background: rgba(255, 255, 255, 0.35);
 }
 
-body.page-login .location-enrollment-form-section::after {
+body.page-login .location-enrollment-form-section::after,
+body.page-enrollment-start .location-enrollment-form-section::after {
     display: none;
 }
 
@@ -7607,8 +7601,6 @@ body.page-login .location-enrollment-form-section::after {
     padding: 0 var(--space-md);
 }
 
-
-
 .location-enrollment-info-location::before {
     left: -50px;
 }
@@ -7633,7 +7625,7 @@ body.page-login .location-enrollment-form-section::after {
 .location-enrollment-instruction {
     font-family: var(--font-secondary);
     font-size: 16px;
-    color: #2D4578;
+    color: #2d4578;
     text-align: left;
     margin-bottom: var(--space-sm);
     line-height: 1.6;
@@ -7726,7 +7718,7 @@ body.page-login .location-enrollment-form-section::after {
 .location-enrollment-submit-btn {
     width: 100%;
     padding: 12px;
-    background: #2D4578;
+    background: #2d4578;
     color: var(--color-white);
     border: none;
     border-radius: 40px;
@@ -7883,14 +7875,13 @@ body.page-login .location-enrollment-form-section::after {
     }
 }
 
-
 /* ========================================
    Sproutvine NEWS Section (Figma design - exact match)
    ======================================== */
 
-   .sproutvine-news-section{
+.sproutvine-news-section {
     padding: 0 0 var(--space-3xl);
-   }
+}
 
 /* ---- HEADER ---- */
 .sproutvine-news-header {
@@ -7913,7 +7904,7 @@ body.page-login .location-enrollment-form-section::after {
 }
 
 .sproutvine-news-title {
-    font-family: var(--font-primary, 'Segoe UI', Arial, sans-serif);
+    font-family: var(--font-primary, "Segoe UI", Arial, sans-serif);
     font-weight: 600;
     font-size: 2.2rem;
     color: #1a1a1a;
@@ -7943,7 +7934,7 @@ body.page-login .location-enrollment-form-section::after {
     justify-content: center;
     background: #e8a020;
     color: #fff;
-    font-family: var(--font-secondary, 'Segoe UI', Arial, sans-serif);
+    font-family: var(--font-secondary, "Segoe UI", Arial, sans-serif);
     font-weight: 700;
     font-size: 0.95rem;
     padding: 0.82rem 2rem;
@@ -7952,7 +7943,9 @@ body.page-login .location-enrollment-form-section::after {
     text-decoration: none;
     white-space: nowrap;
     letter-spacing: 0.3px;
-    transition: background 0.2s ease, transform 0.15s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
     cursor: pointer;
 }
 
@@ -8014,14 +8007,14 @@ body.page-login .location-enrollment-form-section::after {
 
 /* Dark gradient overlay */
 .sproutvine-news-featured-image-wrap::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
         to bottom,
         transparent 25%,
         rgba(0, 0, 0, 0.12) 50%,
-        rgba(0, 0, 0, 0.80) 100%
+        rgba(0, 0, 0, 0.8) 100%
     );
     border-radius: 18px;
     pointer-events: none;
@@ -8069,7 +8062,7 @@ body.page-login .location-enrollment-form-section::after {
 }
 
 .sproutvine-news-featured-title {
-    font-family: var(--font-primary, 'Segoe UI', Arial, sans-serif);
+    font-family: var(--font-primary, "Segoe UI", Arial, sans-serif);
     font-weight: 600;
     font-size: 1.35rem;
     line-height: 1.3;
@@ -8124,7 +8117,9 @@ body.page-login .location-enrollment-form-section::after {
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
     display: flex;
     flex-direction: column;
 }
@@ -8185,7 +8180,7 @@ body.page-login .location-enrollment-form-section::after {
 }
 
 .sproutvine-news-side-title {
-    font-family: var(--font-primary, 'Segoe UI', Arial, sans-serif);
+    font-family: var(--font-primary, "Segoe UI", Arial, sans-serif);
     font-weight: 500;
     font-size: 18px;
     line-height: 1.35;
@@ -8201,7 +8196,7 @@ body.page-login .location-enrollment-form-section::after {
     align-items: center;
     gap: 1rem;
     color: #888;
-    font-size:0.9rem;
+    font-size: 0.9rem;
     border-top: 1px solid #efefef;
     margin-left: 20px;
     padding-top: 15px;
@@ -8299,7 +8294,7 @@ body.page-login .location-enrollment-form-section::after {
     padding: var(--space-2xl) var(--space-xl) 0;
     width: 100%;
     position: relative;
-    background-image: url('/frontend/assets/home_page_images/sky-blue-bg.png');
+    background-image: url("/frontend/assets/home_page_images/sky-blue-bg.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -8455,7 +8450,7 @@ body.page-login .location-enrollment-form-section::after {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #2D4578;
+    color: #2d4578;
     margin: 0 0 1.5rem;
     line-height: 1.4;
 }
@@ -8531,14 +8526,49 @@ body.page-login .location-enrollment-form-section::after {
     overflow: hidden;
     border: 1px solid rgba(180, 210, 220, 0.5);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    background: linear-gradient(160deg, #e5f8fb 0%, #e0f7fa 30%, #daf4f7 60%, #d5f1f5 100%);
+    background: linear-gradient(
+        160deg,
+        #e5f8fb 0%,
+        #e0f7fa 30%,
+        #daf4f7 60%,
+        #d5f1f5 100%
+    );
     background-image:
-        linear-gradient(118deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 15%, transparent 45%),
-        linear-gradient(132deg, rgba(255, 255, 255, 0.35) 0%, transparent 30%, transparent 60%),
-        linear-gradient(148deg, transparent 0%, rgba(255, 255, 255, 0.25) 25%, transparent 55%),
-        linear-gradient(160deg, #e5f8fb 0%, #e0f7fa 30%, #daf4f7 60%, #d5f1f5 100%);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-    background-position: 0 0, 0 0, 0 0, 0 0;
+        linear-gradient(
+            118deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.15) 15%,
+            transparent 45%
+        ),
+        linear-gradient(
+            132deg,
+            rgba(255, 255, 255, 0.35) 0%,
+            transparent 30%,
+            transparent 60%
+        ),
+        linear-gradient(
+            148deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.25) 25%,
+            transparent 55%
+        ),
+        linear-gradient(
+            160deg,
+            #e5f8fb 0%,
+            #e0f7fa 30%,
+            #daf4f7 60%,
+            #d5f1f5 100%
+        );
+    background-size:
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        100% 100%;
+    background-position:
+        0 0,
+        0 0,
+        0 0,
+        0 0;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
@@ -8587,7 +8617,7 @@ body.page-login .location-enrollment-form-section::after {
 }
 
 .ndp-pill-heading--blue {
-    background: #007B9A;
+    background: #007b9a;
 }
 
 .ndp-pill-heading--green {
@@ -8602,7 +8632,7 @@ body.page-login .location-enrollment-form-section::after {
     font-family: var(--font-primary);
     font-size: 30px;
     font-weight: 700;
-    color: #2D4578;
+    color: #2d4578;
     margin: 0 0 0.75rem;
 }
 
@@ -8610,7 +8640,7 @@ body.page-login .location-enrollment-form-section::after {
     font-family: var(--font-primary);
     font-size: 18px;
     font-weight: 600;
-    color: #2D4578;
+    color: #2d4578;
     margin: 1.5rem 0 0.5rem;
 }
 

@@ -2,7 +2,7 @@
 <div class="top-bar">
     <div class="container">
         <p class="top-bar-text">Become a more confident parent through our valuable childcare resources.</p>
-       <a href="{{ route('frontend.ourPrograms') }}" target="_blank"> <i class="fas fa-arrow-right"></i></a>
+        <a href="{{ route('frontend.ourPrograms') }}" target="_blank"> <i class="fas fa-arrow-right"></i></a>
     </div>
 </div>
 
@@ -75,17 +75,17 @@
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.infantToddlerEducation') ? 'active' : '' }}"
                                     href="{{ route('frontend.infantToddlerEducation') }}"
                                     @if (request()->routeIs('frontend.infantToddlerEducation')) aria-current="page" @endif>Daycare (Age 2 & Under)
-                                    </a>
+                                </a>
                             </li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.preschoolEarlyEducation') ? 'active' : '' }}"
                                     href="{{ route('frontend.preschoolEarlyEducation') }}"
                                     @if (request()->routeIs('frontend.preschoolEarlyEducation')) aria-current="page" @endif>Preschool (3-5 years)
-                                    </a>
+                                </a>
                             </li>
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.educationFor512YearOld') ? 'active' : '' }}"
                                     href="{{ route('frontend.educationFor512YearOld') }}"
                                     @if (request()->routeIs('frontend.educationFor512YearOld')) aria-current="page" @endif>School age (5-12 years)
-                                    </a>
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -106,7 +106,7 @@
                             Locations
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="locationsDropdown">
-                           
+
                             <li><a class="dropdown-item {{ request()->routeIs('frontend.locationSeminole') ? 'active' : '' }}"
                                     href="{{ route('frontend.locationSeminole') }}"
                                     @if (request()->routeIs('frontend.locationSeminole')) aria-current="page" @endif>Seminole</a></li>
@@ -128,21 +128,24 @@
                     <!-- Sproutvine with Icon -->
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link" href="https://sproutvine.com/" target="_blank">
-                            <img src="{{ asset('frontend/assets/home_page_images/spr1.png') }}" alt="Sproutvine" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
+                            <img src="{{ asset('frontend/assets/home_page_images/spr1.png') }}" alt="Sproutvine"
+                                class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
                             Sproutvine
                         </a>
                     </li>
 
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link" href="https://thesproutstore.com/" target="_blank">
-                            <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
+                            <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store"
+                                class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
                             Sprout Store
                         </a>
                     </li>
 
                     <li class="nav-item sproutvine-link">
                         <a class="nav-link" href="https://thesproutfoundation.org/" target="_blank">
-                            <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store" class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
+                            <img src="{{ asset('frontend/assets/home_page_images/spr-store.png') }}" alt="Store"
+                                class="menu-icon me-1" style="width: 20px; height: 20px; object-fit: contain;">
                             Sprout Foundation
                         </a>
                     </li>
@@ -156,7 +159,8 @@
 
                     <!-- Schedule a Tour Button (Orange) — hover opens Locations dropdown -->
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-foundation" id="scheduleTourNavTrigger" href="{{ route('frontend.virtualTour') }}" target="_blank">Schedule a Tour &raquo;</a>
+                        <a class="btn btn-foundation" id="scheduleTourNavTrigger" href="javascript:void(0)"
+                            target="_blank">Schedule a Tour &raquo;</a>
                     </li>
                 </ul>
             </div>
