@@ -68,6 +68,14 @@
                     'address' => '5995 Park Blvd, Pinellas Park, FL 33781',
                 ])
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'pinellas-park',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">

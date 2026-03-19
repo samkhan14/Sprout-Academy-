@@ -2896,13 +2896,31 @@ body.page-enrollment-start footer#footer-copyright .footer-bottom {
     background: var(--color-white);
 }
 
+/* Single-location virtual tour section on location pages */
+.location-single-vt {
+    padding: var(--space-xl) 0 var(--space-xl);
+    background: var(--color-white);
+}
+
+.vt-single-location-block {
+    border-bottom: none;
+}
+
+.location-single-vt .vt-location-block {
+    border-bottom: none;
+}
+
+.vt-full-width-viewer {
+    width: 100%;
+}
+
 .vt-location-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-3xl);
     align-items: center;
-    padding: var(--space-3xl) 0;
-    border-bottom: 2px solid #e5e7eb;
+    padding: var(--space-xl) 0;
+    /* border-bottom: 2px solid #e5e7eb; */
 }
 
 .vt-location-block:last-child {
@@ -2915,7 +2933,7 @@ body.page-enrollment-start footer#footer-copyright .footer-bottom {
 }
 
 .vt-location-title {
-    font-size: 3.5rem;
+    font-size: 2.7rem;
     font-weight: 600;
     color: var(--color-dark);
     margin-bottom: var(--space-xl);
@@ -3853,6 +3871,10 @@ body.page-enrollment-start footer#footer-copyright .footer-bottom {
 .why-choose-section {
     padding: var(--space-3xl) 0;
     background: var(--color-white);
+}
+
+.location-why-choose {
+    padding: var(--space-xl) 0;
 }
 
 .why-choose-section .section-heading-wrapper {

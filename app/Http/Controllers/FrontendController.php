@@ -140,34 +140,83 @@ class FrontendController extends Controller
     }
 
 
+    private function getLocationPanoramaImages(string $slug): array
+    {
+        $locationFolderMap = [
+            'seminole'      => 'Seminole',
+            'pinellas-park' => 'Pinellas Park',
+            'montessori'    => 'Montessori',
+            'largo'         => 'Largo',
+            'st-petersburg' => 'St. Pete',
+            'clearwater'    => 'Clearwater',
+        ];
+
+        $folderName = $locationFolderMap[$slug] ?? null;
+        if (!$folderName) return [];
+
+        $folderPath = public_path('frontend/assets/virtual-tours-images/' . $folderName);
+        if (!is_dir($folderPath)) return [];
+
+        $files = glob($folderPath . '/*.jpg');
+        if (empty($files)) return [];
+
+        sort($files);
+        $imageList = [];
+        foreach ($files as $file) {
+            $imageName = basename($file);
+            $imageUrl  = asset('frontend/assets/virtual-tours-images/' . $folderName . '/' . $imageName);
+            $label     = pathinfo($imageName, PATHINFO_FILENAME);
+            $label     = str_replace([$folderName . '-', $folderName . '_'], '', $label);
+            $label     = str_replace(['-', '_'], ' ', $label);
+            $label     = is_numeric(trim($label)) ? 'View ' . trim($label) : $label;
+            $label     = ucwords(trim($label));
+            if (empty($label) || strlen($label) < 2) $label = '360° View';
+            $imageList[] = ['url' => $imageUrl, 'label' => $label, 'filename' => $imageName];
+        }
+
+        return $imageList;
+    }
+
     public function LocationSeminole()
     {
-        return view('frontend.pages.location_seminole');
+        $panoramaImages = $this->getLocationPanoramaImages('seminole');
+        $location = Location::where('slug', 'seminole')->first();
+        return view('frontend.pages.location_seminole', compact('panoramaImages', 'location'));
     }
 
     public function LocationClearwater()
     {
-        return view('frontend.pages.location_clearwater');
+        $panoramaImages = $this->getLocationPanoramaImages('clearwater');
+        $location = Location::where('slug', 'clearwater')->first();
+        return view('frontend.pages.location_clearwater', compact('panoramaImages', 'location'));
     }
 
     public function LocationPinellasPark()
     {
-        return view('frontend.pages.location_pinellessPark');
+        $panoramaImages = $this->getLocationPanoramaImages('pinellas-park');
+        $location = Location::where('slug', 'pinellas-park')->first();
+        return view('frontend.pages.location_pinellessPark', compact('panoramaImages', 'location'));
     }
 
     public function LocationMontessori()
     {
-        return view('frontend.pages.location_montesorri');
+        $panoramaImages = $this->getLocationPanoramaImages('montessori');
+        $location = Location::where('slug', 'montessori')->first();
+        return view('frontend.pages.location_montesorri', compact('panoramaImages', 'location'));
     }
 
     public function LocationLargo()
     {
-        return view('frontend.pages.location_largo');
+        $panoramaImages = $this->getLocationPanoramaImages('largo');
+        $location = Location::where('slug', 'largo')->first();
+        return view('frontend.pages.location_largo', compact('panoramaImages', 'location'));
     }
 
     public function LocationStPetersburg()
     {
-        return view('frontend.pages.location_stPetersburg');
+        $panoramaImages = $this->getLocationPanoramaImages('st-petersburg');
+        $location = Location::where('slug', 'st-petersburg')->first();
+        return view('frontend.pages.location_stPetersburg', compact('panoramaImages', 'location'));
     }
 
     public function InfantToddlerEducation()

@@ -19,7 +19,7 @@
             <!-- Seminole Location -->
             <div class="vt-location-block" id="seminole">
                 <div class="vt-location-info">
-                    <h2 class="vt-location-title">SEMINOLE</h2>
+                    <h2 class="vt-location-title">The Sprout Academy Seminole</h2>
                     <div class="vt-contact-list">
                         <div class="vt-contact-item">
                             <i class="fas fa-map-marker-alt"></i>
@@ -67,6 +67,14 @@
                     'address' => '7985 113th St N, Seminole, FL 33772',
                 ])
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'seminole',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">

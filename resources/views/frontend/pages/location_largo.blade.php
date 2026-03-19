@@ -66,6 +66,14 @@
                     'address' => '1807 Clearwater Largo Rd, Largo, FL 33770',
                 ])
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'largo',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">

@@ -66,6 +66,14 @@
                     </div> -->
                 </div>
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'montessori',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">

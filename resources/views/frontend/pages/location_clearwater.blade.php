@@ -66,6 +66,14 @@
                     'address' => '2750 State Road 580, Clearwater, FL 33761',
                 ])
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'clearwater',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">

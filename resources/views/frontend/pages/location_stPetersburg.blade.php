@@ -66,6 +66,14 @@
                     'address' => '1100 1st Ave N, St. Petersburg, FL 33701',
                 ])
             </div>
+
+            @include('frontend.components.location-virtual-tour', [
+                'locationSlug'   => 'st-petersburg',
+                'panoramaImages' => $panoramaImages ?? [],
+            ])
+
+            @include('frontend.components.location-why-choose')
+
             <section class="location-text">
                 <div class="container">
                     <div class="location-text-content">
