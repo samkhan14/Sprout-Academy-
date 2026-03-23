@@ -72,7 +72,27 @@
                 'panoramaImages' => $panoramaImages ?? [],
             ])
 
-            @include('frontend.components.location-why-choose')
+<section class="why-choose-section location-why-choose">
+    <div class="container">
+        <div class="section-heading-wrapper">
+            <img src="{{ asset('frontend/assets/home_page_images/lock.png') }}" alt="Icon" class="section-icon-left">
+            <h2 class="section-title-inner">The Sprout Academy</h2>
+            <img src="{{ asset('frontend/assets/home_page_images/star.png') }}" alt="Icon" class="section-icon-right">
+        </div>
+
+        <div class="video-showcase-main">
+            <video class="main-video-player" poster="{{ asset('frontend/assets/home_page_images/locations/montessori/vdo-poster-montessori.png') }}"
+                controls preload="metadata">
+                <source src="javascript:void(0)" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button class="video-play-btn-main" aria-label="Play video">
+                <span class="play-icon"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
 
             <section class="location-text">
                 <div class="container">
@@ -93,7 +113,7 @@
 
             <!-- Location Gallery Section -->
             @include('frontend.components.masonry-gallery', [
-                'locationName' => 'seminole',
+                'locationName' => 'montessori',
             ])
             
             <!-- View All Images on Facebook Button -->

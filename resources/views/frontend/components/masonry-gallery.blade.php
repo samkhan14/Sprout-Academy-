@@ -7,12 +7,10 @@
     $locationFolder = strtolower($locationName);
     $locationFolderMap = [
         'seminole' => 'seminole',
-        'pinellas-park' => 'pinellasPark',
-        'pinellaspark' => 'pinellasPark',
+        'pinellas-park' => 'pinellas-park',
         'montessori' => 'montessori',
         'largo' => 'largo',
-        'st-pete' => 'StPetersburg',
-        'stpetersburg' => 'StPetersburg',
+        'st-petersburg' => 'st-petersburg',
     ];
 
     $folderName = $locationFolderMap[$locationFolder] ?? $locationFolder;
@@ -20,7 +18,6 @@
     // For subdirectory deployment: frontend folder is at root level (not in public/)
     // Try base_path first (for subdirectory), then public_path (for local)
     $imagesPath = base_path("frontend/assets/home_page_images/locations/{$folderName}");
-
     // Fallback to public_path if base_path doesn't exist (local development)
     if (!is_dir($imagesPath)) {
         $imagesPath = public_path("frontend/assets/home_page_images/locations/{$folderName}");
