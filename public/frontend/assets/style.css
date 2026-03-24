@@ -2696,7 +2696,8 @@ footer#footer-copyright .footer-bottom {
 }
 
 body.page-login footer#footer-copyright .footer-bottom,
-body.page-enrollment-start footer#footer-copyright .footer-bottom {
+body.page-enrollment-start footer#footer-copyright .footer-bottom,
+body.page-form-employmentApplication footer#footer-copyright .footer-bottom {
     padding-bottom: 0;
     height: 40px;
 }

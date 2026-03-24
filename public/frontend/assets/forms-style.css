@@ -2913,7 +2913,7 @@
 /* Remove Buttons */
 .btn-remove-child,
 .btn-remove-contact {
-    background: #dc3545;
+    background: var(--button-bg);
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -2927,7 +2927,7 @@
 
 .btn-remove-child:hover,
 .btn-remove-contact:hover {
-    background: #c82333;
+    background: var(--button-hover);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

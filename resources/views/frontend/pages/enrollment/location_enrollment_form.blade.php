@@ -60,11 +60,6 @@
                         </button>
                     </form>
 
-                    <!-- Footer Link -->
-                    <p class="location-enrollment-footer-link">
-                        <a href="{{ route('frontend.locations') }}">Not The Location You're Looking For? Please Contact Your
-                            Child Care Provider For The Correct Link.</a>
-                    </p>
                 </div>
             </div>
         </div>

@@ -414,7 +414,11 @@ class EnrollmentController extends Controller
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
 
-        $enrollment = Enrollment::with('children')->find($enrollmentId);
+        $enrollment = Enrollment::with([
+            'children' => function ($query) {
+                $query->orderBy('child_order');
+            },
+        ])->find($enrollmentId);
         if (!$enrollment) {
             return redirect()->route('enrollment.form', ['location' => $location]);
         }
@@ -533,8 +537,8 @@ class EnrollmentController extends Controller
 
         $enrollment = Enrollment::with([
             'contacts' => function ($query) {
-            $query->where('is_primary', false);
-            }
+                $query->where('is_primary', false)->orderBy('contact_order');
+            },
         ])->find($enrollmentId);
 
         if (!$enrollment) {
@@ -689,11 +693,13 @@ class EnrollmentController extends Controller
 
         $enrollment = Enrollment::with([
             'contacts' => function ($query) {
-                $query->orderBy('is_primary', 'desc');
+                $query->orderByDesc('is_primary')->orderBy('contact_order');
             },
-            'children',
+            'children' => function ($query) {
+                $query->orderBy('child_order');
+            },
             'addresses',
-            'phones'
+            'phones',
         ])->find($enrollmentId);
 
         if (!$enrollment) {

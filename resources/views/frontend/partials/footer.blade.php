@@ -45,12 +45,12 @@
                     The Sprout Academy develops the whole child by meeting social, emotional, physical, and intellectual
                     needs through learning and growing every day.
                 </p>
-                <div class="footer-social">
+                {{-- <div class="footer-social">
                     <a href="#" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
                     <a href="#" class="footer-social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Column 2: Company -->
@@ -68,8 +68,7 @@
                 <h3 class="footer-title">Programs</h3>
                 <ul class="footer-links">
                     <li><a href="{{ route('frontend.ourPrograms') }}">Program Overview</a></li>
-                    <li><a href="{{ route('frontend.infantToddlerEducation') }}">Infant</a></li>
-                    <li><a href="{{ route('frontend.infantToddlerEducation') }}">Toddler</a></li>
+                    <li><a href="{{ route('frontend.infantToddlerEducation') }}">Infant & Toddler</a></li>
                     <li><a href="{{ route('frontend.preschoolEarlyEducation') }}">Preschool</a></li>
                     <li><a href="{{ route('frontend.educationFor512YearOld') }}">Pre-K, School Age</a></li>
                 </ul>

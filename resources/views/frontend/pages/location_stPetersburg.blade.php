@@ -10,7 +10,7 @@
         'subtitle' => 'Explore Our Academy',
         'showButton' => true,
         'buttonText' => 'Register My Child At This Location',
-        'buttonLink' => route('frontend.locations'),
+        'buttonLink' => route('enrollment.start', ['location' => 'st-petersburg']),
     ])
 
     <!-- Locations Virtual Tour Section -->
