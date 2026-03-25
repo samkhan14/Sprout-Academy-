@@ -6317,6 +6317,22 @@ h2.mission-title {
     font-size: 19px;
     }
 
+    .ndp-pill-heading {
+        font-size: 23px !important;
+    }
+    
+    .ndp-content p {
+        font-size: 1.2rem !important;
+    }
+
+    section.corp-philosophy-section {
+        padding-bottom: 0;
+    }
+    
+    .corp-commitment-heading {
+        font-size: 19px;
+    }
+
 }
 
 @media (max-width: 575.98px) {

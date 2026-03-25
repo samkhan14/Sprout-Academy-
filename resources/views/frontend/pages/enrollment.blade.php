@@ -60,4 +60,20 @@
             </div>
         </div>
     </section>
+
+    <div class="testimonials-section-2">
+        <section class="testimonials-section-v2 enroll-contact-section" aria-labelledby="enroll-contact-heading">
+            <div class="container">
+                <div class="text-center" id="enroll-contact-tag-heading">
+                @include('frontend.components.section-heading', [
+                    'text' => 'Still have questions?',
+                    'bgColor' => '#0A2239',
+                    'borderColor' => '#fff',
+                    'rotation' => 'center',
+                    ])
+                </div>
+                @include('frontend.components.enroll-contact-form', ['locations' => $locations])
+            </div>
+        </section>
+    </div>
 @endsection

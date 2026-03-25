@@ -1431,6 +1431,7 @@
 
     .form-header-section {
         height: auto;
+        margin-top: 70px;
     }
 
     .form-header-content h1 {
@@ -1438,7 +1439,8 @@
     }
 
     .form-header-content p {
-        font-size: 15px;
+        font-size: 17px;
+        width: 100%;
     }
 }
 
@@ -3218,6 +3220,14 @@ select#salaryCents {
     .relationship-fields {
         display: block;
     }
+
+    .form-field label {
+        font-size: 18px;
+    }
+    
+    .site_form .calendar-card .flatpickr-calendar {
+        display: contents !important;
+    }
 }
 
 /* ========================================
@@ -3250,4 +3260,220 @@ select#salaryCents {
     .site_form .salary-cents-field {
         grid-column: span 1;
     }
+}
+
+/* ========================================
+   ENROLL PAGE — "Send us a message" (gradient section)
+   ======================================== */
+
+.enroll-contact-section .enroll-contact-form-block {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 0 var(--space-xl, 2rem);
+}
+
+.enroll-contact-form-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 var(--space-xl, 2rem);
+    line-height: 1.15;
+}
+
+.enroll-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.enroll-contact-form-alert {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.enroll-contact-form-alert--success {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0a2239;
+}
+
+.enroll-contact-form-alert--error {
+    background: rgba(220, 53, 69, 0.95);
+    color: #fff;
+}
+
+.enroll-contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.25rem;
+}
+
+@media (max-width: 767.98px) {
+    .enroll-contact-form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.enroll-contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.enroll-contact-label {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.enroll-contact-locations {
+    border: 0;
+    padding: 0;
+    margin: 30px 0px;
+}
+
+.enroll-contact-locations-legend {
+    padding: 0;
+    float: none;
+    width: 100%;
+}
+
+.enroll-contact-locations-hint {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.875rem;
+    margin: 0 0 0.65rem;
+}
+
+.enroll-contact-location-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.enroll-contact-location-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0;
+    user-select: none;
+}
+
+.enroll-contact-location-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.enroll-contact-location-box {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    /* border: 2px solid rgba(255, 255, 255, 0.85); */
+    background: #659625;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.enroll-contact-location-input:checked + .enroll-contact-location-box {
+    background: #fff;
+    border-color: #fff;
+}
+
+.enroll-contact-location-input:checked + .enroll-contact-location-box::after {
+    content: "";
+    width: 6px;
+    height: 10px;
+    border: solid #0a2239;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+}
+
+.enroll-contact-location-input:focus-visible + .enroll-contact-location-box {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.enroll-contact-input,
+.enroll-contact-textarea {
+    width: 100%;
+    border: none;
+    border-radius: 30px;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    color: #0a2239;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.enroll-contact-input::placeholder,
+.enroll-contact-textarea::placeholder {
+    color: #6c757d;
+}
+
+.enroll-contact-textarea-wrap {
+    position: relative;
+}
+
+.enroll-contact-textarea-icon {
+    position: absolute;
+    left: 1rem;
+    top: 0.95rem;
+    color: #6c757d;
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+.enroll-contact-textarea {
+    padding-left: 2.5rem;
+    min-height: 140px;
+    resize: vertical;
+}
+
+.enroll-contact-submit {
+    width: 100%;
+    border: none;
+    border-radius: 30px;
+    padding: 1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #fff;
+    background: #0a2239;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-top: 0.25rem;
+}
+
+.enroll-contact-submit:hover:not(:disabled) {
+    background: #061525;
+}
+
+.enroll-contact-submit:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+div#enroll-contact-tag-heading {
+    margin-bottom: 30px;
 }

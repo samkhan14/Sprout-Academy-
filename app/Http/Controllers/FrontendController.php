@@ -9,6 +9,7 @@ use App\Models\ChildAbsentForm;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use App\Mail\FormSubmissionMail;
 use App\Helpers\FormEmailHelper;
 
@@ -261,6 +262,86 @@ class FrontendController extends Controller
     {
         $locations = Location::active()->get();
         return view('frontend.pages.enrollment', compact('locations'));
+    }
+
+    /**
+     * "Send us a message" form on the public /enroll page (AJAX JSON).
+     */
+    public function submitEnrollContactMessage(Request $request)
+    {
+        $allowedSlugs = Location::active()->pluck('slug')->filter()->values()->all();
+
+        if ($allowedSlugs === []) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No locations are available. Please try again later.',
+            ], 422);
+        }
+
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:10000',
+            'locations' => 'required|array|min:1',
+            'locations.*' => ['string', Rule::in($allowedSlugs)],
+        ];
+
+        $messages = [
+            'name.required' => 'Please enter your name.',
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'message.required' => 'Please enter a message.',
+            'locations.required' => 'Please select at least one location.',
+            'locations.min' => 'Please select at least one location.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            $locationLabels = Location::active()
+                ->whereIn('slug', $request->locations)
+                ->orderBy('display_order')
+                ->orderBy('name')
+                ->pluck('name')
+                ->implode(', ');
+
+            $formData = FormEmailHelper::formatFormData([
+                'Name' => $request->name,
+                'Email' => $request->email,
+                'Locations' => $locationLabels,
+                'Message' => $request->message,
+            ]);
+
+            Mail::to(FormEmailHelper::getAdminEmail())->send(
+                new FormSubmissionMail(
+                    'enroll_contact_message',
+                    'Enroll Page — Contact Message',
+                    $formData
+                )
+            );
+        } catch (\Exception $e) {
+            Log::error('Enroll contact message failed: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong. Please try again later.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thank you! Your message has been sent.',
+        ], 200);
     }
 
     public function CorporateResponsibility()

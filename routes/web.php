@@ -33,6 +33,7 @@ Route::controller(FrontendController::class)->name('frontend.')->group(function 
     Route::get('/sproutvine', 'Sproutvine')->name('sproutvine');
     Route::get('/thank-you', 'ThankYou')->name('thankYou');
     Route::get('/enroll', 'Enroll')->name('enroll');
+    Route::post('/enroll/contact-message', 'submitEnrollContactMessage')->name('enroll.contactMessage');
     Route::any('/child-absent-form', 'ChildAbsentForm')->name('childAbsentForm');
     Route::get('/corporate-responsibility', 'CorporateResponsibility')->name('corporateResponsibility');
     Route::get('/non-discrimination-policy', 'NonDiscriminationPolicy')->name('nonDiscriminationPolicy');
