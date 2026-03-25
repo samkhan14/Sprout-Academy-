@@ -6120,7 +6120,7 @@ h2.mission-title {
     }
 
     .location-overlay {
-        height: 82%;
+        height: 100%;
         width: 100%;
         z-index: 4;
     }
@@ -6331,6 +6331,10 @@ h2.mission-title {
     
     .corp-commitment-heading {
         font-size: 19px;
+    }
+
+    .location-overlay .btn {
+        margin-top: 20px;
     }
 
 }

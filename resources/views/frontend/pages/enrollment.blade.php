@@ -12,10 +12,6 @@
     <!-- Spots Are Limited / Locations Section -->
     <section class="locations-section section" aria-labelledby="locations-heading">
         <div class="container">
-            {{-- <div class="locations-header">
-                <h2 id="locations-heading" class="section-title">SPOTS ARE LIMITED!</h2>
-                <p class="locations-subtitle">Enroll Today & Secure Your Child's Spot</p>
-            </div> --}}
 
             <div class="locations-grid">
                 @forelse ($locations as $location)
@@ -23,11 +19,10 @@
                         // Static images map based on location slug
                         $locationImages = [
                             'seminole' => 'sch-img-1.png',
-                            'clearwater' => 'sch-img-2.png',
-                            'pinellas_park' => 'sch-img-3.png',
+                            'st-petersburg' => 'sch-img-2.png',
+                            'pinellas-park' => 'sch-img-3.png',
                             'montessori' => 'sch-img-4.png',
                             'largo' => 'sch-img-5.png',
-                            'st_petersburg' => 'sch-img-1.png',
                         ];
                         $imageName = $locationImages[$location->slug] ?? 'sch-img-1.png';
                     @endphp
