@@ -116,35 +116,37 @@
             </div>
             <h2 id="accreditation-heading" class="accreditation-title section-title">ACCREDITED, AWARDED, & LICENSED</h2>
 
-            <div class="accreditation-grid">
-                <div class="accreditation-card">
+            <div class="accreditation-grid-wrapper">
+            <div id="accreditationGridSlider" class="accreditation-grid" role="list" aria-label="Accreditation logos">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
                         loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif2.png') }}"
                         alt="Florida Health Certification" loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif3.png') }}" alt="APPLE Accreditation"
                         loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif4.png') }}" alt="USDA Certification"
                         loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif5.png') }}"
                         alt="Early Learning Coalition of Pinellas County" loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif1.png') }}" alt="Florida VPK Accreditation"
                         loading="lazy">
                 </div>
-                <div class="accreditation-card">
+                <div class="accreditation-card" role="listitem">
                     <img src="{{ asset('frontend/assets/home_page_images/certif2.png') }}"
                         alt="Florida Health Certification" loading="lazy">
                 </div>
+            </div>
             </div>
         </div>
     </section>
@@ -369,7 +371,124 @@
 
 @push('scripts')
     <script>
-        // Accreditation Slider removed - now using grid layout
+        (function () {
+            var grid = document.getElementById('accreditationGridSlider');
+            if (!grid) return;
+
+            var mq = window.matchMedia('(max-width: 767.98px)');
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            var cards = grid.querySelectorAll('.accreditation-card');
+            var delay = 4000;
+            var intervalId = null;
+            var resumeTimer = null;
+            var currentIndex = 0;
+            var listenersAttached = false;
+            var section = grid.closest('.accreditation-section');
+
+            /** Scroll only the horizontal track — never use scrollIntoView (it scrolls the whole page vertically). */
+            function scrollCardToCenter(card) {
+                var gridRect = grid.getBoundingClientRect();
+                var cardRect = card.getBoundingClientRect();
+                var nextLeft =
+                    grid.scrollLeft +
+                    (cardRect.left - gridRect.left) -
+                    (gridRect.width - cardRect.width) / 2;
+                var maxScroll = Math.max(0, grid.scrollWidth - grid.clientWidth);
+                nextLeft = Math.max(0, Math.min(nextLeft, maxScroll));
+                grid.scrollTo({
+                    left: nextLeft,
+                    behavior: reduceMotion.matches ? 'auto' : 'smooth',
+                });
+            }
+
+            function syncIndexFromScroll() {
+                if (!cards.length) return;
+                var rect = grid.getBoundingClientRect();
+                var mid = rect.left + rect.width / 2;
+                var best = 0;
+                var bestDist = Infinity;
+                for (var i = 0; i < cards.length; i++) {
+                    var r = cards[i].getBoundingClientRect();
+                    var c = r.left + r.width / 2;
+                    var d = Math.abs(c - mid);
+                    if (d < bestDist) {
+                        bestDist = d;
+                        best = i;
+                    }
+                }
+                currentIndex = best;
+            }
+
+            function goNext() {
+                if (cards.length < 2) return;
+                if (section) {
+                    var sr = section.getBoundingClientRect();
+                    if (sr.bottom < 0 || sr.top > window.innerHeight) {
+                        return;
+                    }
+                }
+                currentIndex = (currentIndex + 1) % cards.length;
+                scrollCardToCenter(cards[currentIndex]);
+            }
+
+            function startAutoplay() {
+                stopAutoplay();
+                if (!mq.matches || reduceMotion.matches || cards.length < 2) return;
+                intervalId = window.setInterval(goNext, delay);
+            }
+
+            function stopAutoplay() {
+                if (intervalId) {
+                    window.clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }
+
+            function scheduleResume() {
+                window.clearTimeout(resumeTimer);
+                resumeTimer = window.setTimeout(function () {
+                    syncIndexFromScroll();
+                    startAutoplay();
+                }, 5000);
+            }
+
+            function onUserInteract() {
+                stopAutoplay();
+                window.clearTimeout(resumeTimer);
+                scheduleResume();
+            }
+
+            function bind() {
+                if (!mq.matches || cards.length < 2 || listenersAttached) return;
+                listenersAttached = true;
+                currentIndex = 0;
+                startAutoplay();
+                grid.addEventListener('touchstart', onUserInteract, { passive: true });
+                grid.addEventListener('wheel', onUserInteract, { passive: true });
+            }
+
+            function unbind() {
+                if (!listenersAttached) return;
+                listenersAttached = false;
+                stopAutoplay();
+                window.clearTimeout(resumeTimer);
+                grid.removeEventListener('touchstart', onUserInteract);
+                grid.removeEventListener('wheel', onUserInteract);
+            }
+
+            mq.addEventListener('change', function (e) {
+                if (e.matches) bind();
+                else unbind();
+            });
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bind);
+            } else {
+                bind();
+            }
+        })();
+    </script>
+    <script>
         if (typeof jQuery !== 'undefined' && typeof jQuery.fn.slick !== 'undefined') {
             $(document).ready(function() {
 

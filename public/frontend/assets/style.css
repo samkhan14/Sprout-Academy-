@@ -2697,7 +2697,9 @@ footer#footer-copyright .footer-bottom {
 
 body.page-login footer#footer-copyright .footer-bottom,
 body.page-enrollment-start footer#footer-copyright .footer-bottom,
-body.page-form-employmentApplication footer#footer-copyright .footer-bottom {
+body.page-form-employmentApplication footer#footer-copyright .footer-bottom,
+body.page-enrollment-thankYou footer#footer-copyright .footer-bottom
+ {
     padding-bottom: 0;
     height: 40px;
 }
@@ -5339,6 +5341,8 @@ h2.mission-title {
     .timeline-content-wrapper.right-content .timeline-text {
         padding: 0;
         text-align: left;
+        padding-bottom: 30px;
+        padding-top: 20px;
     }
     .timeline-content-wrapper.left-content .timeline-image,
     .timeline-content-wrapper.right-content .timeline-image {
@@ -5371,8 +5375,7 @@ h2.mission-title {
 
 @media (max-width: 991.98px) {
     .preschool-intro-grid {
-        grid-template-columns: 1fr;
-        row-gap: var(--space-xl);
+        display: block;
     }
     .preschool-intro-figure {
         min-height: 300px;
@@ -5563,7 +5566,7 @@ h2.mission-title {
         right: -42px;
     }
     .owners-description {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
     .owners-tree-bg {
         top: 120px;
@@ -5610,7 +5613,7 @@ h2.mission-title {
         height: 32px;
     }
     .inner-header-title {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
     }
     .vt-location-title {
         font-size: 2rem;
@@ -5643,7 +5646,7 @@ h2.mission-title {
         text-align: center;
     }
     .info-cards-section {
-        padding: var(--space-2xl) 0;
+        /* padding: var(--space-2xl) 0; */
     }
     .info-icon-wrapper {
         width: 90px;
@@ -5676,10 +5679,10 @@ h2.mission-title {
         font-size: 1.75rem;
     }
     .infant-education-subtitle {
-        font-size: 0.95rem;
+        font-size: 1.3rem;
     }
     .accordion-section {
-        padding: var(--space-2xl) 0;
+        padding: var(--space-xl) 0;
     }
     .accordion-section-title {
         font-size: 1.5rem;
@@ -5728,7 +5731,7 @@ h2.mission-title {
         margin-bottom: var(--space-lg);
     }
     .sprout-cares-faq li {
-        font-size: 0.95rem;
+        font-size: 1.2rem;
         margin-bottom: var(--space-sm);
     }
     .sprout-cares-image-frame {
@@ -5771,7 +5774,7 @@ h2.mission-title {
         padding: 1rem 2.5rem;
     }
     .difference-timeline-wrapper {
-        padding: var(--space-2xl) 0;
+        padding: var(--space-2xl) 0 0;
     }
     .timeline-section {
         margin-bottom: var(--space-2xl);
@@ -5782,13 +5785,18 @@ h2.mission-title {
         height: 40px;
     }
     .timeline-heading {
-        font-size: 1.25rem;
+        font-size: 1.55rem;
     }
     .timeline-paragraph {
-        font-size: 0.9375rem;
+        font-size: 18px;
     }
     .benefits-receive-section {
-        padding: var(--space-2xl) 0;
+        padding: 0 var(--space-2xl) 0;
+        background: no-repeat;
+    }
+
+    .spr-aca-diff-accordion {
+        margin-top: 20px;
     }
     .benefits-cards-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -5842,7 +5850,7 @@ h2.mission-title {
         font-size: 1.75rem;
     }
     .toddler-program-text {
-        font-size: 0.95rem;
+        font-size: 1.2rem;
     }
     .program-grid-wrapper {
         flex-direction: column;
@@ -5877,7 +5885,7 @@ h2.mission-title {
         font-size: 1.5rem;
     }
     .program-text {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
     }
     .curriculum-section {
         padding: var(--space-2xl) 0;
@@ -5895,7 +5903,7 @@ h2.mission-title {
         height: 25px;
     }
     .curriculum-description {
-        font-size: 0.95rem;
+        font-size: 1.2rem;
         line-height: 1.7;
     }
     .curriculum-video-play-btn {
@@ -5922,10 +5930,10 @@ h2.mission-title {
         height: 70px;
     }
     .development-card-title {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
     }
     .development-card-text {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
     }
 }
 
@@ -5946,7 +5954,7 @@ h2.mission-title {
     }
 
     section.hero-section {
-        min-height: 450px;
+        min-height: 510px;
         align-items: end;
         padding-bottom: 20px;
         padding-left: 20px;
@@ -5969,8 +5977,8 @@ h2.mission-title {
     }
 
     p.mission-text {
-        font-size: 19px;
-        line-height: 37px;
+        font-size: 19px !important;
+        line-height: 37px !important;
     }
 
     .mission-section {
@@ -6096,6 +6104,7 @@ h2.mission-title {
 
     .testimonials-section {
         padding: var(--space-md) 0;
+        margin-top: 70px;
     }
 
     .locations-grid {
@@ -6111,8 +6120,8 @@ h2.mission-title {
     }
 
     .location-overlay {
-        height: unset;
-        width: 88%;
+        height: 82%;
+        width: 100%;
         z-index: 4;
     }
 
@@ -6123,6 +6132,12 @@ h2.mission-title {
     .location-overlay-address {
         font-size: 15px;
     }
+
+    .location-overlay-content {
+    top: -30px;
+    }
+
+    .location-overlay-buttons {justify-content: flex-start;margin-top: 30px;}
 
     .newsletter-title {
         font-size: 25px;
@@ -6151,8 +6166,10 @@ h2.mission-title {
     }
 
     .inner-page-header {
-        min-height: 300px;
+        min-height: 390px;
         padding-bottom: 0;
+        background-position: 70% 100%;
+        margin-top: 30px;
     }
 
     .vt-contact-label {
@@ -6214,7 +6231,7 @@ h2.mission-title {
     }
 
     .benifits-receive-wrapper .container {
-        padding: var(--space-xl);
+        padding: var(--space-md);
     }
 
     .benefits-receive-header {
@@ -6222,7 +6239,7 @@ h2.mission-title {
     }
 
     .benefit-card-text {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .footer-cta-section {
@@ -6232,6 +6249,7 @@ h2.mission-title {
 
     .footer-cta-title {
         font-size: 21px;
+        margin: 30px 0px;
     }
 
     .footer-cta-content {
@@ -6294,6 +6312,11 @@ h2.mission-title {
         font-size: 22px;
         line-height: 1.7;
     }
+
+    .preschool-intro-content p {
+    font-size: 19px;
+    }
+
 }
 
 @media (max-width: 575.98px) {
@@ -6341,6 +6364,35 @@ h2.mission-title {
         padding: 0.875rem 2rem;
         font-size: 1rem;
     }
+
+
+    header.site-header {top: 50px !important;}
+
+    header.site-header.scrolled {
+        top: 0 !important;
+    }
+
+    .steps-container::before {
+        display: none;
+    }
+
+    .sprout-store-content-wrapper {
+        display: block !important;
+    }
+
+    .sprout-store-content {
+        margin-left: 20px !important;
+        margin-top: 40px;
+    }
+
+    section.sprout-store-section {
+        margin-top: 70px;
+    }
+
+    section.founders-section {
+        margin-top: 80px;
+    }
+
 }
 
 @media (max-width: 991.98px) {
@@ -6404,17 +6456,17 @@ h2.mission-title {
         gap: var(--space-2xl);
     }
     .owners-name {
-        font-size: 3rem;
+        font-size: 2rem;
     }
     .owners-name::before {
         width: 42px;
         height: 42px;
-        left: -55px;
+        left: -5px !important;
     }
     .owners-name::after {
         width: 36px;
         height: 36px;
-        right: -50px;
+        right: -10px !important;
     }
     .owners-tree-bg {
         top: 130px;
@@ -6441,7 +6493,7 @@ h2.mission-title {
         gap: var(--space-2xl);
     }
     .vt-location-title {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
     }
     .vt-viewer-image {
         height: 400px;
@@ -6456,18 +6508,18 @@ h2.mission-title {
         padding: var(--space-md);
     }
     .info-icon-wrapper {
-        width: 100px;
+        width: 120px;
         height: 100px;
     }
     .info-icon {
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
     }
     .info-card-title {
-        font-size: 1.125rem;
+        font-size: 1.325rem;
     }
     .info-card-text {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
     }
     .infant-education-accordion-section {
         padding: var(--space-2xl) 0;
@@ -6476,7 +6528,7 @@ h2.mission-title {
         max-width: 800px;
     }
     .infant-education-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
     .infant-education-icon {
         width: 55px;
@@ -6494,7 +6546,7 @@ h2.mission-title {
         font-size: 1rem;
     }
     .sprout-cares-title {
-        font-size: 2.25rem;
+        font-size: 2.1rem;
     }
     .sprout-cares-description {
         font-size: 1rem;
@@ -6526,8 +6578,16 @@ h2.mission-title {
     .toddler-program-overlay {
         padding: var(--space-2xl) var(--space-xl);
     }
+
+    h2.mission-title {
+        font-size: 30px;
+    }
+
+    .toddler-program-image-wrapper {
+        display: none;
+    }
     .toddler-program-title {
-        font-size: 2.25rem;
+        font-size: 1.5rem;
     }
     .program-content-column {
         width: 45%;
@@ -8270,7 +8330,17 @@ body.page-enrollment-start .location-enrollment-form-section::after {
     }
 
     .sproutvine-news-logo {
-        height: 50px;
+        height: 90px;
+        width: 70%;
+    }
+
+    section.locations-section.section {
+    padding-bottom: 0px;
+}
+
+    .sproutvine-news-brand {
+        align-items: end;
+        gap: 10px;
     }
 
     .sproutvine-news-title {
@@ -8293,6 +8363,12 @@ body.page-enrollment-start .location-enrollment-form-section::after {
     .sproutvine-news-side-image {
         border-radius: 10px;
         min-height: 160px;
+        width: 100%;
+    }
+
+    .sproutvine-news-side-body-content {
+    padding-left: 0;
+    padding-top: 20px;
     }
 
     .sproutvine-news-side-body {
@@ -8704,5 +8780,55 @@ body.page-enrollment-start .location-enrollment-form-section::after {
     .ndp-intro-content {
         order: 2;
         padding-left: 0;
+    }
+}
+
+/* Accreditation: one-at-a-time snap slider — mobile only; scrollbar hidden; desktop = grid */
+@media (max-width: 767.98px) {
+    .accreditation-section .accreditation-grid-wrapper {
+        margin-left: calc(-1 * var(--bs-gutter-x, 0.75rem));
+        margin-right: calc(-1 * var(--bs-gutter-x, 0.75rem));
+        width: calc(100% + (2 * var(--bs-gutter-x, 0.75rem)));
+        max-width: none;
+        box-sizing: border-box;
+        padding-inline: 4px;
+    }
+
+    .accreditation-section .accreditation-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        grid-template-columns: unset;
+        gap: 0;
+        width: 80%;
+        padding: 4px 0 0px;
+        margin: 0 auto;
+        max-width: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 0;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none; /* Firefox: hide scroll line */
+        -ms-overflow-style: none; /* IE/legacy Edge */
+    }
+
+    .accreditation-section .accreditation-grid::-webkit-scrollbar {
+        display: none; /* Chrome/Safari: hide scroll indicator */
+        width: 0;
+        height: 0;
+    }
+
+    .accreditation-section .accreditation-card {
+        flex: 0 0 100%;
+        box-sizing: border-box;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+
+    .accreditation-section .accreditation-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
     }
 }
