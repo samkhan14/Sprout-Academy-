@@ -85,7 +85,7 @@
         <div class="video-showcase-main">
             <video class="main-video-player" poster="{{ asset('frontend/assets/home_page_images/locations/pinellas-park/vdo-poster-pinellsperk.png') }}"
                 controls preload="metadata">
-                <source src="javascript:void(0)" type="video/mp4">
+                <source src="{{ asset('frontend/assets/home_page_images/common-vdo.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <button class="video-play-btn-main" aria-label="Play video">

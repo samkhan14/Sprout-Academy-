@@ -158,9 +158,13 @@
                     </li> -->
 
                     <!-- Schedule a Tour Button (Orange) — hover opens Locations dropdown -->
-                    <li class="nav-item ms-lg-2">
+                    {{-- <li class="nav-item ms-lg-2">
                         <a class="btn btn-foundation" id="scheduleTourNavTrigger" href="javascript:void(0)"
                             target="_blank">Schedule a Tour &raquo;</a>
+                    </li> --}}
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-foundation" href="{{ route('frontend.enroll') }}">Schedule
+                            a Tour &raquo;</a>
                     </li>
                 </ul>
             </div>
