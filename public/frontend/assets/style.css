@@ -1430,10 +1430,10 @@ body.page-nonDiscriminationPolicy section.inner-page-header {
 .testimonial-card-v2::before {
     position: absolute;
     content: "";
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
+    top: 9px;
+    left: 8px;
+    right: 8px;
+    bottom: 7px;
     border-radius: 15px;
     border: 2px solid rgba(15, 74, 116, 0.08);
     z-index: 0;
@@ -2698,8 +2698,7 @@ footer#footer-copyright .footer-bottom {
 body.page-login footer#footer-copyright .footer-bottom,
 body.page-enrollment-start footer#footer-copyright .footer-bottom,
 body.page-form-employmentApplication footer#footer-copyright .footer-bottom,
-body.page-enrollment-thankYou footer#footer-copyright .footer-bottom
- {
+body.page-enrollment-thankYou footer#footer-copyright .footer-bottom {
     padding-bottom: 0;
     height: 40px;
 }
@@ -5334,7 +5333,8 @@ h2.mission-title {
         font-size: 2.25rem;
     }
     .timeline-content-wrapper {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: var(--space-lg);
     }
     .timeline-content-wrapper.left-content .timeline-text,
@@ -5343,13 +5343,11 @@ h2.mission-title {
         text-align: left;
         padding-bottom: 30px;
         padding-top: 20px;
+        order: 2;
     }
     .timeline-content-wrapper.left-content .timeline-image,
     .timeline-content-wrapper.right-content .timeline-image {
         padding: 0;
-        order: 2;
-    }
-    .timeline-content-wrapper.right-content .timeline-text {
         order: 1;
     }
     .timeline-line {
@@ -6134,10 +6132,13 @@ h2.mission-title {
     }
 
     .location-overlay-content {
-    top: -30px;
+        top: -30px;
     }
 
-    .location-overlay-buttons {justify-content: flex-start;margin-top: 30px;}
+    .location-overlay-buttons {
+        justify-content: flex-start;
+        margin-top: 30px;
+    }
 
     .newsletter-title {
         font-size: 25px;
@@ -6223,7 +6224,16 @@ h2.mission-title {
     }
 
     .timeline-content-wrapper {
-        display: block;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .timeline-content-wrapper .timeline-text {
+        order: 2;
+    }
+
+    .timeline-content-wrapper .timeline-image {
+        order: 1;
     }
 
     .timeline-section {
@@ -6314,13 +6324,13 @@ h2.mission-title {
     }
 
     .preschool-intro-content p {
-    font-size: 19px;
+        font-size: 19px;
     }
 
     .ndp-pill-heading {
         font-size: 23px !important;
     }
-    
+
     .ndp-content p {
         font-size: 1.2rem !important;
     }
@@ -6328,7 +6338,7 @@ h2.mission-title {
     section.corp-philosophy-section {
         padding-bottom: 0;
     }
-    
+
     .corp-commitment-heading {
         font-size: 19px;
     }
@@ -6336,7 +6346,6 @@ h2.mission-title {
     .location-overlay .btn {
         margin-top: 20px;
     }
-
 }
 
 @media (max-width: 575.98px) {
@@ -6385,8 +6394,9 @@ h2.mission-title {
         font-size: 1rem;
     }
 
-
-    header.site-header {top: 50px !important;}
+    header.site-header {
+        top: 50px !important;
+    }
 
     header.site-header.scrolled {
         top: 0 !important;
@@ -6412,7 +6422,6 @@ h2.mission-title {
     section.founders-section {
         margin-top: 80px;
     }
-
 }
 
 @media (max-width: 991.98px) {
@@ -8355,8 +8364,8 @@ body.page-enrollment-start .location-enrollment-form-section::after {
     }
 
     section.locations-section.section {
-    padding-bottom: 0px;
-}
+        padding-bottom: 0px;
+    }
 
     .sproutvine-news-brand {
         align-items: end;
@@ -8387,8 +8396,8 @@ body.page-enrollment-start .location-enrollment-form-section::after {
     }
 
     .sproutvine-news-side-body-content {
-    padding-left: 0;
-    padding-top: 20px;
+        padding-left: 0;
+        padding-top: 20px;
     }
 
     .sproutvine-news-side-body {

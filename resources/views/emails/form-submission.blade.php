@@ -178,7 +178,7 @@
     <div class="email-wrapper">
         <!-- Header with Logo -->
         <div class="email-header">
-            <img src="{{ asset('frontend/assets/home_page_images/header-logo-colored.png') }}" alt="The Sprout Academy" class="email-logo">
+            <img src="{{ $message->embed(public_path('frontend/assets/home_page_images/email-logo-white.png')) }}" alt="The Sprout Academy" class="email-logo">
         </div>
 
         <!-- Body -->
